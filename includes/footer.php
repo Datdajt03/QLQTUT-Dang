@@ -5,10 +5,23 @@
 </div><!-- /.layout -->
 
 <script>
-// ── Sidebar toggle (mobile) ────────────────────────────────────────────────
-document.getElementById('menuToggle').addEventListener('click', function() {
-  document.getElementById('sidebar').classList.toggle('open');
+// ── Sidebar toggle (desktop collapse & mobile slide-out) ───────────────────
+document.getElementById('menuToggle').addEventListener('click', function(e) {
+  e.stopPropagation();
+  var layout = document.getElementById('mainLayout');
+  var sidebar = document.getElementById('sidebar');
+  
+  if (window.innerWidth > 768) {
+    // Desktop: collapse / expand sidebar
+    layout.classList.toggle('collapsed');
+    var isCollapsed = layout.classList.contains('collapsed');
+    try { localStorage.setItem('sidebarCollapsed', isCollapsed); } catch(ex){}
+  } else {
+    // Mobile: open / close drawer
+    sidebar.classList.toggle('open');
+  }
 });
+
 document.addEventListener('click', function(e) {
   var sb  = document.getElementById('sidebar');
   var btn = document.getElementById('menuToggle');

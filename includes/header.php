@@ -27,7 +27,15 @@ $tabPhuOpen = ($currentDir === 'Tabphu');
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/style.css">
 </head>
 <body>
-<div class="layout">
+<div class="layout" id="mainLayout">
+<script>
+  try {
+    if (localStorage.getItem('sidebarCollapsed') === 'true' && window.innerWidth > 768) {
+      document.getElementById('mainLayout').classList.add('collapsed');
+    }
+  } catch(e){}
+</script>
+
 
 <!-- ===== SIDEBAR ===== -->
 <aside class="sidebar" id="sidebar">

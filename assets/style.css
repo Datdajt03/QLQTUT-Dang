@@ -64,7 +64,7 @@ body {
   position: fixed;
   top: 0; left: 0; bottom: 0;
   z-index: 1000;
-  transition: transform var(--transition);
+  transition: width var(--transition), transform var(--transition);
   overflow-y: auto;
 }
 
@@ -171,6 +171,7 @@ body {
   gap: 16px;
   z-index: 900;
   backdrop-filter: blur(10px);
+  transition: left var(--transition);
 }
 
 .header-title {
@@ -214,7 +215,6 @@ body {
   text-decoration: none;
 }
 .btn-icon:hover { background: var(--red); color: #fff; border-color: var(--red); }
-#menuToggle { display: none; }
 
 .user-badge {
   display: flex; align-items: center; gap: 8px;
@@ -240,6 +240,7 @@ body {
   padding: 28px;
   min-height: calc(100vh - var(--header-h));
   flex: 1;
+  transition: margin-left var(--transition);
 }
 
 /* ===== PAGE HEADER ===== */
@@ -823,4 +824,53 @@ textarea.form-control { min-height: 90px; resize: vertical; }
   box-shadow: 0 8px 24px rgba(200,16,46,0.25);
   flex-shrink: 0;
 }
+
+/* ===== COLLAPSED SIDEBAR RULES (Desktop) ===== */
+.layout.collapsed {
+  --sidebar-w: 68px;
+}
+
+.layout.collapsed .sidebar-logo {
+  padding: 20px 10px;
+  justify-content: center;
+}
+
+.layout.collapsed .sidebar-logo .logo-text {
+  display: none;
+}
+
+.layout.collapsed .nav-section-title {
+  display: none;
+}
+
+.layout.collapsed .sidebar-nav .nav-item span:not(.icon) {
+  display: none;
+}
+
+.layout.collapsed .sidebar-nav .nav-item {
+  justify-content: center;
+  padding: 12px 10px;
+}
+
+.layout.collapsed .sidebar-nav .nav-item .icon {
+  margin: 0;
+  font-size: 20px;
+}
+
+.layout.collapsed .sidebar-nav .nav-item .badge {
+  display: none;
+}
+
+/* Hide accordion toggle & body in collapsed state */
+.layout.collapsed #tabphuToggle {
+  display: none !important;
+}
+.layout.collapsed #tabphuBody {
+  display: none !important;
+}
+
+.layout.collapsed .sidebar-footer {
+  display: none;
+}
+
 
