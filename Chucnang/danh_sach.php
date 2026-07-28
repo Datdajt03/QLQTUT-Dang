@@ -109,12 +109,26 @@ require_once dirname(__DIR__) . '/includes/header.php';
             <td style="color:var(--text2);"><?= $offset + $i + 1 ?></td>
             <td><code style="color:var(--gold);font-size:12px;"><?= e($row['ma_gvsv'] ?: '—') ?></code></td>
             <td>
-              <a href="chi_tiet.php?id=<?= $row['id'] ?>" class="name-link">
-                <?= e($row['ho_ten']) ?>
-              </a>
-              <?php if ($row['gioi_tinh']): ?>
-              <span style="font-size:11px;color:var(--text2);">(<?= e($row['gioi_tinh']) ?>)</span>
-              <?php endif; ?>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <?php if ($row['avatar']): ?>
+                  <img src="<?= BASE_URL . e($row['avatar']) ?>" class="avatar-cell" alt="">
+                <?php else: ?>
+                  <?php 
+                    $words = explode(' ', $row['ho_ten']);
+                    $initials = (count($words) > 1) ? mb_substr($words[count($words)-2], 0, 1) . mb_substr($words[count($words)-1], 0, 1) : mb_substr($row['ho_ten'], 0, 1);
+                    $initials = mb_strtoupper($initials);
+                  ?>
+                  <div class="avatar-cell-default"><?= e($initials) ?></div>
+                <?php endif; ?>
+                <div>
+                  <a href="chi_tiet.php?id=<?= $row['id'] ?>" class="name-link">
+                    <?= e($row['ho_ten']) ?>
+                  </a>
+                  <?php if ($row['gioi_tinh']): ?>
+                  <span style="font-size:11px;color:var(--text2);">(<?= e($row['gioi_tinh']) ?>)</span>
+                  <?php endif; ?>
+                </div>
+              </div>
             </td>
             <td><?= e($row['sdt'] ?: '—') ?></td>
             <td><?= e($row['lop'] ?: '—') ?></td>

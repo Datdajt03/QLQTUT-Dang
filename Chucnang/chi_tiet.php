@@ -23,23 +23,34 @@ function stepDone($val): bool { return !empty($val); }
 
 require_once dirname(__DIR__) . '/includes/header.php';
 ?>
-
-<div class="page-header">
-  <div class="page-header-left">
-    <div class="breadcrumb">
-      <a href="<?= BASE_URL ?>index.php">Dashboard</a><span class="sep">›</span>
-      <a href="danh_sach.php">Danh sách</a><span class="sep">›</span>
-      <span class="current">Chi tiết</span>
-    </div>
-    <div class="page-title">👤 <?= e($dt['ho_ten']) ?></div>
-    <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
-      <?php
-        $s = $dt['trang_thai'];
-        $cls = $s==='Đã kết nạp'?'green':($s==='Đang theo dõi'?'gold':($s==='Đã chuyển'?'blue':'gray'));
+<div class="page-header" style="align-items: center;">
+  <div class="page-header-left" style="display:flex; flex-direction:row; gap:20px; align-items:center;">
+    <?php if ($dt['avatar']): ?>
+      <img src="<?= BASE_URL . e($dt['avatar']) ?>" class="avatar-detail" alt="Avatar">
+    <?php else: ?>
+      <?php 
+        $words = explode(' ', $dt['ho_ten']);
+        $initials = (count($words) > 1) ? mb_substr($words[count($words)-2], 0, 1) . mb_substr($words[count($words)-1], 0, 1) : mb_substr($dt['ho_ten'], 0, 1);
+        $initials = mb_strtoupper($initials);
       ?>
-      <span class="badge badge-<?= $cls ?>"><?= e($s) ?></span>
-      <?php if ($dt['lop']): ?><span style="color:var(--text2);font-size:13px;">📚 <?= e($dt['lop']) ?></span><?php endif; ?>
-      <?php if ($dt['ma_gvsv']): ?><code style="color:var(--gold);font-size:12px;"><?= e($dt['ma_gvsv']) ?></code><?php endif; ?>
+      <div class="avatar-detail-default"><?= e($initials) ?></div>
+    <?php endif; ?>
+    <div>
+      <div class="breadcrumb">
+        <a href="<?= BASE_URL ?>index.php">Dashboard</a><span class="sep">›</span>
+        <a href="danh_sach.php">Danh sách</a><span class="sep">›</span>
+        <span class="current">Chi tiết</span>
+      </div>
+      <div class="page-title"><?= e($dt['ho_ten']) ?></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+        <?php
+          $s = $dt['trang_thai'];
+          $cls = $s==='Đã kết nạp'?'green':($s==='Đang theo dõi'?'gold':($s==='Đã chuyển'?'blue':'gray'));
+        ?>
+        <span class="badge badge-<?= $cls ?>"><?= e($s) ?></span>
+        <?php if ($dt['lop']): ?><span style="color:var(--text2);font-size:13px;">📚 <?= e($dt['lop']) ?></span><?php endif; ?>
+        <?php if ($dt['ma_gvsv']): ?><code style="color:var(--gold);font-size:12px;"><?= e($dt['ma_gvsv']) ?></code><?php endif; ?>
+      </div>
     </div>
   </div>
   <div style="display:flex;gap:10px;">

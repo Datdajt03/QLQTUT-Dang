@@ -28,6 +28,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($data['ho_ten'])) $errors[] = 'Họ và tên không được để trống';
 
+    // Handle avatar upload
+    $avatarPath = null;
+    if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = dirname(__DIR__) . '/uploads/avatars/';
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+        $ext = strtolower(pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg','jpeg','png','gif','webp'];
+        if (in_array($ext, $allowed) && $_FILES['avatar']['size'] <= 5 * 1024 * 1024) {
+            $fname = 'av_' . time() . '_' . rand(1000,9999) . '.' . $ext;
+            if (move_uploaded_file($_FILES['avatar']['tmp_name'], $uploadDir . $fname)) {
+                $avatarPath = 'uploads/avatars/' . $fname;
+            }
+        } else {
+            $errors[] = 'Ảnh phải là JPG/PNG/GIF/WebP và nhỏ hơn 5MB';
+        }
+    }
+
     if (empty($errors)) {
         // Convert dates
         $dateFields = ['ngay_sinh','ngay_hop_cam_tinh','ngay_phan_cong_giup_do',
@@ -38,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         // Empty strings → null for optional
         foreach ($data as &$v) if ($v === '') $v = null;
+        $data['avatar'] = $avatarPath;
 
         $sql = "INSERT INTO doi_tuong (
             ma_gvsv,ho_ten,sdt,gioi_tinh,ngay_sinh,dan_toc,que_quan,chuc_vu,lop,
@@ -46,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ngay_cap_cc,so_qd_cc,don_vi_cap_cc,ten_dv_congtac_khi_cap_cc,
             ten_chibo_khi_cap_cc,ten_danguy_khi_cap_cc,ten_tinhuy_khi_cap_cc,
             ma_so,ket_nap_dang,ngay_quyet_dinh,so_qd_ket_nap,ngay_ket_nap,
-            dang_vien_huong_dan,ngay_chuyen_sinh_hoat,noi_chuyen_toi,ghi_chu,trang_thai
+            dang_vien_huong_dan,ngay_chuyen_sinh_hoat,noi_chuyen_toi,ghi_chu,trang_thai,avatar
         ) VALUES (
             :ma_gvsv,:ho_ten,:sdt,:gioi_tinh,:ngay_sinh,:dan_toc,:que_quan,:chuc_vu,:lop,
             :chi_bo_cong_nhan,:so_bc_cam_tinh,:ngay_hop_cam_tinh,:dang_vien_giup_do,
@@ -54,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             :ngay_cap_cc,:so_qd_cc,:don_vi_cap_cc,:ten_dv_congtac_khi_cap_cc,
             :ten_chibo_khi_cap_cc,:ten_danguy_khi_cap_cc,:ten_tinhuy_khi_cap_cc,
             :ma_so,:ket_nap_dang,:ngay_quyet_dinh,:so_qd_ket_nap,:ngay_ket_nap,
-            :dang_vien_huong_dan,:ngay_chuyen_sinh_hoat,:noi_chuyen_toi,:ghi_chu,:trang_thai
+            :dang_vien_huong_dan,:ngay_chuyen_sinh_hoat,:noi_chuyen_toi,:ghi_chu,:trang_thai,:avatar
         )";
         $stmt = $db->prepare($sql);
         $stmt->execute($data);
@@ -84,7 +102,25 @@ require_once dirname(__DIR__) . '/includes/header.php';
 <div class="flash flash-danger">❌ <?= implode('<br>❌ ', array_map('e', $errors)) ?></div>
 <?php endif; ?>
 
-<form method="post" id="addForm">
+<form method="post" id="addForm" enctype="multipart/form-data">
+
+<!-- ⓪ Avatar -->
+<div class="form-section">
+  <div class="form-section-title">🖼️ Ảnh đại diện</div>
+  <div class="avatar-upload-wrap">
+    <div id="avatarPreviewWrap" class="avatar-preview-large">📷</div>
+    <div class="avatar-upload-btn">
+      <button type="button" class="btn btn-outline" onclick="document.getElementById('avatarInput').click()">
+        📁 Chọn ảnh...
+      </button>
+      <button type="button" class="btn btn-danger btn-sm" id="removeAvatarBtn" style="display:none;" onclick="removeAvatar()">
+        🗑️ Xóa ảnh
+      </button>
+      <div class="avatar-hint">Định dạng: JPG, PNG, WebP · Tối đa: 5MB</div>
+    </div>
+    <input type="file" name="avatar" id="avatarInput" class="avatar-input-hidden" accept="image/*" onchange="previewAvatar(this)">
+  </div>
+</div>
 
 <!-- ①  Thông tin cá nhân -->
 <div class="form-section">
@@ -286,6 +322,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
   </div>
 </div>
 
+
 <!-- Submit -->
 <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px;">
   <a href="danh_sach.php" class="btn btn-outline btn-lg">Hủy</a>
@@ -294,4 +331,31 @@ require_once dirname(__DIR__) . '/includes/header.php';
 
 </form>
 
+<script>
+function previewAvatar(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var wrap = document.getElementById('avatarPreviewWrap');
+      wrap.innerHTML = '';
+      var img = document.createElement('img');
+      img.src = e.target.result;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+      wrap.appendChild(img);
+      wrap.style.padding = '0';
+      document.getElementById('removeAvatarBtn').style.display = 'inline-flex';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+function removeAvatar() {
+  document.getElementById('avatarInput').value = '';
+  var wrap = document.getElementById('avatarPreviewWrap');
+  wrap.innerHTML = '📷';
+  wrap.style.cssText = '';
+  document.getElementById('removeAvatarBtn').style.display = 'none';
+}
+</script>
+
 <?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+

@@ -30,12 +30,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($fields as $f) $data[$f] = trim($_POST[$f] ?? '');
     if (empty($data['ho_ten'])) $errors[] = 'Họ và tên không được để trống';
 
+    // Handle avatar
+    $avatarPath = $dt['avatar']; // Keep old avatar by default
+    if (isset($_POST['remove_avatar_flag']) && $_POST['remove_avatar_flag'] === '1') {
+        if ($dt['avatar'] && file_exists(dirname(__DIR__) . '/' . $dt['avatar'])) {
+            @unlink(dirname(__DIR__) . '/' . $dt['avatar']);
+        }
+        $avatarPath = null;
+    }
+
+    if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = dirname(__DIR__) . '/uploads/avatars/';
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+        $ext = strtolower(pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg','jpeg','png','gif','webp'];
+        if (in_array($ext, $allowed) && $_FILES['avatar']['size'] <= 5 * 1024 * 1024) {
+            // Delete old file if exists
+            if ($dt['avatar'] && file_exists(dirname(__DIR__) . '/' . $dt['avatar'])) {
+                @unlink(dirname(__DIR__) . '/' . $dt['avatar']);
+            }
+            $fname = 'av_' . time() . '_' . rand(1000,9999) . '.' . $ext;
+            if (move_uploaded_file($_FILES['avatar']['tmp_name'], $uploadDir . $fname)) {
+                $avatarPath = 'uploads/avatars/' . $fname;
+            }
+        } else {
+            $errors[] = 'Ảnh phải là JPG/PNG/GIF/WebP và nhỏ hơn 5MB';
+        }
+    }
+
     if (empty($errors)) {
         $dateFields = ['ngay_sinh','ngay_hop_cam_tinh','ngay_phan_cong_giup_do',
                        'ngay_qd_mo_lop','ngay_cap_cc','ngay_quyet_dinh',
                        'ngay_ket_nap','ngay_chuyen_sinh_hoat'];
         foreach ($dateFields as $df) $data[$df] = $data[$df] ? toDbDate($data[$df]) : null;
         foreach ($data as &$v) if ($v === '') $v = null;
+
+        $fields[] = 'avatar';
+        $data['avatar'] = $avatarPath;
 
         $sets = implode(', ', array_map(fn($f) => "$f = :$f", $fields));
         $data['id'] = $id;
@@ -71,7 +102,33 @@ require_once dirname(__DIR__) . '/includes/header.php';
 <div class="flash flash-danger">❌ <?= implode('<br>❌ ', array_map('e', $errors)) ?></div>
 <?php endif; ?>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
+<input type="hidden" name="remove_avatar_flag" id="removeAvatarFlag" value="0">
+
+<!-- ⓪ Avatar -->
+<div class="form-section">
+  <div class="form-section-title">🖼️ Ảnh đại diện</div>
+  <div class="avatar-upload-wrap">
+    <div id="avatarPreviewWrap" class="avatar-preview-large">
+      <?php if ($dt['avatar']): ?>
+        <img src="<?= BASE_URL . e($dt['avatar']) ?>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+      <?php else: ?>
+        📷
+      <?php endif; ?>
+    </div>
+    <div class="avatar-upload-btn">
+      <button type="button" class="btn btn-outline" onclick="document.getElementById('avatarInput').click()">
+        📁 Chọn ảnh...
+      </button>
+      <button type="button" class="btn btn-danger btn-sm" id="removeAvatarBtn" style="<?= $dt['avatar'] ? 'display:inline-flex;' : 'display:none;' ?>" onclick="removeAvatar()">
+        🗑️ Xóa ảnh
+      </button>
+      <div class="avatar-hint">Định dạng: JPG, PNG, WebP · Tối đa: 5MB</div>
+    </div>
+    <input type="file" name="avatar" id="avatarInput" class="avatar-input-hidden" accept="image/*" onchange="previewAvatar(this)">
+  </div>
+</div>
+
 <!-- ① Thông tin cá nhân -->
 <div class="form-section">
   <div class="form-section-title">👤 1. Thông tin cá nhân</div>
@@ -203,4 +260,33 @@ require_once dirname(__DIR__) . '/includes/header.php';
 </div>
 </form>
 
+<script>
+function previewAvatar(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var wrap = document.getElementById('avatarPreviewWrap');
+      wrap.innerHTML = '';
+      var img = document.createElement('img');
+      img.src = e.target.result;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+      wrap.appendChild(img);
+      wrap.style.padding = '0';
+      document.getElementById('removeAvatarFlag').value = '0';
+      document.getElementById('removeAvatarBtn').style.display = 'inline-flex';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+function removeAvatar() {
+  document.getElementById('avatarInput').value = '';
+  var wrap = document.getElementById('avatarPreviewWrap');
+  wrap.innerHTML = '📷';
+  wrap.style.cssText = '';
+  document.getElementById('removeAvatarFlag').value = '1';
+  document.getElementById('removeAvatarBtn').style.display = 'none';
+}
+</script>
+
 <?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+
