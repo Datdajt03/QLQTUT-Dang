@@ -1,0 +1,13 @@
+# Ignore temp/dev files
+*.log
+*.tmp
+node_modules/
+.env
+.DS_Store
+Thumbs.db
+
+# Ignore sensitive config (user can add their own)
+# config.php  # Uncomment if you want to exclude config
+
+# Excel data file (optional - keep if you want sample data)
+# 01. Danh sach Doi tuong Dang - gui e tu.xlsx
