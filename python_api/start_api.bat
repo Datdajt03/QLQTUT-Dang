@@ -27,21 +27,30 @@ if not defined PYTHON (
 echo [OK] Tim thay Python: %PYTHON%
 echo.
 
-:: Install requirements
-echo [..] Dang cai dat thu vien can thiet...
+:: Check if libraries are already installed to skip pip install
 cd /d "%~dp0"
+%PYTHON% -c "import flask, flask_cors, pymysql, openpyxl, reportlab" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo [OK] Các thư viện Python đã cài đặt đầy đủ. Bỏ qua bước cài đặt lại.
+    echo.
+    goto START_FLASK
+)
+
+:: Install requirements if missing
+echo [..] Phát hiện thiếu thư viện. Đang tiến hành cài đặt tự động...
 %PYTHON% -m pip install -r requirements.txt -q
 if errorlevel 1 (
-    echo [LOI] Khong the cai dat thu vien!
+    echo [LOI] Không thể cài đặt các thư viện cần thiết!
     pause
     exit /b 1
 )
-echo [OK] Thu vien da san sang
+echo [OK] Đã hoàn thành cài đặt thư viện thành công!
 echo.
 
+:START_FLASK
 :: Start Flask
-echo [..] Khoi dong Flask API tai http://localhost:5000
-echo      Nhan Ctrl+C de dung
+echo [..] Khởi động Flask API tại http://localhost:5000
+echo      Nhấn Ctrl+C để dừng
 echo.
 %PYTHON% app.py
 pause
