@@ -58,7 +58,7 @@ $tabPhuOpen = ($currentDir === 'Tabphu');
       <span class="icon">📥</span> Import Excel
     </a>
     <a href="<?= BASE_URL ?>Chucnang/xuat_excel.php" class="nav-item <?= isActive('xuat_excel.php','Chucnang') ?>">
-      <span class="icon">📤</span> Xuất Excel
+      <span class="icon">📤</span> Xuất dữ liệu
     </a>
 
     <!-- Tab phụ (collapsible accordion) -->
@@ -107,7 +107,7 @@ $tabPhuOpen = ($currentDir === 'Tabphu');
 
   <div class="header-actions">
     <a href="<?= BASE_URL ?>Chucnang/them.php" class="btn btn-primary btn-sm">➕ Thêm mới</a>
-    <a href="<?= BASE_URL ?>Chucnang/xuat_excel.php" class="btn-icon" title="Xuất Excel">📤</a>
+    <a href="<?= BASE_URL ?>Chucnang/xuat_excel.php" class="btn-icon" title="Xuất dữ liệu">📤</a>
     <div class="user-badge">
       <div class="avatar">A</div>
       <span class="name">Admin</span>
