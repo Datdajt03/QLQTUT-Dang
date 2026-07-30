@@ -16,6 +16,12 @@ function isActive(string $file, string $dir = ''): string {
 
 // Auto-open Tab phu if on a Tabphu page
 $tabPhuOpen = ($currentDir === 'Tabphu');
+
+$dbForHeader = getDB();
+$pendingCount = 0;
+try {
+    $pendingCount = (int)$dbForHeader->query("SELECT COUNT(*) FROM dang_ky_doi_tuong WHERE trang_thai='Chờ duyệt'")->fetchColumn();
+} catch (Exception $e) {}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -51,22 +57,31 @@ $tabPhuOpen = ($currentDir === 'Tabphu');
     <!-- Tổng quan -->
     <div class="nav-section-title">Tổng quan</div>
     <a href="<?= BASE_URL ?>index.php" class="nav-item <?= isActive('index.php') ?>">
-      <span class="icon">🏠</span> Dashboard
+      <span class="icon">🏠</span> <span>Dashboard</span>
     </a>
 
     <!-- Chức năng chính -->
     <div class="nav-section-title">Chức năng</div>
     <a href="<?= BASE_URL ?>Chucnang/danh_sach.php" class="nav-item <?= isActive('danh_sach.php','Chucnang') ?>">
-      <span class="icon">📋</span> Danh sách đối tượng
+      <span class="icon">📋</span> <span>Danh sách đối tượng</span>
     </a>
     <a href="<?= BASE_URL ?>Chucnang/them.php" class="nav-item <?= isActive('them.php','Chucnang') ?>">
-      <span class="icon">➕</span> Thêm đối tượng
+      <span class="icon">➕</span> <span>Thêm đối tượng</span>
     </a>
     <a href="<?= BASE_URL ?>Chucnang/import_excel.php" class="nav-item <?= isActive('import_excel.php','Chucnang') ?>">
-      <span class="icon">📥</span> Import Excel
+      <span class="icon">📥</span> <span>Import Excel</span>
     </a>
     <a href="<?= BASE_URL ?>Chucnang/xuat_excel.php" class="nav-item <?= isActive('xuat_excel.php','Chucnang') ?>">
-      <span class="icon">📤</span> Xuất dữ liệu
+      <span class="icon">📤</span> <span>Xuất dữ liệu</span>
+    </a>
+    <a href="<?= BASE_URL ?>Chucnang/sua_nhanh.php" class="nav-item <?= isActive('sua_nhanh.php','Chucnang') ?>">
+      <span class="icon">✏️</span> <span>Sửa Excel trực tiếp</span>
+    </a>
+    <a href="<?= BASE_URL ?>Chucnang/duyet_dang_ky.php" class="nav-item <?= isActive('duyet_dang_ky.php','Chucnang') ?>">
+      <span class="icon">🔔</span> <span>Duyệt thông tin</span>
+      <?php if ($pendingCount > 0): ?>
+        <span class="badge"><?= $pendingCount ?></span>
+      <?php endif; ?>
     </a>
 
     <!-- Tab phụ (collapsible accordion) -->
@@ -77,19 +92,19 @@ $tabPhuOpen = ($currentDir === 'Tabphu');
     </div>
     <div class="nav-accordion-body <?= $tabPhuOpen ? 'open' : '' ?>" id="tabphuBody">
       <a href="<?= BASE_URL ?>Tabphu/thong_ke.php" class="nav-item nav-sub <?= isActive('thong_ke.php','Tabphu') ?>">
-        <span class="icon">📊</span> Thống kê & Báo cáo
+        <span class="icon">📊</span> <span>Thống kê & Báo cáo</span>
       </a>
       <a href="<?= BASE_URL ?>Tabphu/chi_bo.php" class="nav-item nav-sub <?= isActive('chi_bo.php','Tabphu') ?>">
-        <span class="icon">🏛️</span> Quản lý Chi bộ
+        <span class="icon">🏛️</span> <span>Quản lý Chi bộ</span>
       </a>
       <a href="<?= BASE_URL ?>Tabphu/dang_vien.php" class="nav-item nav-sub <?= isActive('dang_vien.php','Tabphu') ?>">
-        <span class="icon">👥</span> Quản lý Đảng viên
+        <span class="icon">👥</span> <span>Quản lý Đảng viên</span>
       </a>
       <a href="<?= BASE_URL ?>Tabphu/tim_kiem.php" class="nav-item nav-sub <?= isActive('tim_kiem.php','Tabphu') ?>">
-        <span class="icon">🔍</span> Tìm kiếm nâng cao
+        <span class="icon">🔍</span> <span>Tìm kiếm nâng cao</span>
       </a>
       <a href="<?= BASE_URL ?>Tabphu/cai_dat.php" class="nav-item nav-sub <?= isActive('cai_dat.php','Tabphu') ?>">
-        <span class="icon">⚙️</span> Cài đặt
+        <span class="icon">⚙️</span> <span>Cài đặt</span>
       </a>
     </div>
   </nav>

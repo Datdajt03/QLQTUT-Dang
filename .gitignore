@@ -11,3 +11,11 @@ Thumbs.db
 
 # Excel data file (optional - keep if you want sample data)
 # 01. Danh sach Doi tuong Dang - gui e tu.xlsx
+
+# Python cache
+__pycache__/
+python_api/__pycache__/
+*.pyc
+
+# Local uploads and email logs
+uploads/

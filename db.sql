@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS doi_tuong (
     ma_gvsv VARCHAR(100),
     ho_ten VARCHAR(255) NOT NULL,
     sdt VARCHAR(20),
+    email VARCHAR(255),
     gioi_tinh ENUM('Nam','Nữ','Khác') DEFAULT NULL,
     ngay_sinh DATE DEFAULT NULL,
     dan_toc VARCHAR(100),
@@ -86,6 +87,27 @@ CREATE TABLE IF NOT EXISTS doi_tuong (
     -- Meta
     ghi_chu TEXT,
     trang_thai ENUM('Đang theo dõi','Đã kết nạp','Đã chuyển','Tạm dừng') DEFAULT 'Đang theo dõi',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Bảng đăng ký đối tượng trực tuyến của sinh viên (chờ duyệt)
+CREATE TABLE IF NOT EXISTS dang_ky_doi_tuong (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ma_gvsv VARCHAR(100),
+    ho_ten VARCHAR(255) NOT NULL,
+    sdt VARCHAR(20),
+    email VARCHAR(255),
+    gioi_tinh ENUM('Nam','Nữ','Khác') DEFAULT NULL,
+    ngay_sinh DATE DEFAULT NULL,
+    dan_toc VARCHAR(100),
+    que_quan VARCHAR(500),
+    chuc_vu VARCHAR(255),
+    lop VARCHAR(255),
+    chi_bo_cong_nhan VARCHAR(255),
+    ghi_chu TEXT,
+    ly_do_tu_choi TEXT,
+    trang_thai ENUM('Chờ duyệt','Đã duyệt','Đã từ chối') DEFAULT 'Chờ duyệt',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -104,5 +104,33 @@ function toDbDate(?string $date): ?string {
     return null;
 }
 
+// Helper: Gửi email thông báo (có ghi log cục bộ làm giả lập ở XAMPP)
+function sendMailNotification(string $to, string $subject, string $body): bool {
+    // 1. Ghi log cục bộ vào thư mục uploads
+    try {
+        $logDir = __DIR__ . '/uploads';
+        if (!is_dir($logDir)) {
+            mkdir($logDir, 0755, true);
+        }
+        $logFile = $logDir . '/email_logs.txt';
+        $timestamp = date('Y-m-d H:i:s');
+        $divider = str_repeat('=', 60);
+        $logContent = "{$divider}\n[THỜI GIAN] {$timestamp}\n[GỬI TỚI]   {$to}\n[TIÊU ĐỀ]   {$subject}\n[NỘI DUNG]\n{$body}\n{$divider}\n\n";
+        file_put_contents($logFile, $logContent, FILE_APPEND);
+    } catch (Exception $e) {
+        // Silent catch
+    }
+
+    // 2. Thử gửi bằng mail() thật
+    try {
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From: " . getSetting('admin_email', 'admin@example.com') . "\r\n";
+        return @mail($to, $subject, $body, $headers);
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
 // Start session
 if (session_status() === PHP_SESSION_NONE) session_start();
