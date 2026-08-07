@@ -1,9 +1,33 @@
-# 🇻🇳 Website Quản lý Quần chúng Ưu tú phục vụ Kết nạp Đảng
+<div align="center">
 
-> **Tên đề tài:** Thiết kế Website quản lý quần chúng ưu tú phục vụ kết nạp Đảng
-> **Công nghệ:** PHP thuần MVC kết hợp Python Flask API & MySQL (XAMPP)
+# ⭐ WEBSITE QUẢN LÝ QUẦN CHÚNG ƯU TÚ PHỤC VỤ KẾT NẠP ĐẢNG ⭐
+
+### 🇻🇳 *Hệ thống số hóa quy trình phát triển Đảng viên tại trường Đại học* 🇻🇳
+
+[![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-3.x-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com)
+[![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
+[![XAMPP](https://img.shields.io/badge/XAMPP-8.2-FB7A24?style=for-the-badge&logo=xampp&logoColor=white)](https://apachefriends.org)
+
+[![GitHub](https://img.shields.io/badge/GitHub-Datdajt03%2FQLQTUT--Dang-C8102E?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Datdajt03/QLQTUT-Dang)
+[![License](https://img.shields.io/badge/License-Academic-FFD700?style=for-the-badge)](.)
+[![Status](https://img.shields.io/badge/Status-✅%20Hoàn%20thành-success?style=for-the-badge)](.)
 
 ---
+
+### 👥 Nhóm Thực hiện
+
+| # | Họ và Tên | Phân công |
+|:---:|---|---|
+| 1 | **Lò Mạnh Đạt** | Backend PHP, Database |
+| 2 | **Nguyễn Huy Hoàng** | Frontend CSS/JS, UI/UX |
+| 3 | **Tòng Lưu Anh Tú** | Python API, Báo cáo |
+| 4 | **Phạm Thị Thanh Hảo** | Python API, Báo cáo |
+
+---
+
+</div>
 
 ## 🎨 Giao diện & Trải nghiệm Người dùng (UX/UI)
 - **Hệ màu Đảng bộ:** Đỏ cờ chủ đạo (`#C8102E`), Vàng kim điểm nhấn (`#FFD700`) trên nền Dark Mode hiện đại, dịu mắt và vô cùng sang trọng.
