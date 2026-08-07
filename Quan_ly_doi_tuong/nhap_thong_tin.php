@@ -8,6 +8,19 @@ $db = getDB();
 $errors = [];
 $success = false;
 
+$user = getCurrentUser();
+$ho_ten  = $user['ho_ten'] ?? '';
+$ma_gvsv = $user['username'] ?? '';
+$email   = '';
+$sdt     = '';
+$gioi_tinh = '';
+$ngay_sinh = '';
+$dan_toc   = '';
+$que_quan  = '';
+$chuc_vu   = '';
+$lop       = '';
+$chi_bo_cong_nhan = '';
+
 // Tải danh sách chi bộ để sinh viên chọn
 $chiBos = $db->query("SELECT ten_chi_bo FROM chi_bo ORDER BY ten_chi_bo")->fetchAll(PDO::FETCH_COLUMN);
 
@@ -195,13 +208,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Họ tên -->
             <div class="form-group">
               <label class="form-label">Họ và tên <span class="required">*</span></label>
-              <input type="text" name="ho_ten" class="form-control" placeholder="Nguyễn Văn A" value="<?= e($ho_ten ?? '') ?>" required>
+              <input type="text" name="ho_ten" class="form-control" style="background-color: var(--bg3); cursor: not-allowed;" value="<?= e($ho_ten) ?>" readonly required>
             </div>
             
             <!-- Mã sinh viên -->
             <div class="form-group">
               <label class="form-label">Mã sinh viên <span class="required">*</span></label>
-              <input type="text" name="ma_gvsv" class="form-control" placeholder="VD: SV24101" value="<?= e($ma_gvsv ?? '') ?>" required>
+              <input type="text" name="ma_gvsv" class="form-control" style="background-color: var(--bg3); cursor: not-allowed;" value="<?= e($ma_gvsv) ?>" readonly required>
             </div>
             
             <!-- Email -->
