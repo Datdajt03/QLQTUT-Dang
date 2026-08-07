@@ -35,6 +35,11 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 - **Quản lý (Bí thư Chi bộ)**: Sử dụng đầy đủ các công cụ quản lý đối tượng, duyệt đơn đăng ký, thống kê biểu đồ và import/export Excel. Không được vào phần cài đặt cấu hình hệ thống.
 - **Admin (Quản trị viên)**: Quyền hạn tối cao hệ thống bao gồm quản lý tài khoản người dùng và cài đặt chung của ứng dụng.
 
+### 4. Đề xuất Cập nhật & Dashboard Người dùng chính thức [NEW]
+- **Đề xuất chỉnh sửa trực tuyến**: Cho phép quần chúng đã được duyệt chính thức tự gửi yêu cầu cập nhật thông tin cá nhân (email, SĐT, lớp, quê quán...) qua trang `cap_nhat_thong_tin.php` (Họ tên và Mã SV được khóa chỉ đọc để bảo mật).
+- **Giao diện so sánh của Quản lý**: Đề xuất cập nhật hiển thị tại Tab riêng biệt trong trang `duyet_dang_ky.php`, so sánh chi tiết các trường thay đổi (Cũ ➔ Mới) trực quan để Quản lý duyệt hoặc từ chối kèm lý do.
+- **Dashboard Người dùng chính thức**: Khi hồ sơ được duyệt, Dashboard tự động chuyển thành trang thông tin chính thức có timeline 5 bước kết nạp Đảng trực quan và bảng danh sách thành viên cùng Lớp hoặc cùng Chi bộ Đảng.
+
 ---
 
 ## 🚀 Hướng dẫn Cài đặt & Khởi chạy Chi tiết
@@ -102,6 +107,7 @@ web1/
 │   ├── api_sua_nhanh.php          ← API xử lý lưu dữ liệu sửa nhanh qua AJAX
 │   ├── duyet_dang_ky.php          ← Giao diện phê duyệt/từ chối hồ sơ đăng ký trực tuyến
 │   ├── api_proxy.php              ← File trung gian PHP Proxy kết nối Python Server
+│   ├── cap_nhat_thong_tin.php     ← [NEW] Form đề xuất cập nhật thông tin cá nhân dành cho quần chúng/sinh viên
 │   └── nhap_thong_tin.php         ← Form đăng ký thông tin trực tuyến dành cho sinh viên
 ├── Quan_ly_danh_muc/             ← Module danh mục phân cấp hỗ trợ
 │   ├── chi_bo.php                 ← Danh mục quản lý các Chi bộ
@@ -127,6 +133,7 @@ Hệ thống quản lý cơ sở dữ liệu quan hệ chặt chẽ với các b
 - `nguoi_dung`: [NEW] Lưu trữ tài khoản đăng nhập và phân quyền (Người dùng thường, Quản lý, Admin).
 - `doi_tuong`: Lưu trữ thông tin lý lịch của quần chúng ưu tú theo quy trình kết nạp Đảng.
 - `dang_ky_doi_tuong`: Lưu trữ hồ sơ sinh viên đăng ký trực tuyến chờ phê duyệt.
+- `yeu_cau_cap_nhat`: [NEW] Lưu trữ các đề xuất chỉnh sửa/cập nhật thông tin của quần chúng chờ phê duyệt.
 - `chi_bo`: Quản lý danh mục các Chi bộ Đảng trong đơn vị.
 - `dang_vien`: Quản lý danh sách các đảng viên được phân công hướng dẫn.
 - `lich_su`: Ghi lại toàn bộ lịch sử thao tác để giám sát hệ thống.

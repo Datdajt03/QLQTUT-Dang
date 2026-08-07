@@ -104,6 +104,23 @@ erDiagram
         string nguoi_thuc_hien
         timestamp thoi_gian
     }
+    YEU_CAU_CAP_NHAT {
+        int id PK
+        int doi_tuong_id FK
+        string ho_ten
+        string sdt
+        string email
+        string gioi_tinh
+        date ngay_sinh
+        string dan_toc
+        string que_quan
+        string chuc_vu
+        string lop
+        enum trang_thai
+        string ly_do_tu_choi
+        timestamp created_at
+    }
+    DOI_TUONG ||--o{ YEU_CAU_CAP_NHAT : "đề xuất cập nhật"
 ```
 
 ---
@@ -114,7 +131,7 @@ erDiagram
 Dự án được phân cấp rõ ràng theo các module chức năng chính:
 * **`Cau_hinh/`**: Đảm nhiệm cài đặt hệ thống và cơ sở dữ liệu (`db.sql`, `setup.php`).
 * **`Giao_dien/`**: Giao diện UI/UX tối ưu Dark Mode và Responsive (`header.php`, `footer.php`, CSS, hình ảnh).
-* **`Quan_ly_doi_tuong/`**: Nghiệp vụ quản lý chính đối với quần chúng ưu tú và đơn đăng ký trực tuyến.
+* **`Quan_ly_doi_tuong/`**: Nghiệp vụ quản lý chính đối với quần chúng ưu tú, duyệt đơn đăng ký (`duyet_dang_ky.php`), đề xuất cập nhật thông tin cá nhân (`cap_nhat_thong_tin.php`) và đơn đăng ký trực tuyến (`nhap_thong_tin.php`).
 * **`Quan_ly_danh_muc/`**: Danh mục phân quyền chi bộ và đảng viên hỗ trợ.
 * **`Thong_ke_bao_cao/`**: Biểu đồ phân tích và công cụ xuất nhập dữ liệu file Excel.
 * **`He_thong/`**: Cấu hình cấu trúc trường học và thay đổi mật khẩu hệ thống.
