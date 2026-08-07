@@ -21,8 +21,9 @@ function isActive(string $file, string $dir = ''): string {
     return ($currentPage === $file) ? 'active' : '';
 }
 
-// Tự động mở menu báo cáo nếu đang trong thư mục tương ứng
-$tabPhuOpen = in_array($currentDir, ['Quan_ly_danh_muc', 'Thong_ke_bao_cao', 'He_thong']);
+// Tự động mở menu báo cáo nếu đang trong thư mục tương ứng HOẶC là Quản lý/Admin (mặc định mở)
+$tabPhuOpen = in_array($currentDir, ['Quan_ly_danh_muc', 'Thong_ke_bao_cao', 'He_thong'])
+              || ($vaiTro !== 'Người dùng thường');
 
 $dbForHeader = getDB();
 $pendingCount = 0;
