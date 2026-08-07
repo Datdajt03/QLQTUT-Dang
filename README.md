@@ -142,9 +142,9 @@ Hệ thống quản lý cơ sở dữ liệu quan hệ chặt chẽ với các b
 
 ---
 
-## 📝 Báo cáo bài tập lớn (Chi tiết Đề tài)
-Để xem và soạn thảo tài liệu báo cáo học phần bài tập lớn chi tiết bao gồm mô tả phân tích đề tài, thiết kế sơ đồ database ERD, phân công công việc của các thành viên, vui lòng truy cập và cập nhật trực tiếp tại file:
-👉 **[chitiet.md (Biểu mẫu Báo cáo Đồ án)](chitiet.md)**
+## 📝 Báo cáo bài tập lớn (Phân tích & Thiết kế Đề tài)
+Để xem và soạn thảo tài liệu báo cáo học phần bài tập lớn chi tiết bao gồm mô tả phân tích thiết kế hệ thống chuyên sâu (Quy trình nghiệp vụ, sơ đồ Use Case, Activity, Sequence), thiết kế sơ đồ database ERD và đặc tả bảng dữ liệu chi tiết, vui lòng truy cập và cập nhật trực tiếp tại file:
+👉 **[chitiet.md (Báo cáo Phân tích Thiết kế Hệ thống Đồ án)](chitiet.md)**
 
 ---
 *Phát triển bởi Nhóm sinh viên – Đồ án môn học Thiết kế Website Quản lý Quần chúng Ưu tú.*
