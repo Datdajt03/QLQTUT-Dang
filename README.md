@@ -2,7 +2,13 @@
 
 # ⭐ WEBSITE QUẢN LÝ QUẦN CHÚNG ƯU TÚ PHỤC VỤ KẾT NẠP ĐẢNG ⭐
 
-### 🇻🇳 *Hệ thống số hóa quy trình phát triển Đảng viên tại trường Đại học* 🇻🇳
+### 🇻🇳 *Hệ thống số hóa quy trình phát triển Đảng viên tại trường Đại học TÂY BẮC* 🇻🇳
+
+<a href="https://utb.edu.vn" target="_blank">
+  <img src="https://utb.edu.vn/wp-content/uploads/2022/09/logo.png" alt="Trường Đại học Tây Bắc" height="80"/>
+</a>
+
+[![🏫 Trường Đại học Tây Bắc](https://img.shields.io/badge/🏫%20Trường%20ĐH-TÂY%20BẮC-C8102E?style=for-the-badge&labelColor=FFD700)](https://utb.edu.vn)
 
 [![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
