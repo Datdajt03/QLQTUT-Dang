@@ -49,29 +49,57 @@ Công tác phát triển Đảng viên mới là một nhiệm vụ chính trị
 Dưới đây là sơ đồ các chức năng cốt lõi được phân quyền theo 3 tác nhân chính:
 
 ```mermaid
-usecaseDiagram
-    actor "Người dùng thường\n(Sinh viên)" as User
-    actor "Quản lý\n(Bí thư)" as Manager
-    actor "Quản trị viên\n(Admin)" as Admin
+flowchart TD
+    %% Tác nhân (Actors)
+    User["👤 Người dùng thường (Sinh viên)"]
+    Manager["💼 Quản lý (Bí thư)"]
+    Admin["⚙️ Quản trị viên (Admin)"]
 
-    User --> (Đăng nhập / Đăng ký)
-    User --> (Xem Dashboard cá nhân)
-    User --> (Xem tiến trình kết nạp)
-    User --> (Gửi yêu cầu đăng ký mới)
-    User --> (Gửi đề xuất cập nhật thông tin)
-    User --> (Xem danh sách thành viên cùng Lớp)
+    %% Nhóm chức năng của Người dùng thường
+    subgraph SG_User["Chức năng Sinh viên"]
+        UC_Login["Đăng nhập / Đăng ký"]
+        UC_Dash["Xem Dashboard cá nhân"]
+        UC_Timeline["Xem tiến trình kết nạp 5 bước"]
+        UC_Reg["Gửi yêu cầu đăng ký mới"]
+        UC_Update["Gửi đề xuất cập nhật thông tin"]
+        UC_Class["Xem danh sách bạn cùng Lớp"]
+    end
 
-    Manager --> (Đăng nhập)
-    Manager --> (Xem danh sách đối tượng chính thức)
-    Manager --> (Sửa nhanh thông tin trực tiếp dạng Excel)
-    Manager --> (Phê duyệt đăng ký trực tuyến)
-    Manager --> (Phê duyệt đề xuất cập nhật thông tin)
-    Manager --> (Nhập / Xuất dữ liệu Excel)
-    Manager --> (Xem thống kê đồ thị)
+    %% Nhóm chức năng của Quản lý
+    subgraph SG_Manager["Chức năng Quản lý (Bí thư)"]
+        UC_List["Xem danh sách đối tượng chính thức"]
+        UC_ExcelEdit["Sửa nhanh thông tin trực tiếp dạng Excel"]
+        UC_ApproveReg["Phê duyệt hồ sơ đăng ký mới"]
+        UC_ApproveUpdate["Phê duyệt đề xuất cập nhật"]
+        UC_ExcelInOut["Nhập / Xuất dữ liệu Excel"]
+        UC_Stats["Xem thống kê biểu đồ Chart.js"]
+    end
 
-    Admin --> (Quản lý tài khoản người dùng)
-    Admin --> (Cấu hình hệ thống chung)
-    Admin --> (Toàn quyền của Quản lý)
+    %% Nhóm chức năng của Admin
+    subgraph SG_Admin["Chức năng Admin"]
+        UC_Users["Quản lý tài khoản người dùng"]
+        UC_Config["Cấu hình hệ thống chung"]
+    end
+
+    %% Mối liên kết giữa Actor và Use Case
+    User --> UC_Login
+    User --> UC_Dash
+    User --> UC_Timeline
+    User --> UC_Reg
+    User --> UC_Update
+    User --> UC_Class
+
+    Manager --> UC_Login
+    Manager --> UC_List
+    Manager --> UC_ExcelEdit
+    Manager --> UC_ApproveReg
+    Manager --> UC_ApproveUpdate
+    Manager --> UC_ExcelInOut
+    Manager --> UC_Stats
+
+    Admin --> UC_Users
+    Admin --> UC_Config
+    Admin --> SG_Manager
 ```
 
 ---
@@ -150,7 +178,7 @@ sequenceDiagram
 erDiagram
     NGUOI_DUNG {
         int id PK
-        string username UNIQUE
+        string username
         string password
         string ho_ten
         enum vai_tro
