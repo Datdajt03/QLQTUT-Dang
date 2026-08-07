@@ -39,8 +39,34 @@ Công tác phát triển Đảng viên mới là một nhiệm vụ chính trị
 2. Người dùng sửa đổi các thông tin cá nhân cần thiết (SĐT, Email, Quê quán, Lớp...) và gửi yêu cầu.
 3. Yêu cầu được chuyển đến hàng đợi **Chờ duyệt cập nhật** (bảng `yeu_cau_cap_nhat`) của Quản lý.
 4. Quản lý kiểm tra bảng so sánh sự thay đổi (Cũ ➔ Mới):
-   * Nếu duyệt: Thông tin mới sẽ ghi đè trực tiếp vào bảng hồ sơ chính thức `doi_tuong`.
-   * Nếu từ chối: Ghi nhận trạng thái từ chối cùng lý do phản hồi cho quần chúng.
+    * Nếu duyệt: Thông tin mới sẽ ghi đè trực tiếp vào bảng hồ sơ chính thức `doi_tuong`.
+    * Nếu từ chối: Ghi nhận trạng thái từ chối cùng lý do phản hồi cho quần chúng.
+
+#### c. Mô tả chi tiết cấu phần Giao diện & Chức năng
+
+##### 👤 1. Giao diện Người dùng thường (Quần chúng / Sinh viên)
+Giao diện được thiết kế tối giản, tập trung vào trải nghiệm cá nhân hóa, bao gồm các cấu phần chính sau:
+* **Bản tin Dân trí đầu trang:** Khối hiển thị 4 bài báo mới nhất được lấy trực tiếp từ RSS Dân trí dưới dạng lưới thẻ Card. Giúp sinh viên nắm bắt thông tin thời sự nóng hổi ngay khi vừa đăng nhập.
+* **Khối thông tin cá nhân (Profile Card):** Hiển thị thẻ thông tin chi tiết của quần chúng gồm ảnh đại diện chân dung, mã sinh viên, họ tên, ngày sinh, giới tính, số điện thoại, email, quê quán, dân tộc, lớp học và chi bộ theo dõi sinh hoạt.
+* **Biểu đồ tiến trình (Timeline 5 bước):** Sơ đồ tuyến tính biểu diễn 5 cột mốc kết nạp Đảng của sinh viên:
+  1. *Lớp cảm tình Đảng* ➔ 2. *Phân công giúp đỡ* ➔ 3. *Nhận thức về Đảng* ➔ 4. *Quyết định kết nạp* ➔ 5. *Đảng viên chính thức*.
+  Mỗi cột mốc đi kèm thời gian hoàn thành cụ thể. Bước hiện tại của sinh viên sẽ được tô sáng màu vàng kim (`#FFD700`) nổi bật để người dùng dễ dàng theo dõi.
+* **Bảng danh sách thành viên cùng Lớp:** Bảng thống kê toàn bộ các sinh viên trong cùng lớp học với tài khoản hiện tại đã được duyệt hồ sơ chính thức, giúp tăng cường tương tác và học hỏi giữa các quần chúng ưu tú.
+* **Menu chức năng gửi đề xuất:** 
+  * Nút *Gửi hồ sơ đăng ký mới* (dành cho tài khoản thường chưa có thông tin trong danh sách quần chúng).
+  * Nút *Yêu cầu cập nhật thông tin* (mở ra form `cap_nhat_thong_tin.php` điền sẵn dữ liệu cũ, khóa Họ tên và Mã số SV để bảo mật, cho phép đề xuất gửi duyệt về Quản lý).
+
+##### 💼 2. Giao diện Người quản lý (Bí thư Chi bộ / Quản trị viên)
+Màn hình nghiệp vụ quản lý toàn quyền, cung cấp các công cụ xử lý dữ liệu quy mô lớn:
+* **Bản tin Dân trí đầu trang:** Đồng bộ tin tức thời sự đầu trang chủ giống giao diện người dùng.
+* **Khối chỉ số tổng quan (Dashboard Widgets):** 4 thẻ hiển thị các chỉ số đo lường nhanh số lượng hồ sơ hiện tại: *Tổng số quần chúng*, *Đang theo dõi*, *Đã kết nạp*, *Chờ duyệt đăng ký*.
+* **Hệ thống thống kê đồ thị:** Tích hợp 2 biểu đồ cột và hình tròn của `Chart.js` để phân tích tỷ lệ trạng thái phát triển Đảng và phân bổ quần chúng ưu tú giữa các Chi bộ.
+* **Bảng quản lý danh sách & Timeline:** Danh sách bộ lọc đa năng cho phép Bí thư tìm kiếm, sửa thông tin chi tiết, xóa hồ sơ và xem timeline chi tiết của từng người.
+* **Bảng sửa nhanh trực tiếp dạng Excel:** Giao diện lưới ô tính tại `/Quan_ly_doi_tuong/sua_nhanh.php` cho phép Bí thư nhập liệu trực tiếp trên bảng và tự động lưu (Autosave qua AJAX) mà không phải load lại trang.
+* **Hàng đợi Phê duyệt thông tin 2 cấp:** Giao diện phân loại theo tab thông minh:
+  * *Tab Phê duyệt đăng ký mới:* Duyệt đơn đăng ký trực tuyến của sinh viên, đồng bộ vào danh sách chính thức và gửi email tự động chúc mừng; hoặc từ chối kèm nhập lý do từ chối gửi về hòm thư sinh viên.
+  * *Tab Phê duyệt cập nhật:* Hiển thị bảng so sánh trực quan các thông tin thay đổi (Cũ ➔ Mới) của từng sinh viên. Bí thư có thể bấm "Duyệt" để ghi đè thông tin mới hoặc "Từ chối" và nhập lý do phản hồi.
+* **Tiện ích Import/Export Excel:** Cho phép nhập danh sách quần chúng hàng loạt từ file Excel kéo thả và xuất báo cáo kết hợp backend Flask Python API chuyên nghiệp.
 
 ---
 
