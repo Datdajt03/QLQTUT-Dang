@@ -48,36 +48,171 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 
 ## 🚀 Hướng dẫn Cài đặt & Khởi chạy Chi tiết
 
-Để khởi chạy dự án hoàn chỉnh cả phần Frontend (PHP) và Backend nâng cao (Python), bạn vui lòng thực hiện theo các bước chi tiết sau:
+Dự án gồm **2 thành phần** cần chạy song song:
+| Thành phần | Công nghệ | Cổng | Vai trò |
+|---|---|---|---|
+| Web Server (PHP) | XAMPP Apache + MySQL | `80` | Giao diện chính, xử lý nghiệp vụ |
+| Export API (Python) | Python Flask | `5000` | Xuất file Excel (`.xlsx`) và PDF |
 
-### ⚙️ Bước 1: Chuẩn bị môi trường
-1. Tải và cài đặt **[XAMPP](https://www.apachefriends.org/)** (Khuyên dùng phiên bản PHP 8.x).
-2. Tải và cài đặt **[Python](https://www.python.org/downloads/)** (Phiên bản 3.10 trở lên, nhớ tích chọn **"Add Python to PATH"** trong quá trình cài đặt).
-
-### 📂 Bước 2: Sao chép Mã nguồn
-1. Giải nén hoặc di chuyển thư mục mã nguồn này vào thư mục gốc của XAMPP:
-   `C:\xampp\htdocs\web1`
-   *(Đảm bảo đường dẫn chính xác là `C:\xampp\htdocs\web1\index.php`)*
-
-### 🏛️ Bước 3: Khởi động Apache & MySQL trên XAMPP
-1. Tìm và mở ứng dụng **XAMPP Control Panel**.
-2. Nhấn nút **Start** ở dòng **Apache**.
-3. Nhấn nút **Start** ở dòng **MySQL**.
-
-### 🗄️ Bước 4: Khởi tạo Database Tự động
-1. Mở trình duyệt web của bạn.
-2. Truy cập đường dẫn: **[http://localhost/web1/Cau_hinh/setup.php](http://localhost/web1/Cau_hinh/setup.php)**
-3. Trang thiết lập sẽ tự động kết nối cơ sở dữ liệu MySQL, tạo database `quan_ly_ket_nap_dang`, cài đặt các cấu trúc bảng và nạp dữ liệu mẫu.
-4. Khi nhận được thông báo thành công, nhấn nút **"Vào trang Dashboard"** để được chuyển tới màn hình đăng nhập hệ thống: **[http://localhost/web1/User/login.php](http://localhost/web1/User/login.php)**.
-   * **Tài khoản Admin mặc định**: Username: `Admin` | Password: `Admin123`
-   * Mặc định form đăng nhập sẽ chọn vai trò là **Người dùng thường**, nếu đăng nhập bằng tài khoản Quản lý/Admin, bạn vui lòng nhấp chọn vai trò tương ứng trên màn hình.
-
-### 🐍 Bước 5: Khởi động Python Flask API (Dành cho tính năng Xuất Excel nâng cao)
-1. Truy cập vào thư mục: `C:\xampp\htdocs\web1\python_api`
-2. Nhấp đúp chuột để khởi chạy file: **`start_api.bat`**
-3. Cửa sổ dòng lệnh (CMD) sẽ hiện lên và tự động cài đặt thư viện cần thiết và khởi chạy API server tại cổng `5000`.
+> ⚠️ **Lưu ý quan trọng**: Trang web hoạt động bình thường khi không có Python API. Chỉ cần chạy Python API khi muốn sử dụng tính năng **Xuất Excel/PDF** tại mục *Tiện ích & Báo cáo → Xuất dữ liệu*.
 
 ---
+
+### ⚙️ Bước 1: Cài đặt XAMPP
+
+1. Tải XAMPP tại: **[https://www.apachefriends.org/](https://www.apachefriends.org/)** (khuyến nghị phiên bản **8.2.x** trở lên với PHP 8.x)
+2. Cài đặt XAMPP vào đường dẫn mặc định `C:\xampp`
+3. Mở **XAMPP Control Panel** và nhấn **Start** cho cả hai dịch vụ:
+   - ✅ **Apache** – Web server PHP
+   - ✅ **MySQL** – Cơ sở dữ liệu
+
+---
+
+### 📂 Bước 2: Sao chép Mã nguồn
+
+Clone từ GitHub hoặc giải nén mã nguồn vào thư mục gốc của XAMPP:
+
+```bash
+# Cách 1: Clone từ Git
+git clone https://github.com/Datdajt03/QLQTUT-Dang.git C:\xampp\htdocs\web1
+
+# Cách 2: Giải nén thủ công
+# → Giải nén vào C:\xampp\htdocs\web1\
+```
+
+Kiểm tra: đường dẫn `C:\xampp\htdocs\web1\index.php` phải tồn tại.
+
+---
+
+### 🗄️ Bước 3: Khởi tạo Database Tự động
+
+1. Mở trình duyệt và truy cập: **[http://localhost/web1/Cau_hinh/setup.php](http://localhost/web1/Cau_hinh/setup.php)**
+2. Trang sẽ **tự động**:
+   - Kết nối MySQL với user `root` (không mật khẩu – mặc định XAMPP)
+   - Tạo database `quan_ly_ket_nap_dang`
+   - Tạo tất cả bảng và nạp dữ liệu mẫu demo
+3. Khi thấy thông báo **"Cài đặt thành công"**, nhấn **"Vào trang Dashboard"**
+
+**Tài khoản mặc định sau khi setup:**
+
+| Vai trò | Username | Password |
+|---|---|---|
+| Admin | `Admin` | `Admin123` |
+| Quản lý | `testql` | `Admin123` |
+| Người dùng | `testuser` | `Admin123` |
+
+> 💡 Khi đăng nhập, hãy chọn đúng vai trò tương ứng trên trang login.
+
+---
+
+### 🐍 Bước 4: Cài đặt Python & Môi trường Flask API
+
+> Phần này dành cho tính năng **Xuất Excel/PDF**. Bỏ qua nếu không cần xuất báo cáo.
+
+#### 4.1 – Cài đặt Python
+
+1. Tải Python tại: **[https://www.python.org/downloads/](https://www.python.org/downloads/)** (phiên bản **3.10+**, khuyến nghị **3.11** hoặc **3.12**)
+2. Khi cài đặt, **BẮT BUỘC** tích chọn ✅ **"Add Python to PATH"** (ở màn hình đầu tiên của trình cài đặt)
+3. Kiểm tra cài đặt thành công bằng cách mở **Command Prompt** và gõ:
+   ```bash
+   python --version
+   # Kết quả mong muốn: Python 3.x.x
+   
+   pip --version
+   # Kết quả mong muốn: pip xx.x from ...
+   ```
+
+#### 4.2 – Cài đặt thư viện Python (cách nhanh)
+
+Cách nhanh nhất là chạy trực tiếp file `start_api.bat` — nó sẽ tự động cài thư viện:
+
+```
+C:\xampp\htdocs\web1\python_api\start_api.bat
+```
+
+Hoặc cài thủ công qua Command Prompt:
+
+```bash
+cd C:\xampp\htdocs\web1\python_api
+pip install -r requirements.txt
+```
+
+Danh sách thư viện sẽ được cài đặt:
+
+| Thư viện | Phiên bản | Vai trò |
+|---|---|---|
+| `flask` | ≥ 3.0.0 | Web framework API server |
+| `flask-cors` | ≥ 4.0.0 | Cho phép PHP gọi API cross-origin |
+| `pymysql` | ≥ 1.1.0 | Kết nối MySQL từ Python |
+| `openpyxl` | ≥ 3.1.2 | Tạo và định dạng file Excel `.xlsx` |
+| `reportlab` | ≥ 4.0.0 | Tạo file PDF có hỗ trợ tiếng Việt |
+
+#### 4.3 – Khởi động Flask API
+
+**Cách 1 (Khuyến nghị):** Nhấp đúp chuột vào file:
+```
+C:\xampp\htdocs\web1\python_api\start_api.bat
+```
+
+**Cách 2:** Chạy thủ công qua PowerShell hoặc CMD:
+```bash
+cd C:\xampp\htdocs\web1\python_api
+# Windows – fix lỗi encoding tiếng Việt
+set PYTHONIOENCODING=utf-8
+set PYTHONUTF8=1
+python app.py
+```
+
+Khi thấy màn hình hiển thị như sau là **thành công**:
+```
+[OK] Font TimesNewRoman da dang ky thanh cong!
+==================================================
+  Flask API (Excel + PDF) – He thong Ket nap Dang v1.1
+  Running at: http://localhost:5000
+==================================================
+ * Running on http://127.0.0.1:5000
+```
+
+#### 4.4 – Kiểm tra API hoạt động
+
+Mở trình duyệt, truy cập: **[http://localhost:5000/health](http://localhost:5000/health)**
+
+Kết quả thành công sẽ trả về:
+```json
+{"status": "ok", "message": "Flask API dang hoat dong!"}
+```
+
+Sau đó vào **Dashboard → Tiện ích & Báo cáo → Xuất dữ liệu**, sẽ thấy banner xanh: **"✅ Python API đang chạy – Sẵn sàng xuất dữ liệu!"**
+
+---
+
+### 🔧 Xử lý Lỗi Thường Gặp
+
+#### ❌ Lỗi: `'python' is not recognized as an internal or external command`
+**Nguyên nhân**: Chưa tích chọn "Add Python to PATH" khi cài Python.  
+**Giải pháp**:
+- Gỡ và cài lại Python, nhớ tích chọn **"Add Python to PATH"** ở bước đầu
+- Hoặc thêm thủ công: vào *System Properties → Environment Variables → PATH* và thêm đường dẫn `C:\Users\[TÊN]\AppData\Local\Programs\Python\Python3xx\`
+
+#### ❌ Lỗi: `UnicodeEncodeError: 'charmap' codec can't encode character`
+**Nguyên nhân**: Windows dùng encoding `cp1252` mặc định, không hỗ trợ tiếng Việt.  
+**Giải pháp**: Chạy qua `start_api.bat` thay vì gõ lệnh thủ công (file đã được cấu hình `PYTHONIOENCODING=utf-8` và `PYTHONUTF8=1`).
+
+#### ❌ Lỗi: `Address already in use: Port 5000`
+**Nguyên nhân**: Đã có một tiến trình khác đang chạy trên cổng 5000.  
+**Giải pháp**: Mở Task Manager (Ctrl+Shift+Esc) → Tab *Details* → Tìm `python.exe` → *End Task*. Sau đó khởi động lại API.
+
+#### ❌ Lỗi: `ModuleNotFoundError: No module named 'flask'`
+**Nguyên nhân**: Chưa cài đặt thư viện.  
+**Giải pháp**: Chạy lại `start_api.bat` (tự động cài) hoặc `pip install -r requirements.txt` thủ công.
+
+#### ❌ Trang báo "⚠️ Python API chưa chạy"
+**Nguyên nhân**: Flask API chưa được khởi động hoặc đã bị đóng.  
+**Giải pháp**: Chạy lại `start_api.bat`. Flask API cần **chạy nền song song** với XAMPP trong suốt quá trình sử dụng tính năng xuất báo cáo.
+
+---
+
+
 
 ## 📁 Sơ đồ cấu trúc Thư mục mới
 
