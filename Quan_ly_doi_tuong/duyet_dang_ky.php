@@ -115,39 +115,124 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
+    } elseif ($id && in_array($action, ['approve_update', 'reject_update'])) {
+        // Tìm yêu cầu cập nhật tương ứng
+        $stmt = $db->prepare("SELECT * FROM yeu_cau_cap_nhat WHERE id = ?");
+        $stmt->execute([$id]);
+        $req = $stmt->fetch();
+
+        if ($req) {
+            if ($action === 'approve_update') {
+                try {
+                    $db->beginTransaction();
+
+                    // 1. Cập nhật bảng doi_tuong với thông tin mới
+                    $sqlUpdate = "UPDATE doi_tuong SET 
+                        sdt = :sdt,
+                        email = :email,
+                        gioi_tinh = :gioi_tinh,
+                        ngay_sinh = :ngay_sinh,
+                        dan_toc = :dan_toc,
+                        que_quan = :que_quan,
+                        chuc_vu = :chuc_vu,
+                        lop = :lop
+                        WHERE id = :doi_tuong_id";
+                    $stmtUpdate = $db->prepare($sqlUpdate);
+                    $stmtUpdate->execute([
+                        ':sdt'          => $req['sdt'],
+                        ':email'        => $req['email'],
+                        ':gioi_tinh'    => $req['gioi_tinh'],
+                        ':ngay_sinh'    => !empty($req['ngay_sinh']) ? $req['ngay_sinh'] : null,
+                        ':dan_toc'      => $req['dan_toc'],
+                        ':que_quan'     => $req['que_quan'],
+                        ':chuc_vu'      => $req['chuc_vu'],
+                        ':lop'          => $req['lop'],
+                        ':doi_tuong_id' => $req['doi_tuong_id']
+                    ]);
+
+                    // 2. Đổi trạng thái yêu cầu cập nhật thành 'Đã duyệt'
+                    $stmtReqUpdate = $db->prepare("UPDATE yeu_cau_cap_nhat SET trang_thai = 'Đã duyệt' WHERE id = ?");
+                    $stmtReqUpdate->execute([$id]);
+
+                    // Ghi lịch sử
+                    logHistory($req['doi_tuong_id'], 'Cập nhật', 'Ban quản lý đã phê duyệt yêu cầu cập nhật thông tin của: ' . $req['ho_ten']);
+
+                    $db->commit();
+                    setFlash('success', 'Đã duyệt và cập nhật thông tin thành công cho "' . $req['ho_ten'] . '"!');
+                } catch (Exception $e) {
+                    $db->rollBack();
+                    setFlash('danger', 'Lỗi khi duyệt cập nhật: ' . $e->getMessage());
+                }
+            } elseif ($action === 'reject_update') {
+                $lyDo = trim($_POST['ly_do_tu_choi'] ?? '');
+                if (empty($lyDo)) {
+                    setFlash('danger', 'Vui lòng cung cấp lý do từ chối cập nhật.');
+                } else {
+                    try {
+                        $stmtReqUpdate = $db->prepare("UPDATE yeu_cau_cap_nhat SET trang_thai = 'Đã từ chối', ly_do_tu_choi = ? WHERE id = ?");
+                        $stmtReqUpdate->execute([$lyDo, $id]);
+
+                        setFlash('warning', 'Đã từ chối yêu cầu cập nhật thông tin của "' . $req['ho_ten'] . '".');
+                    } catch (Exception $e) {
+                        setFlash('danger', 'Lỗi khi từ chối cập nhật: ' . $e->getMessage());
+                    }
+                }
+            }
+        }
     }
-    redirect(BASE_URL . 'Quan_ly_doi_tuong/duyet_dang_ky.php');
+    redirect(BASE_URL . 'Quan_ly_doi_tuong/duyet_dang_ky.php' . (!empty($_POST['redirect_tab']) ? '?tab=' . urlencode($_POST['redirect_tab']) : ''));
 }
 
 // Lọc và hiển thị hồ sơ đăng ký
 $searchFilter = trim($_GET['search'] ?? '');
-$tabFilter    = $_GET['tab'] ?? 'pending'; // pending | approved | rejected
+$tabFilter    = $_GET['tab'] ?? 'pending'; // pending | approved | rejected | update
 
 $where = [];
 $params = [];
 
-if ($tabFilter === 'approved') {
-    $where[] = "trang_thai = 'Đã duyệt'";
-} elseif ($tabFilter === 'rejected') {
-    $where[] = "trang_thai = 'Đã từ chối'";
+if ($tabFilter === 'update') {
+    // Tải danh sách đề xuất cập nhật thông tin
+    $sql = "SELECT y.*, d.ma_gvsv, 
+                   d.sdt as old_sdt, d.email as old_email, d.gioi_tinh as old_gioi_tinh, 
+                   d.ngay_sinh as old_ngay_sinh, d.dan_toc as old_dan_toc, 
+                   d.que_quan as old_que_quan, d.chuc_vu as old_chuc_vu, d.lop as old_lop 
+            FROM yeu_cau_cap_nhat y 
+            JOIN doi_tuong d ON y.doi_tuong_id = d.id 
+            WHERE y.trang_thai = 'Chờ duyệt'";
+    if ($searchFilter !== '') {
+        $sql .= " AND (y.ho_ten LIKE ? OR d.ma_gvsv LIKE ? OR y.lop LIKE ?)";
+        $params = ["%$searchFilter%", "%$searchFilter%", "%$searchFilter%"];
+    }
+    $sql .= " ORDER BY y.created_at DESC";
+    $stmt = $db->prepare($sql);
+    $stmt->execute($params);
+    $rows = $stmt->fetchAll();
 } else {
-    $where[] = "trang_thai = 'Chờ duyệt'";
-}
+    // Tải danh sách đăng ký mới
+    if ($tabFilter === 'approved') {
+        $where[] = "trang_thai = 'Đã duyệt'";
+    } elseif ($tabFilter === 'rejected') {
+        $where[] = "trang_thai = 'Đã từ chối'";
+    } else {
+        $where[] = "trang_thai = 'Chờ duyệt'";
+    }
 
-if ($searchFilter !== '') {
-    $where[] = "(ho_ten LIKE ? OR ma_gvsv LIKE ? OR lop LIKE ?)";
-    $params = array_merge($params, ["%$searchFilter%", "%$searchFilter%", "%$searchFilter%"]);
-}
+    if ($searchFilter !== '') {
+        $where[] = "(ho_ten LIKE ? OR ma_gvsv LIKE ? OR lop LIKE ?)";
+        $params = array_merge($params, ["%$searchFilter%", "%$searchFilter%", "%$searchFilter%"]);
+    }
 
-$whereStr = implode(' AND ', $where);
-$stmt = $db->prepare("SELECT * FROM dang_ky_doi_tuong WHERE $whereStr ORDER BY created_at DESC");
-$stmt->execute($params);
-$rows = $stmt->fetchAll();
+    $whereStr = implode(' AND ', $where);
+    $stmt = $db->prepare("SELECT * FROM dang_ky_doi_tuong WHERE $whereStr ORDER BY created_at DESC");
+    $stmt->execute($params);
+    $rows = $stmt->fetchAll();
+}
 
 // Đếm số lượng chờ duyệt hiện tại
 $pendingCount = $db->query("SELECT COUNT(*) FROM dang_ky_doi_tuong WHERE trang_thai = 'Chờ duyệt'")->fetchColumn();
 $approvedCount = $db->query("SELECT COUNT(*) FROM dang_ky_doi_tuong WHERE trang_thai = 'Đã duyệt'")->fetchColumn();
 $rejectedCount = $db->query("SELECT COUNT(*) FROM dang_ky_doi_tuong WHERE trang_thai = 'Đã từ chối'")->fetchColumn();
+$updateCount   = $db->query("SELECT COUNT(*) FROM yeu_cau_cap_nhat WHERE trang_thai = 'Chờ duyệt'")->fetchColumn();
 
 require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
@@ -164,7 +249,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <div class="page-subtitle">Quản lý, thẩm định thông tin sinh viên tự khai báo và đồng bộ vào hệ thống.</div>
   </div>
   <div style="display:flex;gap:10px;">
-    <a href="<?= BASE_URL ?>nhap_thong_tin.php" target="_blank" class="btn btn-gold">🔗 Mở link đăng ký công khai</a>
+    <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/nhap_thong_tin.php" target="_blank" class="btn btn-gold">🔗 Mở link đăng ký công khai</a>
   </div>
 </div>
 
@@ -172,6 +257,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <div class="tabs">
   <a href="?tab=pending&search=<?= e($searchFilter) ?>" class="tab-btn <?= $tabFilter==='pending'?'active':'' ?>">
     📥 Chờ duyệt (<?= $pendingCount ?>)
+  </a>
+  <a href="?tab=update&search=<?= e($searchFilter) ?>" class="tab-btn <?= $tabFilter==='update'?'active':'' ?>">
+    ✏️ Đề xuất cập nhật (<?= $updateCount ?>)
   </a>
   <a href="?tab=approved&search=<?= e($searchFilter) ?>" class="tab-btn <?= $tabFilter==='approved'?'active':'' ?>">
     ✅ Đã duyệt (<?= $approvedCount ?>)
@@ -202,41 +290,109 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <?php else: ?>
       <div class="table-wrapper">
         <table class="data-table">
-          <thead>
-            <tr>
-              <th>STT</th>
-              <th>Mã SV</th>
-              <th>Họ và tên</th>
-              <th>Lớp</th>
-              <th>Email (Gmail)</th>
-              <th>SĐT</th>
-              <th>Chi bộ mong muốn</th>
-              <th style="text-align:center;">Thời gian gửi</th>
-              <th style="text-align:center;">Hành động</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($rows as $i => $row): ?>
+          <?php if ($tabFilter === 'update'): ?>
+            <thead>
               <tr>
-                <td style="color:var(--text2);"><?= $i + 1 ?></td>
-                <td><code style="color:var(--gold);font-size:12px;"><?= e($row['ma_gvsv']) ?></code></td>
-                <td>
-                  <div style="font-weight:600;color:var(--text);"><?= e($row['ho_ten']) ?></div>
-                  <span style="font-size:11px;color:var(--text2);">(<?= e($row['gioi_tinh'] ?: 'Chưa chọn') ?> · <?= $row['ngay_sinh'] ? formatDate($row['ngay_sinh']) : 'Chưa nhập ngày sinh' ?>)</span>
-                </td>
-                <td><?= e($row['lop']) ?></td>
-                <td><?= e($row['email']) ?></td>
-                <td><?= e($row['sdt']) ?></td>
-                <td><?= e($row['chi_bo_cong_nhan'] ?: '—') ?></td>
-                <td style="text-align:center;font-size:12px;color:var(--text2);"><?= date('H:i d/m/Y', strtotime($row['created_at'])) ?></td>
-                <td>
-                  <div style="display:flex;gap:5px;justify-content:center;">
-                    <button class="btn btn-outline btn-sm" onclick="openDetailsModal(<?= htmlspecialchars(json_encode($row)) ?>)">👁️ Xem chi tiết</button>
-                  </div>
-                </td>
+                <th>STT</th>
+                <th>Họ tên & Mã SV</th>
+                <th>Thông tin thay đổi (Cũ ➔ Mới)</th>
+                <th style="text-align:center;">Thời gian đề xuất</th>
+                <th style="text-align:center;">Hành động</th>
               </tr>
-            <?php endforeach; ?>
-          </tbody>
+            </thead>
+            <tbody>
+              <?php foreach ($rows as $i => $row): ?>
+                <tr>
+                  <td style="color:var(--text2);"><?= $i + 1 ?></td>
+                  <td>
+                    <div style="font-weight:600;color:var(--text);"><?= e($row['ho_ten']) ?></div>
+                    <code style="color:var(--gold);font-size:12px;"><?= e($row['ma_gvsv']) ?></code>
+                  </td>
+                  <td>
+                    <div style="display:flex; flex-direction:column; gap:4px; font-size:13px; text-align:left;">
+                      <?php
+                      $fields = [
+                          'lop' => 'Lớp',
+                          'sdt' => 'SĐT',
+                          'email' => 'Email',
+                          'gioi_tinh' => 'Giới tính',
+                          'ngay_sinh' => 'Ngày sinh',
+                          'dan_toc' => 'Dân tộc',
+                          'que_quan' => 'Quê quán',
+                          'chuc_vu' => 'Chức vụ'
+                      ];
+                      $diffs = [];
+                      foreach ($fields as $key => $label) {
+                          $old = $row['old_' . $key] ?? '';
+                          $new = $row[$key] ?? '';
+                          if ($key === 'ngay_sinh') {
+                              $old = $old ? formatDate($old) : '';
+                              $new = $new ? formatDate($new) : '';
+                          }
+                          if (trim((string)$old) !== trim((string)$new)) {
+                              $diffs[] = "<strong>$label:</strong> <span style='text-decoration:line-through; color:var(--red);'>$old</span> ➔ <span style='font-weight:bold; color:var(--success);'>$new</span>";
+                          }
+                      }
+                      if (empty($diffs)) {
+                          echo "<span style='color:var(--text2); font-style:italic;'>Không có thay đổi</span>";
+                      } else {
+                          echo implode('<br>', $diffs);
+                      }
+                      ?>
+                    </div>
+                  </td>
+                  <td style="text-align:center;font-size:12px;color:var(--text2);"><?= date('H:i d/m/Y', strtotime($row['created_at'])) ?></td>
+                  <td>
+                    <div style="display:flex;gap:5px;justify-content:center;">
+                      <form method="post" action="duyet_dang_ky.php" style="margin:0;" onsubmit="return confirm('Bạn có chắc chắn muốn duyệt và cập nhật thông tin mới này?');">
+                        <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                        <input type="hidden" name="action" value="approve_update">
+                        <input type="hidden" name="redirect_tab" value="update">
+                        <button type="submit" class="btn btn-primary btn-sm">✅ Duyệt</button>
+                      </form>
+                      <button class="btn btn-outline btn-sm" onclick="openRejectUpdateModal(<?= $row['id'] ?>)">❌ Từ chối</button>
+                    </div>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          <?php else: ?>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Mã SV</th>
+                <th>Họ và tên</th>
+                <th>Lớp</th>
+                <th>Email (Gmail)</th>
+                <th>SĐT</th>
+                <th>Chi bộ mong muốn</th>
+                <th style="text-align:center;">Thời gian gửi</th>
+                <th style="text-align:center;">Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($rows as $i => $row): ?>
+                <tr>
+                  <td style="color:var(--text2);"><?= $i + 1 ?></td>
+                  <td><code style="color:var(--gold);font-size:12px;"><?= e($row['ma_gvsv']) ?></code></td>
+                  <td>
+                    <div style="font-weight:600;color:var(--text);"><?= e($row['ho_ten']) ?></div>
+                    <span style="font-size:11px;color:var(--text2);">(<?= e($row['gioi_tinh'] ?: 'Chưa chọn') ?> · <?= $row['ngay_sinh'] ? formatDate($row['ngay_sinh']) : 'Chưa nhập ngày sinh' ?>)</span>
+                  </td>
+                  <td><?= e($row['lop']) ?></td>
+                  <td><?= e($row['email']) ?></td>
+                  <td><?= e($row['sdt']) ?></td>
+                  <td><?= e($row['chi_bo_cong_nhan'] ?: '—') ?></td>
+                  <td style="text-align:center;font-size:12px;color:var(--text2);"><?= date('H:i d/m/Y', strtotime($row['created_at'])) ?></td>
+                  <td>
+                    <div style="display:flex;gap:5px;justify-content:center;">
+                      <button class="btn btn-outline btn-sm" onclick="openDetailsModal(<?= htmlspecialchars(json_encode($row)) ?>)">👁️ Xem chi tiết</button>
+                    </div>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          <?php endif; ?>
         </table>
       </div>
     <?php endif; ?>
@@ -343,7 +499,38 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   </div>
 </div>
 
+<!-- Reject Update Modal -->
+<div class="modal-overlay" id="rejectUpdateModal">
+  <div class="modal" style="max-width: 500px; width: 95%;">
+    <div class="modal-title" style="color:var(--danger);font-weight:700;">❌ Từ chối yêu cầu cập nhật</div>
+    <div class="modal-body" style="padding-top:10px;">
+      <form method="post" action="duyet_dang_ky.php">
+        <input type="hidden" name="action" value="reject_update">
+        <input type="hidden" name="id" id="reject_update_id">
+        <input type="hidden" name="redirect_tab" value="update">
+        <div class="form-group" style="text-align:left;">
+          <label class="form-label" style="font-weight:600;">Lý do từ chối cập nhật <span class="required" style="color:var(--red);">*</span></label>
+          <textarea name="ly_do_tu_choi" class="form-control" placeholder="VD: Thông tin lớp mới không đúng / số điện thoại không liên lạc được..." rows="3" required></textarea>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
+          <button type="button" class="btn btn-outline" onclick="closeRejectUpdateModal()">Hủy bỏ</button>
+          <button type="submit" class="btn btn-danger">Xác nhận Từ chối</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
+function openRejectUpdateModal(id) {
+  document.getElementById('reject_update_id').value = id;
+  document.getElementById('rejectUpdateModal').classList.add('open');
+}
+
+function closeRejectUpdateModal() {
+  document.getElementById('rejectUpdateModal').classList.remove('open');
+}
+
 function openDetailsModal(row) {
   // Gán thông tin sinh viên vào modal
   document.getElementById('modal_name').textContent = row.ho_ten;
@@ -413,6 +600,11 @@ function closeModal() {
 // Bấm ra vùng ngoài modal để đóng
 document.getElementById('detailsModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
+});
+
+// Bấm ra vùng ngoài modal reject update để đóng
+document.getElementById('rejectUpdateModal').addEventListener('click', function(e) {
+  if (e.target === this) closeRejectUpdateModal();
 });
 
 // Format date Y-m-d to d/m/Y cho JavaScript hiển thị

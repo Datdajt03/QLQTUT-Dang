@@ -41,6 +41,29 @@ function getDB(): PDO {
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
             }
 
+            // Tự động khởi tạo bảng yeu_cau_cap_nhat nếu chưa có
+            try {
+                $pdo->query("SELECT 1 FROM yeu_cau_cap_nhat LIMIT 1");
+            } catch (PDOException $e) {
+                $pdo->exec("CREATE TABLE IF NOT EXISTS yeu_cau_cap_nhat (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    doi_tuong_id INT NOT NULL,
+                    ho_ten VARCHAR(255),
+                    sdt VARCHAR(20),
+                    email VARCHAR(255),
+                    gioi_tinh VARCHAR(10),
+                    ngay_sinh DATE,
+                    dan_toc VARCHAR(50),
+                    que_quan TEXT,
+                    chuc_vu VARCHAR(100),
+                    lop VARCHAR(100),
+                    trang_thai ENUM('Chờ duyệt', 'Đã duyệt', 'Đã từ chối') DEFAULT 'Chờ duyệt',
+                    ly_do_tu_choi TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (doi_tuong_id) REFERENCES doi_tuong(id) ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+            }
+
             // Tự động kiểm tra và thêm các tài khoản mặc định nếu chưa có
             $defaultUsers = [
                 ['username' => 'Admin',   'password' => 'Admin123',   'ho_ten' => 'Quản trị viên', 'vai_tro' => 'Admin'],

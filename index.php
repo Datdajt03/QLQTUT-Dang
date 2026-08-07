@@ -27,12 +27,12 @@ try {
         $myProfile = $stmt->fetch();
 
         if ($myProfile) {
-            // Lấy danh sách thành viên cùng chi bộ
-            $stmtMembers = $db->prepare("SELECT id, ma_gvsv, ho_ten, lop, chuc_vu, trang_thai, email 
+            // Lấy danh sách thành viên cùng chi bộ hoặc cùng lớp học
+            $stmtMembers = $db->prepare("SELECT id, ma_gvsv, ho_ten, lop, chi_bo_cong_nhan, chuc_vu, trang_thai, email 
                                          FROM doi_tuong 
-                                         WHERE chi_bo_cong_nhan = ? AND id != ? 
+                                         WHERE ((chi_bo_cong_nhan = ? AND chi_bo_cong_nhan != '') OR (lop = ? AND lop != '')) AND id != ? 
                                          ORDER BY ho_ten ASC");
-            $stmtMembers->execute([$myProfile['chi_bo_cong_nhan'], $myProfile['id']]);
+            $stmtMembers->execute([$myProfile['chi_bo_cong_nhan'], $myProfile['lop'], $myProfile['id']]);
             $chiBoMembers = $stmtMembers->fetchAll();
         } else {
             // Lấy danh sách yêu cầu đăng ký (chờ duyệt/từ chối)
@@ -93,7 +93,11 @@ require_once __DIR__ . '/Giao_dien/header.php';
   </div>
   <?php else: ?>
   <div style="display:flex;gap:10px;align-items:center;">
-    <a href="Quan_ly_doi_tuong/nhap_thong_tin.php" class="btn btn-primary">✍️ Gửi yêu cầu đăng ký mới</a>
+    <?php if ($myProfile): ?>
+      <a href="Quan_ly_doi_tuong/cap_nhat_thong_tin.php" class="btn btn-gold">✏️ Yêu cầu cập nhật thông tin</a>
+    <?php else: ?>
+      <a href="Quan_ly_doi_tuong/nhap_thong_tin.php" class="btn btn-primary">✍️ Gửi yêu cầu đăng ký mới</a>
+    <?php endif; ?>
   </div>
   <?php endif; ?>
 </div>
@@ -360,17 +364,17 @@ require_once __DIR__ . '/Giao_dien/header.php';
     </div>
   </div>
 
-  <!-- Bảng thành viên cùng chi bộ -->
+  <!-- Bảng thành viên cùng chi bộ hoặc cùng lớp -->
   <div class="card fade-in">
     <div class="card-header">
-      <div class="card-title"><span class="icon">🏛️</span> Danh sách thành viên cùng chi bộ: <strong><?= e($myProfile['chi_bo_cong_nhan']) ?></strong></div>
+      <div class="card-title"><span class="icon">🏛️</span> Danh sách thành viên cùng Lớp (<strong><?= e($myProfile['lop'] ?: '—') ?></strong>) hoặc cùng Chi bộ (<strong><?= e($myProfile['chi_bo_cong_nhan'] ?: '—') ?></strong>)</div>
     </div>
     <div class="card-body" style="padding:0;">
       <?php if (empty($chiBoMembers)): ?>
       <div class="empty-state" style="padding: 30px 20px;">
         <div class="icon">📂</div>
-        <h3>Không có thành viên nào khác trong Chi bộ</h3>
-        <p>Chi bộ hiện tại chưa ghi nhận quần chúng chính thức nào khác trong hệ thống.</p>
+        <h3>Không có thành viên nào khác cùng Lớp hoặc Chi bộ</h3>
+        <p>Hệ thống chưa ghi nhận thành viên chính thức nào khác trong lớp hoặc chi bộ của bạn.</p>
       </div>
       <?php else: ?>
       <div class="table-wrapper">
@@ -381,6 +385,7 @@ require_once __DIR__ . '/Giao_dien/header.php';
               <th>Mã SV/GV</th>
               <th>Họ và tên</th>
               <th>Lớp</th>
+              <th>Chi bộ</th>
               <th>Chức vụ</th>
               <th>Email liên hệ</th>
               <th>Trạng thái kết nạp</th>
@@ -393,6 +398,7 @@ require_once __DIR__ . '/Giao_dien/header.php';
               <td><code style="color:var(--gold);font-size:12px;"><?= e($m['ma_gvsv'] ?: '—') ?></code></td>
               <td><strong><?= e($m['ho_ten']) ?></strong></td>
               <td><?= e($m['lop'] ?: '—') ?></td>
+              <td><?= e($m['chi_bo_cong_nhan'] ?: '—') ?></td>
               <td><?= e($m['chuc_vu'] ?: '—') ?></td>
               <td><a href="mailto:<?= e($m['email']) ?>" style="color:var(--gold); text-decoration:none;"><?= e($m['email'] ?: '—') ?></a></td>
               <td><?php
