@@ -26,12 +26,30 @@ function getDB(): PDO {
         ];
         try {
             $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+            
+            // Tự động khởi tạo bảng nguoi_dung và tài khoản admin mặc định
+            try {
+                $pdo->query("SELECT 1 FROM nguoi_dung LIMIT 1");
+            } catch (PDOException $e) {
+                $pdo->exec("CREATE TABLE IF NOT EXISTS nguoi_dung (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    username VARCHAR(100) UNIQUE NOT NULL,
+                    password VARCHAR(255) NOT NULL,
+                    ho_ten VARCHAR(255),
+                    vai_tro ENUM('Người dùng thường', 'Quản lý', 'Admin') DEFAULT 'Người dùng thường',
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+                
+                $adminPass = password_hash('Admin123', PASSWORD_DEFAULT);
+                $stmt = $pdo->prepare("INSERT INTO nguoi_dung (username, password, ho_ten, vai_tro) VALUES (?, ?, ?, ?)");
+                $stmt->execute(['Admin', $adminPass, 'Quản trị viên', 'Admin']);
+            }
         } catch (PDOException $e) {
             die('<div style="color:red;padding:20px;font-family:sans-serif;">
                 <h2>❌ Lỗi kết nối Database</h2>
                 <p>' . htmlspecialchars($e->getMessage()) . '</p>
                 <p>Vui lòng kiểm tra: MySQL đang chạy và database <strong>' . DB_NAME . '</strong> đã được tạo.</p>
-                <p><a href="' . BASE_URL . 'setup.php">Chạy Setup</a></p>
+                <p><a href="' . BASE_URL . 'Cau_hinh/setup.php">Chạy Setup</a></p>
             </div>');
         }
     }
@@ -64,6 +82,7 @@ function setFlash(string $type, string $msg): void {
     $_SESSION['flash'] = ['type' => $type, 'msg' => $msg];
 }
 
+// Helper: get flash
 function getFlash(): ?array {
     if (session_status() === PHP_SESSION_NONE) session_start();
     if (isset($_SESSION['flash'])) {
@@ -104,7 +123,7 @@ function toDbDate(?string $date): ?string {
     return null;
 }
 
-// Helper: Gửi email thông báo (có ghi log cục bộ làm giả lập ở XAMPP)
+// Helper: Gửi email thông báo (có ghi log cục bộ làm giả làm ở XAMPP)
 function sendMailNotification(string $to, string $subject, string $body): bool {
     // 1. Ghi log cục bộ vào thư mục uploads
     try {

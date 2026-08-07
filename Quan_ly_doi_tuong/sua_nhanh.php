@@ -1,6 +1,8 @@
 <?php
-// Chucnang/sua_nhanh.php - Giao diện chỉnh sửa nhanh kiểu Excel trực tiếp (Hiện ô nhập trực tiếp + Lọc + Tìm kiếm)
+// Quan_ly_doi_tuong/sua_nhanh.php - Giao diện chỉnh sửa nhanh kiểu Excel trực tiếp (Hiện ô nhập trực tiếp + Lọc + Tìm kiếm)
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 $pageTitle = 'Sửa Excel trực tiếp';
 
 $db = getDB();
@@ -41,7 +43,7 @@ $stmt = $db->prepare("SELECT * FROM doi_tuong WHERE $whereStr ORDER BY ho_ten AS
 $stmt->execute($params);
 $rows = $stmt->fetchAll();
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <!-- Page Header -->
@@ -55,7 +57,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div class="page-title">✏️ Bảng Excel <span>Chỉnh sửa trực tiếp</span></div>
     <div class="page-subtitle">Nhấp chọn ô để nhập dữ liệu trực tiếp. Hệ thống tự động lưu khi nhập xong.</div>
   </div>
-  <a href="<?= BASE_URL ?>Chucnang/danh_sach.php" class="btn btn-outline">📋 Về danh sách thường</a>
+  <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/danh_sach.php" class="btn btn-outline">📋 Về danh sách thường</a>
 </div>
 
 <!-- Filter Bar -->
@@ -389,4 +391,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

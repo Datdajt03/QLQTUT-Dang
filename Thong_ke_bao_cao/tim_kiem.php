@@ -1,6 +1,8 @@
 <?php
-// Tabphu/tim_kiem.php – Tìm kiếm nâng cao
+// Thong_ke_bao_cao/tim_kiem.php – Tìm kiếm nâng cao
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 $pageTitle = 'Tìm kiếm nâng cao';
 $db = getDB();
 
@@ -40,7 +42,7 @@ $lopList  = $db->query("SELECT DISTINCT lop FROM doi_tuong WHERE lop != '' AND l
 $chiBoList = $db->query("SELECT DISTINCT chi_bo_cong_nhan FROM doi_tuong WHERE chi_bo_cong_nhan != '' AND chi_bo_cong_nhan IS NOT NULL ORDER BY chi_bo_cong_nhan")->fetchAll(PDO::FETCH_COLUMN);
 $dvList   = $db->query("SELECT DISTINCT dang_vien_giup_do FROM doi_tuong WHERE dang_vien_giup_do != '' AND dang_vien_giup_do IS NOT NULL ORDER BY dang_vien_giup_do")->fetchAll(PDO::FETCH_COLUMN);
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <div class="page-header">
@@ -119,7 +121,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div style="display:flex;align-items:center;gap:10px;">
       <span class="badge badge-gold"><?= count($results) ?> bản ghi</span>
       <?php if (!empty($results)): ?>
-      <a href="<?= BASE_URL ?>Chucnang/xuat_excel.php?<?= http_build_query(array_filter(['search'=>$q_ten,'trang_thai'=>$q_tt])) ?>" class="btn btn-gold btn-sm">📤 Xuất</a>
+      <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php?<?= http_build_query(array_filter(['search'=>$q_ten,'trang_thai'=>$q_tt])) ?>" class="btn btn-gold btn-sm">📤 Xuất</a>
       <?php endif; ?>
     </div>
   </div>
@@ -138,7 +140,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
           <tr>
             <td><?= $i+1 ?></td>
             <td><code style="color:var(--gold);font-size:11px;"><?= e($r['ma_gvsv']??'—') ?></code></td>
-            <td><a href="<?= BASE_URL ?>Chucnang/chi_tiet.php?id=<?= $r['id'] ?>" class="name-link"><?= e($r['ho_ten']) ?></a></td>
+            <td><a href="<?= BASE_URL ?>Quan_ly_doi_tuong/chi_tiet.php?id=<?= $r['id'] ?>" class="name-link"><?= e($r['ho_ten']) ?></a></td>
             <td><?= e($r['lop']??'—') ?></td>
             <td style="font-size:12px;"><?= e(mb_substr($r['chi_bo_cong_nhan']??'',0,25)) ?></td>
             <td style="font-size:12px;"><?= e($r['dang_vien_giup_do']??'—') ?></td>
@@ -146,8 +148,8 @@ require_once dirname(__DIR__) . '/includes/header.php';
             <td><span class="badge badge-<?= $cls ?>"><?= e($s) ?></span></td>
             <td>
               <div style="display:flex;gap:5px;">
-                <a href="<?= BASE_URL ?>Chucnang/chi_tiet.php?id=<?= $r['id'] ?>" class="btn btn-outline btn-sm">👁️</a>
-                <a href="<?= BASE_URL ?>Chucnang/sua.php?id=<?= $r['id'] ?>" class="btn btn-outline btn-sm">✏️</a>
+                <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/chi_tiet.php?id=<?= $r['id'] ?>" class="btn btn-outline btn-sm">👁️</a>
+                <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/sua.php?id=<?= $r['id'] ?>" class="btn btn-outline btn-sm">✏️</a>
               </div>
             </td>
           </tr>
@@ -160,4 +162,4 @@ require_once dirname(__DIR__) . '/includes/header.php';
 </div>
 <?php endif; ?>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

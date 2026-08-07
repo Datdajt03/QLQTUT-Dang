@@ -92,7 +92,7 @@ try {
     <?php endforeach; ?>
 
     <?php if ($success ?? false): ?>
-    <a href="index.php" class="btn">🏠 Vào trang Dashboard</a>
+    <a href="../index.php" class="btn">🏠 Vào trang Dashboard</a>
     <?php else: ?>
     <div class="status-item warn">
       <div>

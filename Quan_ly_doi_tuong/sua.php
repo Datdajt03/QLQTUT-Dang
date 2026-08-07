@@ -1,15 +1,17 @@
 <?php
-// Chucnang/sua.php – Sửa thông tin đối tượng
+// Quan_ly_doi_tuong/sua.php – Sửa thông tin đối tượng
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 
 $id = (int)($_GET['id'] ?? 0);
-if (!$id) { setFlash('danger','ID không hợp lệ'); redirect(BASE_URL.'Chucnang/danh_sach.php'); }
+if (!$id) { setFlash('danger','ID không hợp lệ'); redirect(BASE_URL.'Quan_ly_doi_tuong/danh_sach.php'); }
 
 $db = getDB();
 $q  = $db->prepare("SELECT * FROM doi_tuong WHERE id = ?");
 $q->execute([$id]);
 $dt = $q->fetch();
-if (!$dt) { setFlash('danger','Không tìm thấy đối tượng'); redirect(BASE_URL.'Chucnang/danh_sach.php'); }
+if (!$dt) { setFlash('danger','Không tìm thấy đối tượng'); redirect(BASE_URL.'Quan_ly_doi_tuong/danh_sach.php'); }
 
 $chiBos    = $db->query("SELECT * FROM chi_bo ORDER BY ten_chi_bo")->fetchAll();
 $dangViens = $db->query("SELECT * FROM dang_vien ORDER BY ho_ten")->fetchAll();
@@ -73,14 +75,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->prepare("UPDATE doi_tuong SET $sets WHERE id = :id")->execute($data);
         logHistory($id, 'Cập nhật', 'Cập nhật thông tin đối tượng');
         setFlash('success', 'Đã cập nhật thông tin "' . ($data['ho_ten'] ?? '') . '"');
-        redirect(BASE_URL . 'Chucnang/chi_tiet.php?id=' . $id);
+        redirect(BASE_URL . 'Quan_ly_doi_tuong/chi_tiet.php?id=' . $id);
     }
     // merge back for redisplay
     $dt = array_merge($dt, $data);
 }
 
 $pageTitle = 'Sửa: ' . $dt['ho_ten'];
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <div class="page-header">
@@ -288,5 +290,5 @@ function removeAvatar() {
 }
 </script>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>
 

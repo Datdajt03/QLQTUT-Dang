@@ -1,15 +1,17 @@
 <?php
-// Chucnang/chi_tiet.php – Xem chi tiết hồ sơ
+// Quan_ly_doi_tuong/chi_tiet.php – Xem chi tiết hồ sơ
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 
 $id = (int)($_GET['id'] ?? 0);
-if (!$id) { setFlash('danger','ID không hợp lệ'); redirect(BASE_URL.'Chucnang/danh_sach.php'); }
+if (!$id) { setFlash('danger','ID không hợp lệ'); redirect(BASE_URL.'Quan_ly_doi_tuong/danh_sach.php'); }
 
 $db = getDB();
 $row = $db->prepare("SELECT * FROM doi_tuong WHERE id = ?");
 $row->execute([$id]);
 $dt = $row->fetch();
-if (!$dt) { setFlash('danger','Không tìm thấy đối tượng'); redirect(BASE_URL.'Chucnang/danh_sach.php'); }
+if (!$dt) { setFlash('danger','Không tìm thấy đối tượng'); redirect(BASE_URL.'Quan_ly_doi_tuong/danh_sach.php'); }
 
 // History
 $hist = $db->prepare("SELECT * FROM lich_su WHERE doi_tuong_id = ? ORDER BY thoi_gian DESC LIMIT 20");
@@ -21,7 +23,7 @@ $pageTitle = 'Chi tiết: ' . $dt['ho_ten'];
 // Determine timeline steps status
 function stepDone($val): bool { return !empty($val); }
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 <div class="page-header" style="align-items: center;">
   <div class="page-header-left" style="display:flex; flex-direction:row; gap:20px; align-items:center;">
@@ -273,4 +275,4 @@ function showTab(name, btn) {
 }
 </script>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

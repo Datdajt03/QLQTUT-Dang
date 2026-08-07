@@ -1,11 +1,13 @@
 <?php
-// Chucnang/xoa.php – Xóa đối tượng
+// Quan_ly_doi_tuong/xoa.php – Xóa đối tượng
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 
 $id  = (int)($_GET['id'] ?? 0);
 $ref = $_GET['ref'] ?? 'danh_sach';
 
-if (!$id) { redirect(BASE_URL . 'Chucnang/danh_sach.php'); }
+if (!$id) { redirect(BASE_URL . 'Quan_ly_doi_tuong/danh_sach.php'); }
 
 $db  = getDB();
 $row = $db->prepare("SELECT ho_ten FROM doi_tuong WHERE id = ?");
@@ -20,4 +22,4 @@ if ($dt) {
     setFlash('danger', 'Không tìm thấy đối tượng');
 }
 
-redirect(BASE_URL . 'Chucnang/danh_sach.php');
+redirect(BASE_URL . 'Quan_ly_doi_tuong/danh_sach.php');

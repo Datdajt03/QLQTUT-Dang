@@ -1,5 +1,5 @@
 <?php
-// includes/footer.php
+// Giao_dien/footer.php
 ?>
 </main><!-- /.main -->
 </div><!-- /.layout -->
@@ -31,20 +31,29 @@ document.addEventListener('click', function(e) {
 });
 
 // ── Global search ──────────────────────────────────────────────────────────
-document.getElementById('globalSearch').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && this.value.trim()) {
-    window.location = '<?= BASE_URL ?>Chucnang/danh_sach.php?search=' + encodeURIComponent(this.value.trim());
-  }
-});
+var globSearch = document.getElementById('globalSearch');
+if (globSearch) {
+  globSearch.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && this.value.trim()) {
+      window.location = '<?= BASE_URL ?>Quan_ly_doi_tuong/danh_sach.php?search=' + encodeURIComponent(this.value.trim());
+    }
+  });
+}
 
 // ── Flash auto-dismiss ─────────────────────────────────────────────────────
 var flash = document.querySelector('.flash');
 if (flash) setTimeout(function(){ flash.style.transition='opacity 0.5s'; flash.style.opacity='0'; }, 4000);
 
 // ── Tab phụ accordion ──────────────────────────────────────────────────────
+var tabphuToggle = document.getElementById('tabphuToggle');
+if (tabphuToggle) {
+  tabphuToggle.addEventListener('click', toggleTabPhu);
+}
+
 function toggleTabPhu() {
   var toggle = document.getElementById('tabphuToggle');
   var body   = document.getElementById('tabphuBody');
+  if (!toggle || !body) return;
   var isOpen = body.classList.contains('open');
 
   body.classList.toggle('open', !isOpen);
@@ -58,13 +67,17 @@ function toggleTabPhu() {
 // Restore state on load (unless auto-opened by PHP)
 (function() {
   var body = document.getElementById('tabphuBody');
-  if (!body.classList.contains('open')) {
+  if (body && !body.classList.contains('open')) {
     try {
       var saved = localStorage.getItem('tabphuOpen');
       if (saved === 'true') {
         body.classList.add('open');
-        document.getElementById('tabphuToggle').classList.add('open');
-        document.querySelector('.accordion-arrow').textContent = '▲';
+        var toggle = document.getElementById('tabphuToggle');
+        if (toggle) {
+          toggle.classList.add('open');
+          var arrow = toggle.querySelector('.accordion-arrow');
+          if (arrow) arrow.textContent = '▲';
+        }
       }
     } catch(e){}
   }

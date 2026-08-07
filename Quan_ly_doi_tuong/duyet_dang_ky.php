@@ -1,6 +1,8 @@
 <?php
-// Chucnang/duyet_dang_ky.php - Giao diện phê duyệt đăng ký thông tin sinh viên
+// Quan_ly_doi_tuong/duyet_dang_ky.php - Giao diện phê duyệt đăng ký thông tin sinh viên
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 $pageTitle = 'Phê duyệt hồ sơ';
 
 $db = getDB();
@@ -114,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-    redirect(BASE_URL . 'Chucnang/duyet_dang_ky.php');
+    redirect(BASE_URL . 'Quan_ly_doi_tuong/duyet_dang_ky.php');
 }
 
 // Lọc và hiển thị hồ sơ đăng ký
@@ -147,7 +149,7 @@ $pendingCount = $db->query("SELECT COUNT(*) FROM dang_ky_doi_tuong WHERE trang_t
 $approvedCount = $db->query("SELECT COUNT(*) FROM dang_ky_doi_tuong WHERE trang_thai = 'Đã duyệt'")->fetchColumn();
 $rejectedCount = $db->query("SELECT COUNT(*) FROM dang_ky_doi_tuong WHERE trang_thai = 'Đã từ chối'")->fetchColumn();
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <!-- Page Header -->
@@ -422,4 +424,4 @@ function formatDateString(str) {
 }
 </script>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

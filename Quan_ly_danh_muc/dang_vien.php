@@ -1,6 +1,8 @@
 <?php
-// Tabphu/dang_vien.php – Quản lý Đảng viên giúp đỡ
+// Quan_ly_danh_muc/dang_vien.php – Quản lý Đảng viên giúp đỡ
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 $pageTitle = 'Quản lý Đảng viên';
 $db = getDB();
 $errors = [];
@@ -27,13 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    ->execute([$ht,$ma,$cv,$cb ?: null,$sdt,$em,$ghi,$id]);
                 setFlash('success', "Đã cập nhật đảng viên \"$ht\"");
             }
-            redirect(BASE_URL . 'Tabphu/dang_vien.php');
+            redirect(BASE_URL . 'Quan_ly_danh_muc/dang_vien.php');
         }
     } elseif ($act === 'delete') {
         $id = (int)$_POST['del_id'];
         $db->prepare("DELETE FROM dang_vien WHERE id=?")->execute([$id]);
         setFlash('success', 'Đã xóa đảng viên');
-        redirect(BASE_URL . 'Tabphu/dang_vien.php');
+        redirect(BASE_URL . 'Quan_ly_danh_muc/dang_vien.php');
     }
 }
 
@@ -55,7 +57,7 @@ if ($editId) {
     $editRow = $q->fetch();
 }
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <div class="page-header">
@@ -159,4 +161,4 @@ require_once dirname(__DIR__) . '/includes/header.php';
   </div>
 </div>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

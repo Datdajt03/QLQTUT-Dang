@@ -3,6 +3,8 @@
 // Tránh CORS, xử lý lỗi khi API không chạy
 
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 
 define('API_BASE', 'http://localhost:5000');
 define('API_TIMEOUT', 15);

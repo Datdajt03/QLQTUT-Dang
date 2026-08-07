@@ -1,6 +1,8 @@
 <?php
-// Chucnang/import_excel.php – Import dữ liệu từ file Excel/CSV
+// Thong_ke_bao_cao/import_excel.php – Import dữ liệu từ file Excel/CSV
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 $pageTitle = 'Import Excel';
 
 $db     = getDB();
@@ -157,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['excel_file'])) {
     }
 }
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <div class="page-header">
@@ -257,7 +259,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
         </table>
       </div>
       <div style="margin-top:16px;">
-        <a href="../Chucnang/xuat_excel.php" class="btn btn-gold" style="width:100%;justify-content:center;">
+        <a href="../Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold" style="width:100%;justify-content:center;">
           📤 Tải mẫu file (xuất CSV hiện tại)
         </a>
       </div>
@@ -280,4 +282,4 @@ function handleDrop(e) {
 }
 </script>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

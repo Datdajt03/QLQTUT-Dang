@@ -1,6 +1,8 @@
 <?php
 // Chucnang/api_sua_nhanh.php - API xử lý chỉnh sửa nhanh trực tiếp từ bảng Excel
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 
 header('Content-Type: application/json; charset=utf-8');
 

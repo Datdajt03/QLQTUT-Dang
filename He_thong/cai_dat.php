@@ -1,6 +1,8 @@
 <?php
-// Tabphu/cai_dat.php – Cài đặt hệ thống
+// He_thong/cai_dat.php – Cài đặt hệ thống
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole('Admin');
 $pageTitle = 'Cài đặt';
 $db = getDB();
 
@@ -23,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         setFlash('success', 'Đã lưu cài đặt hệ thống!');
     }
-    redirect(BASE_URL . 'Tabphu/cai_dat.php');
+    redirect(BASE_URL . 'He_thong/cai_dat.php');
 }
 
 // Load settings
@@ -37,7 +39,7 @@ $totalCB = $db->query("SELECT COUNT(*) FROM chi_bo")->fetchColumn();
 $totalDV = $db->query("SELECT COUNT(*) FROM dang_vien")->fetchColumn();
 $totalLS = $db->query("SELECT COUNT(*) FROM lich_su")->fetchColumn();
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <div class="page-header">
@@ -137,12 +139,12 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div class="card fade-in">
       <div class="card-header"><div class="card-title"><span class="icon">🔧</span> Công cụ</div></div>
       <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
-        <a href="<?= BASE_URL ?>Chucnang/xuat_excel.php" class="btn btn-gold" style="justify-content:center;">📤 Xuất toàn bộ dữ liệu</a>
-        <a href="<?= BASE_URL ?>Chucnang/import_excel.php" class="btn btn-outline" style="justify-content:center;">📥 Import Excel</a>
+        <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold" style="justify-content:center;">📤 Xuất toàn bộ dữ liệu</a>
+        <a href="<?= BASE_URL ?>Thong_ke_bao_cao/import_excel.php" class="btn btn-outline" style="justify-content:center;">📥 Import Excel</a>
         <a href="<?= BASE_URL ?>setup.php" class="btn btn-outline" style="justify-content:center;">🔄 Xem Setup DB</a>
       </div>
     </div>
   </div>
 </div>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

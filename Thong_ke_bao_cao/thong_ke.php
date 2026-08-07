@@ -1,6 +1,8 @@
 <?php
-// Tabphu/thong_ke.php – Thống kê & Báo cáo
+// Thong_ke_bao_cao/thong_ke.php – Thống kê & Báo cáo
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 $pageTitle = 'Thống kê & Báo cáo';
 $db = getDB();
 
@@ -57,7 +59,7 @@ $topDV = $db->query("
     GROUP BY dang_vien_giup_do ORDER BY so_luong DESC LIMIT 5
 ")->fetchAll();
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <div class="page-header">
@@ -68,7 +70,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
     </div>
     <div class="page-title">📊 Thống kê <span>& Báo cáo</span></div>
   </div>
-  <a href="<?= BASE_URL ?>Chucnang/xuat_excel.php" class="btn btn-gold">📤 Xuất báo cáo</a>
+  <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold">📤 Xuất báo cáo</a>
 </div>
 
 <!-- Stat Cards -->
@@ -218,4 +220,4 @@ new Chart('chartLop',{
 });
 </script>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

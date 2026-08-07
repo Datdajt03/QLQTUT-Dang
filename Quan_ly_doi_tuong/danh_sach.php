@@ -1,6 +1,8 @@
 <?php
-// Chucnang/danh_sach.php - Danh sách đối tượng
+// Quan_ly_doi_tuong/danh_sach.php - Danh sách đối tượng
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 $pageTitle = 'Danh sách đối tượng';
 
 $db = getDB();
@@ -37,7 +39,7 @@ $rows = $stmt->fetchAll();
 // Distinct lớp for filter
 $lopList = $db->query("SELECT DISTINCT lop FROM doi_tuong WHERE lop IS NOT NULL AND lop != '' ORDER BY lop")->fetchAll(PDO::FETCH_COLUMN);
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <!-- Page Header -->
@@ -52,8 +54,8 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div class="page-subtitle">Tổng cộng <?= number_format($total) ?> đối tượng</div>
   </div>
   <div style="display:flex;gap:10px;">
-    <a href="<?= BASE_URL ?>Chucnang/them.php" class="btn btn-primary">➕ Thêm mới</a>
-    <a href="<?= BASE_URL ?>Chucnang/xuat_excel.php?<?= http_build_query(['search'=>$search,'trang_thai'=>$trangThai,'lop'=>$lop]) ?>" class="btn btn-gold">📤 Xuất Excel</a>
+    <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/them.php" class="btn btn-primary">➕ Thêm mới</a>
+    <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php?<?= http_build_query(['search'=>$search,'trang_thai'=>$trangThai,'lop'=>$lop]) ?>" class="btn btn-gold">📤 Xuất Excel</a>
   </div>
 </div>
 
@@ -203,4 +205,4 @@ document.getElementById('deleteModal').addEventListener('click', function(e) {
 });
 </script>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

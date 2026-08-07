@@ -1,6 +1,8 @@
 <?php
-// Tabphu/chi_bo.php – Quản lý Chi bộ
+// Quan_ly_danh_muc/chi_bo.php – Quản lý Chi bộ
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 $pageTitle = 'Quản lý Chi bộ';
 $db = getDB();
 $errors = [];
@@ -26,13 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    ->execute([$ten,$ma,$dang,$tinh,$ghi,$id]);
                 setFlash('success', "Đã cập nhật chi bộ \"$ten\"");
             }
-            redirect(BASE_URL . 'Tabphu/chi_bo.php');
+            redirect(BASE_URL . 'Quan_ly_danh_muc/chi_bo.php');
         }
     } elseif ($act === 'delete') {
         $id = (int)$_POST['del_id'];
         $db->prepare("DELETE FROM chi_bo WHERE id=?")->execute([$id]);
         setFlash('success', 'Đã xóa chi bộ');
-        redirect(BASE_URL . 'Tabphu/chi_bo.php');
+        redirect(BASE_URL . 'Quan_ly_danh_muc/chi_bo.php');
     }
 }
 
@@ -41,7 +43,7 @@ $editId = (int)($_GET['edit'] ?? 0);
 $editRow = $editId ? $db->prepare("SELECT * FROM chi_bo WHERE id=?") : null;
 if ($editRow) { $editRow->execute([$editId]); $editRow = $editRow->fetch(); }
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <div class="page-header">
@@ -131,4 +133,4 @@ require_once dirname(__DIR__) . '/includes/header.php';
 
 </div>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

@@ -1,6 +1,8 @@
 <?php
-// Chucnang/them.php – Thêm đối tượng mới
+// Quan_ly_doi_tuong/them.php – Thêm đối tượng mới
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 $pageTitle = 'Thêm đối tượng';
 
 $db = getDB();
@@ -79,11 +81,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newId = $db->lastInsertId();
         logHistory($newId, 'Thêm mới', 'Thêm đối tượng: ' . ($data['ho_ten'] ?? ''));
         setFlash('success', 'Đã thêm đối tượng "' . ($data['ho_ten'] ?? '') . '" thành công!');
-        redirect(BASE_URL . 'Chucnang/chi_tiet.php?id=' . $newId);
+        redirect(BASE_URL . 'Quan_ly_doi_tuong/chi_tiet.php?id=' . $newId);
     }
 }
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <div class="page-header">
@@ -357,5 +359,5 @@ function removeAvatar() {
 }
 </script>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>
 

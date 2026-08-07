@@ -1,6 +1,8 @@
 <?php
-// Chucnang/xuat_excel.php – Xuất dữ liệu Excel/PDF qua Python API
+// Thong_ke_bao_cao/xuat_excel.php – Xuất dữ liệu Excel/PDF qua Python API
 require_once dirname(__DIR__) . '/config.php';
+require_once dirname(__DIR__) . '/User/auth.php';
+requireRole(['Quản lý', 'Admin']);
 $pageTitle = 'Xuất dữ liệu';
 
 $db = getDB();
@@ -13,7 +15,7 @@ $totalObjects = $db->query("SELECT COUNT(*) FROM doi_tuong")->fetchColumn();
 // Fetch initial list of all objects to display on load
 $initialObjects = $db->query("SELECT id, ma_gvsv, ho_ten, gioi_tinh, lop, chi_bo_cong_nhan, trang_thai, avatar FROM doi_tuong ORDER BY ho_ten")->fetchAll(PDO::FETCH_ASSOC);
 
-require_once dirname(__DIR__) . '/includes/header.php';
+require_once dirname(__DIR__) . '/Giao_dien/header.php';
 ?>
 
 <div class="page-header">
@@ -412,4 +414,4 @@ renderList();
 checkApi();
 </script>
 
-<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>
