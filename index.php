@@ -107,6 +107,165 @@ require_once __DIR__ . '/Giao_dien/header.php';
   <a href="Cau_hinh/setup.php" style="color:inherit;font-weight:700;">Chạy Setup để tạo database</a>
 </div>
 <?php endif; ?>
+<!-- SECTION: BẢN TIN DÂN TRÍ -->
+<?php
+$newsItems = [];
+$rssError = '';
+try {
+    // Tải RSS tin mới nhất từ Dân trí
+    $feedUrl = 'https://dantri.com.vn/rss/home.rss';
+    // Sử dụng context timeout 3s để tránh lag trang nếu dân trí bị nghẽn
+    $context = stream_context_create([
+        'http' => [
+            'timeout' => 3, 
+            'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        ]
+    ]);
+    $xmlContent = @file_get_contents($feedUrl, false, $context);
+    if ($xmlContent) {
+        $xml = @simplexml_load_string($xmlContent);
+        if ($xml && isset($xml->channel->item)) {
+            $count = 0;
+            foreach ($xml->channel->item as $item) {
+                if ($count >= 4) break; // Lấy 4 tin nổi bật nhất
+                
+                // Trích xuất ảnh thumbnail từ description
+                $description = (string)$item->description;
+                preg_match('/<img[^>]+src="([^"]+)"/i', $description, $matches);
+                $thumbnail = !empty($matches[1]) ? $matches[1] : '';
+                
+                // Trích xuất phần text mô tả
+                $summary = strip_tags($description);
+                // Giới hạn độ dài mô tả ngắn gọn
+                if (mb_strlen($summary) > 120) {
+                    $summary = mb_substr($summary, 0, 117) . '...';
+                }
+                
+                $newsItems[] = [
+                    'title' => (string)$item->title,
+                    'link' => (string)$item->link,
+                    'pubDate' => (string)$item->pubDate,
+                    'thumbnail' => $thumbnail,
+                    'summary' => $summary
+                ];
+                $count++;
+            }
+        } else {
+            $rssError = 'Không thể phân tích dữ liệu tin tức.';
+        }
+    } else {
+        $rssError = 'Không thể kết nối đến Dân trí RSS.';
+    }
+} catch (Exception $e) {
+    $rssError = 'Có lỗi xảy ra khi tải tin tức.';
+}
+?>
+
+<div class="card fade-in" style="margin-bottom: 24px; border-left: 4px solid var(--gold);">
+  <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+    <div class="card-title">📰 Bản tin mới nhất từ Dân trí (dantri.com.vn)</div>
+    <a href="https://dantri.com.vn" target="_blank" style="color:var(--gold); font-size:12px; text-decoration:none; font-weight:600;">Xem tất cả ➔</a>
+  </div>
+  <div class="card-body">
+    <?php if (!empty($rssError) && empty($newsItems)): ?>
+      <div style="color:var(--text2); font-style:italic; font-size:13px; display:flex; align-items:center; gap:8px;">
+        ⚠️ Không thể tải tin tức trực tiếp từ Dân trí (vui lòng kiểm tra kết nối mạng).
+      </div>
+    <?php else: ?>
+      <div class="dantri-news-grid">
+        <?php foreach ($newsItems as $news): ?>
+          <a href="<?= e($news['link']) ?>" target="_blank" class="news-item-card" style="text-decoration:none; color:inherit;">
+            <?php if ($news['thumbnail']): ?>
+              <div class="news-thumb" style="background-image: url('<?= e($news['thumbnail']) ?>');"></div>
+            <?php else: ?>
+              <div class="news-thumb" style="background:var(--bg3); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:24px;">📰</div>
+            <?php endif; ?>
+            <div class="news-info">
+              <h4 class="news-title"><?= e($news['title']) ?></h4>
+              <p class="news-summary"><?= e($news['summary']) ?></p>
+              <div class="news-meta">
+                <span>🕒 <?= date('d/m/Y H:i', strtotime($news['pubDate'])) ?></span>
+              </div>
+            </div>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+  </div>
+</div>
+
+<style>
+.dantri-news-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1200px) {
+  .dantri-news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .dantri-news-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.news-item-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.news-item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  border-color: var(--gold);
+}
+.news-thumb {
+  height: 140px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid var(--border);
+}
+.news-info {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+.news-title {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 36px;
+}
+.news-summary {
+  margin: 0 0 10px 0;
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 46px;
+}
+.news-meta {
+  font-size: 10px;
+  color: var(--gold);
+  font-weight: 500;
+}
+</style>
 
 <?php if ($vaiTro === 'Người dùng thường'): ?>
   <!-- DASHBOARD CHO NGƯỜI DÙNG THƯỜNG -->

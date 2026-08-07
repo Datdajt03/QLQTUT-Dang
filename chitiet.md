@@ -63,6 +63,7 @@ flowchart TD
         UC_Reg["Gửi yêu cầu đăng ký mới"]
         UC_Update["Gửi đề xuất cập nhật thông tin"]
         UC_Class["Xem danh sách bạn cùng Lớp"]
+        UC_News["Xem tin tức Dân trí"]
     end
 
     %% Nhóm chức năng của Quản lý
@@ -88,6 +89,7 @@ flowchart TD
     User --> UC_Reg
     User --> UC_Update
     User --> UC_Class
+    User --> UC_News
 
     Manager --> UC_Login
     Manager --> UC_List
@@ -96,6 +98,7 @@ flowchart TD
     Manager --> UC_ApproveUpdate
     Manager --> UC_ExcelInOut
     Manager --> UC_Stats
+    Manager --> UC_News
 
     Admin --> UC_Users
     Admin --> UC_Config
@@ -324,6 +327,7 @@ erDiagram
 ### 2. Công nghệ sử dụng
 * **Frontend**: HTML5, Vanilla CSS3 (Hệ màu Dark mode phối hợp Đỏ-Vàng sang trọng, Responsive linh hoạt), JavaScript ES6 (AJAX Fetch API).
 * **Backend**: PHP 8.x thuần kết nối CSDL qua PDO bảo mật chống SQL Injection.
+* **Tích hợp RSS/XML Parser**: Sử dụng `simplexml_load_string` và cơ chế luồng `stream_context_create` có thiết lập timeout của PHP để nạp tin tức trực tuyến từ Dân trí.
 * **Python API (Flask)**: Phục vụ xuất báo cáo định dạng cao cấp qua các thư viện xử lý bảng tính chuyên dụng.
 * **Cơ sở dữ liệu**: MySQL (hệ quản trị cơ sở dữ liệu XAMPP).
 
@@ -333,6 +337,7 @@ erDiagram
 
 * **Ưu điểm**:
   * Giao diện phối màu cờ Đảng trang nghiêm, hiện đại, bắt mắt.
+  * Tích hợp bản tin Dân trí (dantri.com.vn) trực quan thời gian thực ở đầu Dashboard giúp cập nhật tin tức nhanh chóng.
   * Phân quyền chặt chẽ 3 cấp tài khoản bảo mật.
   * Tính năng cập nhật thông tin đề xuất và duyệt cập nhật trực quan so sánh thay đổi Cũ ➔ Mới giúp công tác quản lý của Bí thư cực kỳ tiện lợi.
   * Sinh viên dễ dàng xem được thông tin của bạn học cùng lớp học của mình khi được duyệt.
