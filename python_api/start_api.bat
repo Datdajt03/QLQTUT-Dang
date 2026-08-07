@@ -51,5 +51,7 @@ REM Khoi dong Flask
 echo [..] Khoi dong Flask API tai http://localhost:5000
 echo      Nhan Ctrl+C de dung
 echo.
+set PYTHONIOENCODING=utf-8
+set PYTHONUTF8=1
 %PYTHON% app.py
 pause

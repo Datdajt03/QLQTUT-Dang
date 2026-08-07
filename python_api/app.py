@@ -1,5 +1,12 @@
-# Flask API cho xuất Excel & PDF – Hệ thống Kết nạp Đảng
+# -*- coding: utf-8 -*-
+# Flask API cho xuat Excel & PDF – He thong Ket nap Dang
 # pip install -r requirements.txt
+import sys, io
+# Force UTF-8 output on Windows (fix cp1252 UnicodeEncodeError)
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+if sys.stderr.encoding != 'utf-8':
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
@@ -93,9 +100,9 @@ if os.path.exists(win_fonts_dir):
         FONT_REGULAR = 'TimesNewRoman'
         FONT_BOLD = 'TimesNewRoman-Bold'
         FONT_ITALIC = 'TimesNewRoman-Italic'
-        print("[OK] Đã đăng ký font Unicode hệ thống thành công!")
+        print("[OK] Font TimesNewRoman da dang ky thanh cong!")
     except Exception as e:
-        print(f"[WARN] Lỗi đăng ký font: {e}. Sử dụng font tiêu chuẩn thay thế.")
+        print(f"[WARN] Loi dang ky font: {e}. Su dung font tieu chuan thay the.")
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 def fmt_date(v):
