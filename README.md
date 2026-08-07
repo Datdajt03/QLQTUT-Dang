@@ -40,9 +40,9 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 - **Giao diện so sánh của Quản lý**: Đề xuất cập nhật hiển thị tại Tab riêng biệt trong trang `duyet_dang_ky.php`, so sánh chi tiết các trường thay đổi (Cũ ➔ Mới) trực quan để Quản lý duyệt hoặc từ chối kèm lý do.
 - **Dashboard Người dùng chính thức**: Khi hồ sơ được duyệt, Dashboard tự động chuyển thành trang thông tin chính thức có timeline 5 bước kết nạp Đảng trực quan và bảng danh sách thành viên cùng Lớp hoặc cùng Chi bộ Đảng.
 
-### 5. Tích hợp Tin tức Thời gian thực từ Dân trí (dantri.com.vn) [NEW]
-- **Bản tin đầu trang**: Tích hợp trực tiếp dữ liệu tin tức nóng hổi thời gian thực ở phần đầu trang chủ Dashboard (`index.php`) cho cả tài khoản sinh viên và quản lý.
-- **Cơ chế hoạt động**: Sử dụng parser RSS động bằng PHP với cơ chế timeout kết nối tối đa 3 giây để đảm bảo trang tải cực nhanh và mượt mà, tự động bóc tách ảnh thumbnail và tóm tắt nội dung bài viết.
+### 5. Tích hợp Tin tức Đa nguồn (Dân trí, Báo Nhân Dân, Báo Đảng Cộng sản) [NEW]
+- **Bản tin đầu trang**: Tích hợp thanh chọn tin tức trực tuyến với 3 nguồn báo chính thống: *Báo Dân trí*, *Báo Nhân Dân*, và *Báo điện tử Đảng Cộng sản Việt Nam* ngay tại đầu trang chủ Dashboard (`index.php`) cho mọi tài khoản.
+- **Cơ chế hoạt động**: Sử dụng parser RSS động của PHP kết hợp dự phòng luồng tin từ Báo điện tử Chính phủ hoặc dữ liệu dự phòng cục bộ khi trang Báo Đảng Cộng sản chặn cURL (Cookie wall). Có thiết lập timeout 3 giây để đảm bảo tải trang cực kỳ nhanh chóng.
 
 ---
 

@@ -353,7 +353,7 @@ erDiagram
 ### 2. Công nghệ sử dụng
 * **Frontend**: HTML5, Vanilla CSS3 (Hệ màu Dark mode phối hợp Đỏ-Vàng sang trọng, Responsive linh hoạt), JavaScript ES6 (AJAX Fetch API).
 * **Backend**: PHP 8.x thuần kết nối CSDL qua PDO bảo mật chống SQL Injection.
-* **Tích hợp RSS/XML Parser**: Sử dụng `simplexml_load_string` và cơ chế luồng `stream_context_create` có thiết lập timeout của PHP để nạp tin tức trực tuyến từ Dân trí.
+* **Tích hợp RSS/XML Parser**: Sử dụng `simplexml_load_string` và cơ chế luồng `stream_context_create` có thiết lập timeout của PHP để nạp tin tức trực tuyến đa nguồn (Dân trí, Báo Nhân Dân, Báo điện tử Đảng Cộng sản) đồng thời tích hợp logic dự phòng thông tin linh hoạt.
 * **Python API (Flask)**: Phục vụ xuất báo cáo định dạng cao cấp qua các thư viện xử lý bảng tính chuyên dụng.
 * **Cơ sở dữ liệu**: MySQL (hệ quản trị cơ sở dữ liệu XAMPP).
 
@@ -363,7 +363,7 @@ erDiagram
 
 * **Ưu điểm**:
   * Giao diện phối màu cờ Đảng trang nghiêm, hiện đại, bắt mắt.
-  * Tích hợp bản tin Dân trí (dantri.com.vn) trực quan thời gian thực ở đầu Dashboard giúp cập nhật tin tức nhanh chóng.
+  * Tích hợp bản tin thời sự đa nguồn chính thống (Dân trí, Nhân Dân, Đảng Cộng sản) thời gian thực ở đầu Dashboard giúp cập nhật tin tức nhanh chóng và phù hợp chuyên môn công tác Đảng.
   * Phân quyền chặt chẽ 3 cấp tài khoản bảo mật.
   * Tính năng cập nhật thông tin đề xuất và duyệt cập nhật trực quan so sánh thay đổi Cũ ➔ Mới giúp công tác quản lý của Bí thư cực kỳ tiện lợi.
   * Sinh viên dễ dàng xem được thông tin của bạn học cùng lớp học của mình khi được duyệt.
