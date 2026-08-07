@@ -9,10 +9,10 @@
 * **Repository:** https://github.com/Datdajt03/QLQTUT-Dang
 * **Nhóm thực hiện:** [Điền tên nhóm]
 * **Thành viên:**
-  1. [Họ và tên SV 1] – [MSSV 1] – [Phân công: Backend PHP, Database]
-  2. [Họ và tên SV 2] – [MSSV 2] – [Phân công: Frontend CSS/JS, UI/UX]
-  3. [Họ và tên SV 3] – [MSSV 3] – [Phân công: Python API, Báo cáo]
-
+  1. [LÒ MẠNH ĐẠT] – [MSSV 1] – [Phân công: Backend PHP, Database]
+  2. [NGUYỄN HUY HOÀNG] – [MSSV 2] – [Phân công: Frontend CSS/JS, UI/UX]
+  3. [TÒNG LƯU ANH TÚ] – [MSSV 3] – [Phân công: Python API, Báo cáo]
+  4. [PHẠM THỊ THANH HẢO] – [MSSV 3] – [Phân công: Python API, Báo cáo]
 ---
 
 ## I. GIỚI THIỆU ĐỀ TÀI
