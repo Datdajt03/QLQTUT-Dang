@@ -108,6 +108,7 @@ web1/
 │   ├── duyet_dang_ky.php          ← Giao diện phê duyệt/từ chối hồ sơ đăng ký trực tuyến
 │   ├── api_proxy.php              ← File trung gian PHP Proxy kết nối Python Server
 │   ├── cap_nhat_thong_tin.php     ← [NEW] Form đề xuất cập nhật thông tin cá nhân dành cho quần chúng/sinh viên
+│   ├── thanh_vien_chi_bo.php     ← [NEW] Trang xem danh sách thành viên cùng lớp hoặc chi bộ sinh hoạt dành cho sinh viên
 │   └── nhap_thong_tin.php         ← Form đăng ký thông tin trực tuyến dành cho sinh viên
 ├── Quan_ly_danh_muc/             ← Module danh mục phân cấp hỗ trợ
 │   ├── chi_bo.php                 ← Danh mục quản lý các Chi bộ

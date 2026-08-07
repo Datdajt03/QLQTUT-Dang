@@ -69,11 +69,26 @@ try {
     </a>
 
     <?php if ($vaiTro === 'Người dùng thường'): ?>
+      <?php
+      $dbHeader = getDB();
+      $stmtH = $dbHeader->prepare("SELECT COUNT(*) FROM doi_tuong WHERE ma_gvsv = ? OR ho_ten = ?");
+      $stmtH->execute([$user['username'], $user['ho_ten']]);
+      $isApprovedUser = ($stmtH->fetchColumn() > 0);
+      ?>
       <!-- Chức năng sinh viên/người dùng thường -->
       <div class="nav-section-title">Hồ sơ cá nhân</div>
-      <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/nhap_thong_tin.php" class="nav-item <?= isActive('nhap_thong_tin.php','Quan_ly_doi_tuong') ?>">
-        <span class="icon">✍️</span> <span>Gửi hồ sơ đăng ký</span>
-      </a>
+      <?php if ($isApprovedUser): ?>
+        <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/thanh_vien_chi_bo.php" class="nav-item <?= isActive('thanh_vien_chi_bo.php','Quan_ly_doi_tuong') ?>">
+          <span class="icon">🏛️</span> <span>Đồng chí cùng Chi bộ/Lớp</span>
+        </a>
+        <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/cap_nhat_thong_tin.php" class="nav-item <?= isActive('cap_nhat_thong_tin.php','Quan_ly_doi_tuong') ?>">
+          <span class="icon">✏️</span> <span>Cập nhật thông tin</span>
+        </a>
+      <?php else: ?>
+        <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/nhap_thong_tin.php" class="nav-item <?= isActive('nhap_thong_tin.php','Quan_ly_doi_tuong') ?>">
+          <span class="icon">✍️</span> <span>Gửi hồ sơ đăng ký</span>
+        </a>
+      <?php endif; ?>
     <?php else: ?>
       <!-- Chức năng quản lý/admin -->
       <div class="nav-section-title">Nghiệp vụ</div>
