@@ -188,7 +188,7 @@ var apiOnline = false;
 
 // ── API health check ──────────────────────────────────────────────────────────
 function checkApi() {
-  fetch('api_proxy.php?path=health')
+  fetch('<?= BASE_URL ?>Quan_ly_doi_tuong/api_proxy.php?path=health')
     .then(r => r.json())
     .then(d => {
       if (d.status === 'ok') {
@@ -360,17 +360,17 @@ function doExport() {
 
   if (currentType === 1) {
     // Excel - POST → /api/export/all
-    fetchDownload('api_proxy.php?path=api/export/all', {filter_type: ft, filter_value: fv});
+    fetchDownload('<?= BASE_URL ?>Quan_ly_doi_tuong/api_proxy.php?path=api/export/all', {filter_type: ft, filter_value: fv});
   } else if (currentType === 2) {
     // PDF (Single Profile) - GET → /api/export/single/{id}
     var pid = document.querySelector('input[name=pid]:checked')?.value;
     if (!pid) return done();
-    window.location = `api_proxy.php?path=api/export/single/${pid}`;
+    window.location = `<?= BASE_URL ?>Quan_ly_doi_tuong/api_proxy.php?path=api/export/single/${pid}`;
     setTimeout(done, 1500);
   } else if (currentType === 3) {
     // PDF (Selected List) - POST → /api/export/selected
     var ids = [...document.querySelectorAll('.pcheck:checked')].map(c => parseInt(c.value));
-    fetchDownload('api_proxy.php?path=api/export/selected', {ids});
+    fetchDownload('<?= BASE_URL ?>Quan_ly_doi_tuong/api_proxy.php?path=api/export/selected', {ids});
   }
 
   function done() { btn.disabled = false; spin.style.display = 'none'; updateExportBtn(); }

@@ -27,7 +27,7 @@ function getDB(): PDO {
         try {
             $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
             
-            // Tự động khởi tạo bảng nguoi_dung và tài khoản admin mặc định
+            // Tự động khởi tạo bảng nguoi_dung nếu chưa có
             try {
                 $pdo->query("SELECT 1 FROM nguoi_dung LIMIT 1");
             } catch (PDOException $e) {
@@ -39,10 +39,23 @@ function getDB(): PDO {
                     vai_tro ENUM('Người dùng thường', 'Quản lý', 'Admin') DEFAULT 'Người dùng thường',
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-                
-                $adminPass = password_hash('Admin123', PASSWORD_DEFAULT);
-                $stmt = $pdo->prepare("INSERT INTO nguoi_dung (username, password, ho_ten, vai_tro) VALUES (?, ?, ?, ?)");
-                $stmt->execute(['Admin', $adminPass, 'Quản trị viên', 'Admin']);
+            }
+
+            // Tự động kiểm tra và thêm các tài khoản mặc định nếu chưa có
+            $defaultUsers = [
+                ['username' => 'Admin',   'password' => 'Admin123',   'ho_ten' => 'Quản trị viên', 'vai_tro' => 'Admin'],
+                ['username' => 'Testql',  'password' => 'Testql123',  'ho_ten' => 'Quản lý Thử nghiệm', 'vai_tro' => 'Quản lý'],
+                ['username' => 'Testngd', 'password' => 'Testngd123', 'ho_ten' => 'Người dùng Thử nghiệm', 'vai_tro' => 'Người dùng thường']
+            ];
+
+            foreach ($defaultUsers as $u) {
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM nguoi_dung WHERE username = ?");
+                $stmt->execute([$u['username']]);
+                if ($stmt->fetchColumn() == 0) {
+                    $hash = password_hash($u['password'], PASSWORD_DEFAULT);
+                    $stmtIns = $pdo->prepare("INSERT INTO nguoi_dung (username, password, ho_ten, vai_tro) VALUES (?, ?, ?, ?)");
+                    $stmtIns->execute([$u['username'], $hash, $u['ho_ten'], $u['vai_tro']]);
+                }
             }
         } catch (PDOException $e) {
             die('<div style="color:red;padding:20px;font-family:sans-serif;">

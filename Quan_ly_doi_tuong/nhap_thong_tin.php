@@ -1,6 +1,6 @@
 <?php
 // nhap_thong_tin.php - Form đăng ký thông tin quần chúng ưu tú công khai dành cho sinh viên
-require_once __DIR__ . '/config.php';
+require_once dirname(__DIR__) . '/config.php';
 require_once dirname(__DIR__) . '/User/auth.php';
 requireLogin();
 
