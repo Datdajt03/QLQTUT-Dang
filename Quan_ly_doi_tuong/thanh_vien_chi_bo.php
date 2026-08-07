@@ -23,7 +23,7 @@ if (!$myProfile) {
 $search = trim($_GET['search'] ?? '');
 $sql = "SELECT id, ma_gvsv, ho_ten, lop, chi_bo_cong_nhan, chuc_vu, trang_thai, email 
         FROM doi_tuong 
-        WHERE ((chi_bo_cong_nhan = :chi_bo AND chi_bo_cong_nhan != '') OR (lop = :lop AND lop != '')) AND id != :my_id";
+        WHERE lop = :lop AND id != :my_id";
 
 if ($search !== '') {
     $sql .= " AND (ho_ten LIKE :search OR ma_gvsv LIKE :search OR lop LIKE :search OR chuc_vu LIKE :search)";
@@ -33,7 +33,6 @@ $sql .= " ORDER BY ho_ten ASC";
 
 $stmtMembers = $db->prepare($sql);
 $params = [
-    ':chi_bo' => $myProfile['chi_bo_cong_nhan'],
     ':lop'    => $myProfile['lop'],
     ':my_id'  => $myProfile['id']
 ];
@@ -73,7 +72,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <div class="card fade-in">
   <div class="card-header">
     <div class="card-title">
-      👥 Danh sách thành viên cùng Lớp (<strong><?= e($myProfile['lop'] ?: '—') ?></strong>) hoặc Chi bộ (<strong><?= e($myProfile['chi_bo_cong_nhan'] ?: '—') ?></strong>)
+      👥 Danh sách thành viên cùng Lớp (<strong><?= e($myProfile['lop'] ?: '—') ?></strong>)
     </div>
   </div>
   <div class="card-body" style="padding:0;">

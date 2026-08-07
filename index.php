@@ -25,14 +25,13 @@ try {
         $stmt = $db->prepare("SELECT * FROM doi_tuong WHERE ma_gvsv = ? OR ho_ten = ? LIMIT 1");
         $stmt->execute([$user['username'], $user['ho_ten']]);
         $myProfile = $stmt->fetch();
-
         if ($myProfile) {
-            // Lấy danh sách thành viên cùng chi bộ hoặc cùng lớp học
+            // Lấy danh sách thành viên cùng lớp học
             $stmtMembers = $db->prepare("SELECT id, ma_gvsv, ho_ten, lop, chi_bo_cong_nhan, chuc_vu, trang_thai, email 
                                          FROM doi_tuong 
-                                         WHERE ((chi_bo_cong_nhan = ? AND chi_bo_cong_nhan != '') OR (lop = ? AND lop != '')) AND id != ? 
+                                         WHERE lop = ? AND id != ? 
                                          ORDER BY ho_ten ASC");
-            $stmtMembers->execute([$myProfile['chi_bo_cong_nhan'], $myProfile['lop'], $myProfile['id']]);
+            $stmtMembers->execute([$myProfile['lop'], $myProfile['id']]);
             $chiBoMembers = $stmtMembers->fetchAll();
         } else {
             // Lấy danh sách yêu cầu đăng ký (chờ duyệt/từ chối)
@@ -364,16 +363,16 @@ require_once __DIR__ . '/Giao_dien/header.php';
     </div>
   </div>
 
-  <!-- Bảng thành viên cùng chi bộ hoặc cùng lớp -->
+  <!-- Bảng thành viên cùng lớp -->
   <div class="card fade-in">
     <div class="card-header">
-      <div class="card-title"><span class="icon">🏛️</span> Danh sách thành viên cùng Lớp (<strong><?= e($myProfile['lop'] ?: '—') ?></strong>) hoặc cùng Chi bộ (<strong><?= e($myProfile['chi_bo_cong_nhan'] ?: '—') ?></strong>)</div>
+      <div class="card-title"><span class="icon">🏛️</span> Danh sách thành viên cùng Lớp (<strong><?= e($myProfile['lop'] ?: '—') ?></strong>)</div>
     </div>
     <div class="card-body" style="padding:0;">
       <?php if (empty($chiBoMembers)): ?>
       <div class="empty-state" style="padding: 30px 20px;">
         <div class="icon">📂</div>
-        <h3>Không có thành viên nào khác cùng Lớp hoặc Chi bộ</h3>
+        <h3>Không có thành viên nào khác cùng Lớp</h3>
         <p>Hệ thống chưa ghi nhận thành viên chính thức nào khác trong lớp hoặc chi bộ của bạn.</p>
       </div>
       <?php else: ?>

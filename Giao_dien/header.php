@@ -79,7 +79,7 @@ try {
       <div class="nav-section-title">Hồ sơ cá nhân</div>
       <?php if ($isApprovedUser): ?>
         <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/thanh_vien_chi_bo.php" class="nav-item <?= isActive('thanh_vien_chi_bo.php','Quan_ly_doi_tuong') ?>">
-          <span class="icon">🏛️</span> <span>Đồng chí cùng Chi bộ/Lớp</span>
+          <span class="icon">🏛️</span> <span>Thành viên cùng Lớp</span>
         </a>
         <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/cap_nhat_thong_tin.php" class="nav-item <?= isActive('cap_nhat_thong_tin.php','Quan_ly_doi_tuong') ?>">
           <span class="icon">✏️</span> <span>Cập nhật thông tin</span>
