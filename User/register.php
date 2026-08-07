@@ -53,24 +53,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Đăng ký tài khoản – <?= SITE_NAME ?></title>
-  <link rel="stylesheet" href="<?= BASE_URL ?>assets/style.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>Giao_dien/assets/style.css">
   <style>
     body {
-      background: #0f0f14;
+      background: #f4f6f9;
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       padding: 20px;
       font-family: 'Roboto', sans-serif;
+      color: #333333;
     }
     .auth-container {
       max-width: 450px;
       width: 100%;
-      background: #16161f;
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
       border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
       overflow: hidden;
     }
     .auth-header {
@@ -85,11 +86,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     .auth-header p {
       font-size: 13px;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,0.85);
       margin-top: 6px;
     }
     .auth-body {
       padding: 30px;
+    }
+    .form-label {
+      color: #495057;
+      font-weight: 500;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+    .form-control {
+      background: #ffffff !important;
+      border: 1px solid #ced4da !important;
+      color: #212529 !important;
+    }
+    .form-control:focus {
+      border-color: #C8102E !important;
+      box-shadow: 0 0 0 0.2rem rgba(200, 16, 46, 0.15) !important;
     }
     .role-selection {
       display: grid;
@@ -98,40 +114,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       margin-top: 8px;
     }
     .role-box {
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid #ced4da;
       border-radius: 8px;
       padding: 10px 14px;
       display: flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
-      background: rgba(255,255,255,0.02);
+      background: #f8f9fa;
       transition: all 0.2s;
     }
     .role-box:hover {
-      background: rgba(255,255,255,0.05);
-      border-color: rgba(255,255,255,0.2);
+      background: #e9ecef;
+      border-color: #adb5bd;
     }
     .role-box input[type="radio"] {
       margin: 0;
-      accent-color: #FFD700;
+      accent-color: #C8102E;
     }
     .role-box span {
       font-size: 13px;
       font-weight: 500;
-      color: #e8e8f0;
+      color: #495057;
     }
     .role-box.active {
-      border-color: #FFD700;
-      background: rgba(255,215,0,0.05);
+      border-color: #C8102E;
+      background: rgba(200, 16, 46, 0.05);
+    }
+    .role-box.active span {
+      color: #C8102E;
     }
     .links {
       text-align: center;
       margin-top: 20px;
       font-size: 13px;
+      color: #6c757d;
     }
     .links a {
-      color: #FFD700;
+      color: #C8102E;
       text-decoration: none;
       font-weight: 600;
     }
