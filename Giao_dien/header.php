@@ -41,6 +41,8 @@ try {
   <title><?= isset($pageTitle) ? e($pageTitle) . ' – ' : '' ?><?= SITE_NAME ?></title>
   <meta name="description" content="Hệ thống quản lý quần chúng ưu tú phục vụ kết nạp Đảng">
   <link rel="stylesheet" href="<?= BASE_URL ?>Giao_dien/assets/style.css">
+  <link rel="icon" type="image/png" href="<?= BASE_URL ?>Pic_for_all/Logo Đại Học Tây Bắc.png">
+  <link rel="apple-touch-icon" href="<?= BASE_URL ?>Pic_for_all/Logo Đại Học Tây Bắc.png">
 </head>
 <body>
 <div class="layout" id="mainLayout">
@@ -55,7 +57,11 @@ try {
 <!-- ===== SIDEBAR ===== -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-icon">⭐</div>
+    <div class="logo-icon" style="background:none;box-shadow:none;padding:2px;">
+      <img src="<?= BASE_URL ?>Pic_for_all/Logo Đại Học Tây Bắc.png"
+           alt="Logo ĐH Tây Bắc"
+           style="width:40px;height:40px;object-fit:contain;border-radius:6px;">
+    </div>
     <div class="logo-text">
       Kết nạp Đảng
       <span>Quản lý Quần chúng ƯT</span>
@@ -150,7 +156,10 @@ try {
   </nav>
 
   <div class="sidebar-footer">
-    <div>⭐ <strong>Đảng bộ</strong></div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px;">
+      <img src="<?= BASE_URL ?>Pic_for_all/Logo Đại Học Tây Bắc.png" alt="UTB" style="width:16px;height:16px;object-fit:contain;opacity:0.8;">
+      <strong>Đảng bộ</strong>
+    </div>
     <div style="margin-top:4px;font-size:10px;">v1.2 · <?= date('Y') ?></div>
   </div>
 </aside>
@@ -160,7 +169,8 @@ try {
   <button class="btn-icon" id="menuToggle" title="Menu" style="border:none;">☰</button>
 
   <div class="header-title">
-    <span>⭐</span> <?= SITE_NAME ?>
+    <img src="<?= BASE_URL ?>Pic_for_all/Logo Đại Học Tây Bắc.png" alt="UTB" style="width:22px;height:22px;object-fit:contain;vertical-align:middle;margin-right:4px;">
+    <?= SITE_NAME ?>
   </div>
 
   <div class="header-search">
@@ -175,6 +185,25 @@ try {
       <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/them.php" class="btn btn-primary btn-sm">➕ Thêm mới</a>
       <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php" class="btn-icon" title="Xuất dữ liệu">📤</a>
     <?php endif; ?>
+
+    <!-- Quick links UTB -->
+    <div style="display:flex;align-items:center;gap:6px;border-left:1px solid var(--border);padding-left:12px;margin-left:4px;">
+      <a href="https://lms.utb.edu.vn/" target="_blank" rel="noopener"
+         title="Hệ thống LMS Đại học Tây Bắc"
+         style="display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:rgba(200,16,46,0.1);border:1px solid rgba(200,16,46,0.3);border-radius:7px;color:var(--text2);font-size:12px;font-weight:600;text-decoration:none;transition:all 0.25s ease;"
+         onmouseover="this.style.background='rgba(200,16,46,0.25)';this.style.color='#fff';"
+         onmouseout="this.style.background='rgba(200,16,46,0.1)';this.style.color='var(--text2)';">
+        📚 LMS
+      </a>
+      <a href="https://sinhvien.utb.edu.vn/" target="_blank" rel="noopener"
+         title="Cổng sinh viên Đại học Tây Bắc"
+         style="display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.25);border-radius:7px;color:var(--text2);font-size:12px;font-weight:600;text-decoration:none;transition:all 0.25s ease;"
+         onmouseover="this.style.background='rgba(255,215,0,0.2)';this.style.color='var(--gold)';"
+         onmouseout="this.style.background='rgba(255,215,0,0.08)';this.style.color='var(--text2)';">
+        🎓 SV Portal
+      </a>
+    </div>
+
     <a href="<?= BASE_URL ?>User/logout.php" class="user-badge" title="Nhấp vào để Đăng xuất" style="text-decoration:none; display:flex; align-items:center;">
       <div class="avatar" style="background:var(--red); color:#fff; font-weight:bold;"><?= mb_substr($currentUser['ho_ten'] ?: $currentUser['username'], 0, 1) ?></div>
       <span class="name" style="margin-right:4px;"><?= e($currentUser['ho_ten'] ?: $currentUser['username']) ?></span>
