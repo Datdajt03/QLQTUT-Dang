@@ -1,5 +1,46 @@
 <div style="text-align: justify">
 
+# 📋 QUẢN LÝ QUẦN CHÚNG ƯU TÚ PHỤC VỤ KẾT NẠP ĐẢNG
+
+> 🌐 **Liên kết trường:** &nbsp;[🏫 TBU – Đại học Tây Bắc](https://utb.edu.vn/index.php) &nbsp;|&nbsp; [📚 LMS TBU](https://lms.utb.edu.vn/) &nbsp;|&nbsp; [🎓 Cổng Sinh viên TBU](https://sinhvien.utb.edu.vn/)
+
+---
+
+## 👥 Thông tin Nhóm Thực hiện
+
+**Nhóm thực hiện:** `[02]`
+
+| STT | Họ và Tên | MSSV | Phân công |
+|:---:|:----------|:----:|:----------|
+| 1 | **LÒ MẠNH ĐẠT** | MSSV 1 | Backend PHP, Database |
+| 2 | **NGUYỄN HUY HOÀNG** | MSSV 2 | Frontend Python API, Edge AI |
+| 3 | **TÒNG LƯU ANH TÚ** | MSSV 3 | Báo cáo CSS/JS, UI/UX |
+| 4 | **PHẠM THỊ THANH HẢO** | MSSV 3 | Python API, Báo cáo |
+
+---
+
+## 📌 Giới thiệu Đề tài
+
+### 🇻🇳 Tiếng Việt
+
+Công tác phát triển Đảng trong môi trường giáo dục đại học đòi hỏi quản lý một khối lượng lớn hồ sơ quần chúng ưu tú qua nhiều giai đoạn chặt chẽ — từ tiếp nhận đơn đăng ký, theo dõi quá trình bồi dưỡng, đến hoàn thiện các biểu mẫu hành chính kết nạp theo quy định của Đảng. Thực tế hiện nay tại nhiều cơ sở giáo dục, quy trình này vẫn phụ thuộc phần lớn vào hồ sơ giấy và bảng tính thủ công, dẫn đến nguy cơ sai sót, thất lạc thông tin và tốn nhiều thời gian xử lý.
+
+**Hệ thống Quản lý Quần chúng Ưu tú Phục vụ Kết nạp Đảng** được xây dựng nhằm số hóa và tự động hóa toàn bộ quy trình nêu trên. Ứng dụng cho phép cán bộ Đảng vụ quản lý tập trung hồ sơ từng quần chúng, theo dõi timeline 5 bước kết nạp theo đúng điều lệ Đảng, phê duyệt hoặc từ chối đơn đăng ký kèm thông báo email tự động, và xuất trực tiếp 8 biểu mẫu PDF hành chính chuẩn 2026 với dữ liệu được điền sẵn chính xác từ cơ sở dữ liệu. Tích hợp thêm Edge AI giúp tự động nhận diện và điền thông tin từ ảnh CCCD/thẻ sinh viên, giảm đáng kể thời gian nhập liệu thủ công. Hệ thống phân quyền 3 cấp (Sinh viên – Quản lý – Admin) đảm bảo bảo mật và tính minh bạch trong toàn bộ vận hành.
+
+> **Giá trị cốt lõi:** Giúp trường rút ngắn thời gian xử lý hồ sơ kết nạp Đảng, giảm thiểu sai sót nghiệp vụ, và nâng cao tính chuyên nghiệp trong công tác phát triển Đảng viên tại cơ sở giáo dục.
+
+---
+
+### 🇬🇧 English (Academic)
+
+The recruitment and development of Party members within higher education institutions is a process governed by strict procedural requirements, encompassing candidate registration, progressive training oversight, and the completion of standardised administrative documents in accordance with Party regulations. In practice, many universities continue to rely on paper-based records and manual spreadsheets, exposing the workflow to risks of data loss, clerical error, and significant administrative overhead.
+
+This system — **Management of Outstanding Candidates for Communist Party Admission** — addresses these challenges by providing a comprehensive, web-based platform that digitises and automates the entire Party member recruitment pipeline. The application enables Party secretaries to centrally manage candidate profiles, monitor each individual's progress across the five mandated admission milestones, and approve or reject applications with automated email notifications. Crucially, the system generates all eight standardised 2026 administrative PDF forms with pre-populated data drawn directly from the database, eliminating manual transcription. An integrated Edge AI module leverages OCR technology to automatically extract personal information from national identity cards and student ID cards, substantially reducing data entry time. A three-tier role-based access control model (Student – Manager – Administrator) ensures data integrity, operational transparency, and institutional security throughout the process.
+
+> **Core value proposition:** The system enables universities to significantly reduce administrative processing time, minimise procedural errors, and elevate the professional standard of Party member development operations within educational institutions.
+
+---
+
 ## 🎨 Giao diện & Trải nghiệm Người dùng (UX/UI)
 
 - **Hệ màu Đảng bộ:** Đỏ cờ chủ đạo (`#C8102E`), Vàng kim điểm nhấn (`#FFD700`) trên nền Dark Mode hiện đại, dịu mắt và vô cùng sang trọng.
