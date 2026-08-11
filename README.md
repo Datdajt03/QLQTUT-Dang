@@ -10,12 +10,12 @@
 
 **Nhóm thực hiện:** `[02]`
 
-| STT | Họ và Tên | MSSV | Phân công |
-|:---:|:----------|:----:|:----------|
-| 1 | **LÒ MẠNH ĐẠT** | MSSV 1 | Backend PHP, Database |
-| 2 | **NGUYỄN HUY HOÀNG** | MSSV 2 | Frontend Python API, Edge AI |
-| 3 | **TÒNG LƯU ANH TÚ** | MSSV 3 | Báo cáo CSS/JS, UI/UX |
-| 4 | **PHẠM THỊ THANH HẢO** | MSSV 3 | Python API, Báo cáo |
+| STT | Họ và Tên              |  MSSV  | Phân công                    |
+| :-: | :--------------------- | :----: | :--------------------------- |
+|  1  | **LÒ MẠNH ĐẠT**        | MSSV 1 | Backend PHP, Database        |
+|  2  | **NGUYỄN HUY HOÀNG**   | MSSV 2 | Frontend Python API, Edge AI |
+|  3  | **TÒNG LƯU ANH TÚ**    | MSSV 3 | Báo cáo CSS/JS, UI/UX        |
+|  4  | **PHẠM THỊ THANH HẢO** | MSSV 3 | Python API, Báo cáo          |
 
 ---
 
@@ -23,7 +23,7 @@
 
 ### 🇻🇳 Tiếng Việt
 
-Công tác phát triển Đảng trong môi trường giáo dục đại học đòi hỏi quản lý một khối lượng lớn hồ sơ quần chúng ưu tú qua nhiều giai đoạn chặt chẽ — từ tiếp nhận đơn đăng ký, theo dõi quá trình bồi dưỡng, đến hoàn thiện các biểu mẫu hành chính kết nạp theo quy định của Đảng. Thực tế hiện nay tại nhiều cơ sở giáo dục, quy trình này vẫn phụ thuộc phần lớn vào hồ sơ giấy và bảng tính thủ công, dẫn đến nguy cơ sai sót, thất lạc thông tin và tốn nhiều thời gian xử lý.
+Công tác phát triển Đảng trong môi trường giáo dục đại học đòi hỏi quản lý một khối lượng lớn hồ sơ quần chúng ưu tú qua nhiều giai đoạn chặt chẽ từ tiếp nhận đơn đăng ký, theo dõi quá trình bồi dưỡng, đến hoàn thiện các biểu mẫu hành chính kết nạp theo quy định của Đảng. Thực tế hiện nay tại nhiều cơ sở giáo dục, quy trình này vẫn phụ thuộc phần lớn vào hồ sơ giấy và bảng tính thủ công, dẫn đến nguy cơ sai sót, thất lạc thông tin và tốn nhiều thời gian xử lý.
 
 **Hệ thống Quản lý Quần chúng Ưu tú Phục vụ Kết nạp Đảng** được xây dựng nhằm số hóa và tự động hóa toàn bộ quy trình nêu trên. Ứng dụng cho phép cán bộ Đảng vụ quản lý tập trung hồ sơ từng quần chúng, theo dõi timeline 5 bước kết nạp theo đúng điều lệ Đảng, phê duyệt hoặc từ chối đơn đăng ký kèm thông báo email tự động, và xuất trực tiếp 8 biểu mẫu PDF hành chính chuẩn 2026 với dữ liệu được điền sẵn chính xác từ cơ sở dữ liệu. Tích hợp thêm Edge AI giúp tự động nhận diện và điền thông tin từ ảnh CCCD/thẻ sinh viên, giảm đáng kể thời gian nhập liệu thủ công. Hệ thống phân quyền 3 cấp (Sinh viên – Quản lý – Admin) đảm bảo bảo mật và tính minh bạch trong toàn bộ vận hành.
 
@@ -63,7 +63,7 @@ This system — **Management of Outstanding Candidates for Communist Party Admis
 ### 2. Form đăng ký Sinh viên & Duyệt hồ sơ (Gửi Gmail thông báo)
 
 - **Form đăng ký trực tuyến**: Trang `/Quan_ly_doi_tuong/nhap_thong_tin.php` cho phép sinh viên tự điền hồ sơ đề xuất (Họ tên, mã SV, lớp, email, chi bộ đề xuất...) gửi lên hệ thống.
-- **Màn hình phê duyệt (Quản lý/Admin)**: Quản lý hồ sơ tại `/Quan_ly_doi_tuong/duyet_dang_ky.php` với 3 phân loại: *Chờ duyệt*, *Đã duyệt*, *Đã từ chối*. Có huy hiệu đếm số hồ sơ chờ duyệt hiển thị thời gian thực trên thanh Sidebar.
+- **Màn hình phê duyệt (Quản lý/Admin)**: Quản lý hồ sơ tại `/Quan_ly_doi_tuong/duyet_dang_ky.php` với 3 phân loại: _Chờ duyệt_, _Đã duyệt_, _Đã từ chối_. Có huy hiệu đếm số hồ sơ chờ duyệt hiển thị thời gian thực trên thanh Sidebar.
   - **Phê duyệt**: Đưa thẳng thông tin sinh viên vào danh sách chính thức `doi_tuong`, đồng thời gửi thư chúc mừng qua Gmail sinh viên.
   - **Từ chối**: Admin nhập lý do từ chối, chuyển hồ sơ sang trạng thái từ chối và gửi email nêu rõ lý do bác bỏ.
 - **Giả lập Gmail (Email Log)**: Toàn bộ email gửi đi (HTML định dạng đẹp mắt) đều được tự động lưu log tại thư mục `uploads/email_logs.txt` dưới dạng file văn bản để dễ dàng theo dõi và kiểm tra trong môi trường XAMPP local.
@@ -84,12 +84,12 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 
 ### 5. Tích hợp Tin tức Đa nguồn (Dân trí, Báo Nhân Dân, Báo Đảng Cộng sản)
 
-- **Bản tin đầu trang**: Tích hợp thanh chọn tin tức trực tuyến với 3 nguồn báo chính thống: *Báo Dân trí*, *Báo Nhân Dân*, và *Báo điện tử Đảng Cộng sản Việt Nam* ngay tại đầu trang chủ Dashboard (`index.php`) cho mọi tài khoản.
+- **Bản tin đầu trang**: Tích hợp thanh chọn tin tức trực tuyến với 3 nguồn báo chính thống: _Báo Dân trí_, _Báo Nhân Dân_, và _Báo điện tử Đảng Cộng sản Việt Nam_ ngay tại đầu trang chủ Dashboard (`index.php`) cho mọi tài khoản.
 - **Cơ chế hoạt động**: Sử dụng parser RSS động của PHP kết hợp dự phòng luồng tin từ Báo điện tử Chính phủ hoặc dữ liệu dự phòng cục bộ khi trang Báo Đảng Cộng sản chặn cURL (Cookie wall). Có thiết lập timeout 3 giây để đảm bảo tải trang cực kỳ nhanh chóng.
 
 ### 6. Edge AI Module (`AI_Module`): Smart Auto-Fill & Smart Avatar Crop [NEW]
 
-- **Trợ lý OCR Tự Động Điền Hồ Sơ (Smart Auto-Fill)**: Cho phép sinh viên tải lên **ảnh chụp CCCD (Mặt trước & Mặt sau) + Thẻ sinh viên** (hoặc Giấy nhận thức về Đảng). Engine Edge AI (`AI_Module/edge_ai_autofill.js`) dùng Tesseract.js trích xuất trực tiếp *Họ tên, Ngày sinh, Mã SV, Giới tính, Quê quán, Dân tộc, Lớp* và **tự động điền (Auto-fill)** vào form đăng ký `nhap_thong_tin.php`, tiết kiệm 90% thời gian gõ thủ công.
+- **Trợ lý OCR Tự Động Điền Hồ Sơ (Smart Auto-Fill)**: Cho phép sinh viên tải lên **ảnh chụp CCCD (Mặt trước & Mặt sau) + Thẻ sinh viên** (hoặc Giấy nhận thức về Đảng). Engine Edge AI (`AI_Module/edge_ai_autofill.js`) dùng Tesseract.js trích xuất trực tiếp _Họ tên, Ngày sinh, Mã SV, Giới tính, Quê quán, Dân tộc, Lớp_ và **tự động điền (Auto-fill)** vào form đăng ký `nhap_thong_tin.php`, tiết kiệm 90% thời gian gõ thủ công.
 - **Kiểm tra & Tự động Cắt Ảnh Chân dung (Smart Avatar Validation & Crop 3x4)**: Tự động nhận diện khuôn mặt và dùng HTML5 Canvas cắt ảnh chân dung về đúng tỷ lệ ảnh thẻ chuẩn 3x4 (300x400) sắc nét trước khi tải lên máy chủ.
 - **Agent Phân loại & Ánh xạ Tên Cột Excel (`AI_Module/excel_column_agent.js`)**: Khi tải lên file Excel/CSV tại `Thong_ke_bao_cao/import_excel.php`, AI Agent tự động phát hiện các tiêu đề cột ghi tắt/sai lệch (như `Qli`, `QL`, `Quản lý`, `Mã SV`...) và bật Modal hiển thị bảng chọn cột bên trái để ánh xạ chuẩn xác vào các trường CSDL trước khi lưu.
 - **Thẩm định Hồ sơ Minh chứng (Client-Side AI)**: OCR kiểm tra tính đầy đủ của file PDF/Image minh chứng (dưới 10MB/file), lưu file vào `uploads/ho_so_minh_chung/` và lưu log phân tích vào MySQL `edge_ai_logs`.
@@ -108,7 +108,7 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
   7. **Mẫu CN-NTVĐ1**: Giấy chứng nhận lớp Bồi dưỡng nhận thức về Đảng - Trung tâm chính trị (Xuất PDF)
   8. **Mẫu CN-NTVĐ1-2**: Giấy chứng nhận lớp Bồi dưỡng nhận thức về Đảng - Cấp ủy cấp (Xuất PDF)
 - **Mục đích xuất PDF & Nổi bật dữ liệu điền sẵn**: Giúp quản lý Đảng vụ trích xuất đầy đủ các dữ liệu hồ sơ cá nhân cần thiết. Toàn bộ các giá trị dữ liệu động được trích xuất (Họ tên, Ngày sinh, Quê quán, Lớp, Chi bộ, Đảng viên giúp đỡ...) đều được **tô viền và tô chữ màu Đỏ nổi bật `[ Dữ liệu ]`**, giúp người dùng dễ dàng nhận biết, sao chép (copy) và dán chính xác vào biểu mẫu gốc khi cần.
-- **Cơ chế Thẩm tra & Tự động bật Modal cảnh báo khi thiếu thông tin**: Khi bấm xuất bất kỳ biểu mẫu PDF nào, nếu hệ thống phát hiện hồ sơ còn khuyết các trường bắt buộc (như *Quê quán, Dân tộc, Chi bộ...*), hệ thống sẽ dừng xuất file và **hiển thị 1 Tab Modal cảnh báo** liệt kê chính xác danh sách các thông tin thiếu kèm nút **"✏️ Điền thông tin ngay"** để bổ sung trực tiếp.
+- **Cơ chế Thẩm tra & Tự động bật Modal cảnh báo khi thiếu thông tin**: Khi bấm xuất bất kỳ biểu mẫu PDF nào, nếu hệ thống phát hiện hồ sơ còn khuyết các trường bắt buộc (như _Quê quán, Dân tộc, Chi bộ..._), hệ thống sẽ dừng xuất file và **hiển thị 1 Tab Modal cảnh báo** liệt kê chính xác danh sách các thông tin thiếu kèm nút **"✏️ Điền thông tin ngay"** để bổ sung trực tiếp.
 - **Xuất PDF sắc nét & Chuẩn phông tiếng Việt**: Khởi tạo và tải tệp PDF qua Python ReportLab API chuẩn phông Times New Roman sắc nét, nhanh chóng.
 
 ### 8. Xóa Hàng Loạt Nhiều Đối Tượng (Bulk Delete Action) & Mẫu Excel Điền Chuẩn [NEW]
@@ -123,12 +123,12 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 
 Dự án gồm **2 thành phần** cần chạy song song:
 
-| Thành phần        | Công nghệ          | Cổng    | Vai trò                               |
-| ------------------- | -------------------- | -------- | -------------------------------------- |
+| Thành phần          | Công nghệ            | Cổng   | Vai trò                          |
+| ------------------- | -------------------- | ------ | -------------------------------- |
 | Web Server (PHP)    | XAMPP Apache + MySQL | `80`   | Giao diện chính, xử lý nghiệp vụ |
-| Export API (Python) | Python Flask         | `5000` | Xuất file Excel (`.xlsx`) và PDF   |
+| Export API (Python) | Python Flask         | `5000` | Xuất file Excel (`.xlsx`) và PDF |
 
-> ⚠️ **Lưu ý quan trọng**: Trang web hoạt động bình thường khi không có Python API. Chỉ cần chạy Python API khi muốn sử dụng tính năng **Xuất Excel/PDF** tại mục *Tiện ích & Báo cáo → Xuất dữ liệu*.
+> ⚠️ **Lưu ý quan trọng**: Trang web hoạt động bình thường khi không có Python API. Chỉ cần chạy Python API khi muốn sử dụng tính năng **Xuất Excel/PDF** tại mục _Tiện ích & Báo cáo → Xuất dữ liệu_.
 
 ## 🚀 Cài Đặt 1-Click Tự Động Cho Máy Mới (`setup_newcomputer.bat`) [NEW]
 
@@ -186,10 +186,10 @@ Kiểm tra: đường dẫn `C:\xampp\htdocs\web1\index.php` phải tồn tại.
 
 **Tài khoản mặc định sau khi setup:**
 
-| Vai trò      | Username     | Password     |
-| ------------- | ------------ | ------------ |
-| Admin         | `Admin`    | `Admin123` |
-| Quản lý     | `testql`   | `Admin123` |
+| Vai trò    | Username   | Password   |
+| ---------- | ---------- | ---------- |
+| Admin      | `Admin`    | `Admin123` |
+| Quản lý    | `testql`   | `Admin123` |
 | Người dùng | `testuser` | `Admin123` |
 
 > 💡 Khi đăng nhập, hãy chọn đúng vai trò tương ứng trên trang login.
@@ -205,6 +205,7 @@ Kiểm tra: đường dẫn `C:\xampp\htdocs\web1\index.php` phải tồn tại.
 1. Tải Python tại: **[https://www.python.org/downloads/](https://www.python.org/downloads/)** (phiên bản **3.10+**, khuyến nghị **3.11** hoặc **3.12**)
 2. Khi cài đặt, **BẮT BUỘC** tích chọn ✅ **"Add Python to PATH"** (ở màn hình đầu tiên của trình cài đặt)
 3. Kiểm tra cài đặt thành công bằng cách mở **Command Prompt** và gõ:
+
    ```bash
    python --version
    # Kết quả mong muốn: Python 3.x.x
@@ -230,13 +231,13 @@ pip install -r requirements.txt
 
 Danh sách thư viện sẽ được cài đặt:
 
-| Thư viện     | Phiên bản | Vai trò                                  |
-| -------------- | ----------- | ----------------------------------------- |
-| `flask`      | ≥ 3.0.0    | Web framework API server                  |
-| `flask-cors` | ≥ 4.0.0    | Cho phép PHP gọi API cross-origin       |
-| `pymysql`    | ≥ 1.1.0    | Kết nối MySQL từ Python                |
-| `openpyxl`   | ≥ 3.1.2    | Tạo và định dạng file Excel`.xlsx` |
-| `reportlab`  | ≥ 4.0.0    | Tạo file PDF có hỗ trợ tiếng Việt   |
+| Thư viện     | Phiên bản | Vai trò                            |
+| ------------ | --------- | ---------------------------------- |
+| `flask`      | ≥ 3.0.0   | Web framework API server           |
+| `flask-cors` | ≥ 4.0.0   | Cho phép PHP gọi API cross-origin  |
+| `pymysql`    | ≥ 1.1.0   | Kết nối MySQL từ Python            |
+| `openpyxl`   | ≥ 3.1.2   | Tạo và định dạng file Excel`.xlsx` |
+| `reportlab`  | ≥ 4.0.0   | Tạo file PDF có hỗ trợ tiếng Việt  |
 
 #### 4.3 – Khởi động Flask API
 
@@ -274,7 +275,7 @@ Mở trình duyệt, truy cập: **[http://localhost:5000/health](http://localho
 Kết quả thành công sẽ trả về:
 
 ```json
-{"status": "ok", "message": "Flask API dang hoat dong!"}
+{ "status": "ok", "message": "Flask API dang hoat dong!" }
 ```
 
 Sau đó vào **Dashboard → Tiện ích & Báo cáo → Xuất dữ liệu**, sẽ thấy banner xanh: **"✅ Python API đang chạy – Sẵn sàng xuất dữ liệu!"**
@@ -288,7 +289,7 @@ Sau đó vào **Dashboard → Tiện ích & Báo cáo → Xuất dữ liệu**, 
 **Nguyên nhân**: Chưa tích chọn "Add Python to PATH" khi cài Python.**Giải pháp**:
 
 - Gỡ và cài lại Python, nhớ tích chọn **"Add Python to PATH"** ở bước đầu
-- Hoặc thêm thủ công: vào *System Properties → Environment Variables → PATH* và thêm đường dẫn `C:\Users\[TÊN]\AppData\Local\Programs\Python\Python3xx\`
+- Hoặc thêm thủ công: vào _System Properties → Environment Variables → PATH_ và thêm đường dẫn `C:\Users\[TÊN]\AppData\Local\Programs\Python\Python3xx\`
 
 #### ❌ Lỗi: `UnicodeEncodeError: 'charmap' codec can't encode character`
 
@@ -298,7 +299,7 @@ Sau đó vào **Dashboard → Tiện ích & Báo cáo → Xuất dữ liệu**, 
 #### ❌ Lỗi: `Address already in use: Port 5000`
 
 **Nguyên nhân**: Đã có một tiến trình khác đang chạy trên cổng 5000.
-**Giải pháp**: Mở Task Manager (Ctrl+Shift+Esc) → Tab *Details* → Tìm `python.exe` → *End Task*. Sau đó khởi động lại API.
+**Giải pháp**: Mở Task Manager (Ctrl+Shift+Esc) → Tab _Details_ → Tìm `python.exe` → _End Task_. Sau đó khởi động lại API.
 
 #### ❌ Lỗi: `ModuleNotFoundError: No module named 'flask'`
 
@@ -397,6 +398,6 @@ Hệ thống quản lý cơ sở dữ liệu quan hệ chặt chẽ với các b
 
 ---
 
-*Phát triển bởi Nhóm sinh viên – Đồ án Quản lý Quần chúng Ưu tú.*
+_Phát triển bởi Nhóm sinh viên – Đồ án Quản lý Quần chúng Ưu tú._
 
 </div>
