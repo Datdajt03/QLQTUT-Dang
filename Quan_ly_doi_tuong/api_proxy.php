@@ -7,14 +7,14 @@ require_once dirname(__DIR__) . '/User/auth.php';
 requireRole(['Quản lý', 'Admin']);
 
 define('API_BASE', 'http://localhost:5000');
-define('API_TIMEOUT', 15);
+define('API_TIMEOUT', 60);
 
 $path   = trim($_GET['path'] ?? '', '/');
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Security: whitelist allowed paths
 $allowed = ['health','api/filters','api/list','api/export/all','api/export/selected'];
-$allowed_pattern = '/^(health|api\/(filters|list|export\/(all|selected|single\/\d+)))$/';
+$allowed_pattern = '/^(health|api\/(filters|list|export\/(all|selected|single\/\d+|form\/[a-zA-Z0-9_-]+\/\d+)))$/';
 
 if (!preg_match($allowed_pattern, $path)) {
     http_response_code(403);

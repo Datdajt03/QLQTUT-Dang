@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS doi_tuong (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
     -- Thông tin cá nhân
+    avatar VARCHAR(255) DEFAULT NULL,
     ma_gvsv VARCHAR(100),
     ho_ten VARCHAR(255) NOT NULL,
     sdt VARCHAR(20),
@@ -132,7 +133,7 @@ CREATE TABLE IF NOT EXISTS cai_dat (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dữ liệu mặc định
-INSERT INTO cai_dat (khoa, gia_tri, mo_ta) VALUES
+INSERT IGNORE INTO cai_dat (khoa, gia_tri, mo_ta) VALUES
 ('ten_truong', 'Trường Đại học Tây Bắc', 'Tên trường/đơn vị'),
 ('ten_dang_uy', 'Đảng uỷ trường ĐH Tây Bắc', 'Tên Đảng uỷ'),
 ('nam_hoc', '2024-2025', 'Năm học hiện tại'),

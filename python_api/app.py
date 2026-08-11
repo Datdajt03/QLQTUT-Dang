@@ -596,6 +596,264 @@ def export_selected():
         db.close()
 
 
+# ─── PDF Form Builders (Mẫu 1-KNĐ, 2-KNĐ, 3-KNĐ, 4-KNĐ, 4a-KNĐ, 5-KNĐ, Mẫu I, Mẫu II) ─
+FORM_DOCX_MAP = {
+    '1-knd': 'mau-1-KND-don-xin-vao-dang-.docx',
+    '2-knd': 'mau-2-KND-ly-lich-vao-dang.docx',
+    '3-knd': 'mau-3-KND-giay-gioi-thieu-dang-vien-chinh-thuc.docx',
+    '4-knd': 'mau-4-KND-giay-gioi-thieu-doan-vien-uu-tu.docx',
+    '4a-knd': 'mau-4a-KND-giay-gioi-thieu-doan-vien-cong-doan.docx',
+    '5-knd': 'mau-5-KND-tong-hop-y-kien.docx',
+    'mau-i': 'mau-CN-NTVD1.docx',
+    'mau-ii': 'mau-CN-NTVD1-2.docx',
+}
+
+def build_knd_form_pdf(form_type: str, row: dict) -> io.BytesIO:
+    """Render trực tiếp PDF 100% chuẩn thể thức hành chính 2026 bằng ReportLab Engine, dữ liệu bôi viền đỏ nổi bật để người dùng dễ copy/dán"""
+    buf = io.BytesIO()
+    doc = SimpleDocTemplate(
+        buf, pagesize=letter,
+        leftMargin=54, rightMargin=54, topMargin=54, bottomMargin=54
+    )
+    story = []
+
+    def tag_v(val):
+        """Hàm bọc dữ liệu động với viền đỏ, chữ đỏ đậm nổi bật"""
+        if not val or val == '…………………………………………' or val == '……/……/……':
+            val_str = str(val or '…………………………………………')
+            return f'<font color="#C8102E"><b>{val_str}</b></font>'
+        return f'<font color="#C8102E"><b>[ {val} ]</b></font>'
+
+    ho_ten = tag_v(row.get('ho_ten', '…………………………………………'))
+    ngay_sinh = tag_v(fmt_date(row.get('ngay_sinh')) or '……/……/……')
+    que_quan = tag_v(row.get('que_quan', '……………………………………………………………………………………'))
+    dan_toc = tag_v(row.get('dan_toc', '……………………'))
+    lop = tag_v(row.get('lop', '…………………………………………'))
+    chuc_vu = tag_v(row.get('chuc_vu', 'Quần chúng'))
+    chi_bo = tag_v(row.get('chi_bo_cong_nhan', '…………………………………………'))
+    dang_vien_giup_do = tag_v(row.get('dang_vien_giup_do', '…………………………………………'))
+    so_qd_cc = tag_v(row.get('so_qd_cc', 'GCN-2026/ĐU'))
+
+    st_header_party = ParagraphStyle('HP', fontName=FONT_BOLD, fontSize=11, leading=14, alignment=0, textColor=colors.HexColor('#C8102E'))
+    st_nation_motto = ParagraphStyle('NM', fontName=FONT_BOLD, fontSize=10, leading=13, alignment=1)
+    st_title        = ParagraphStyle('T', fontName=FONT_BOLD, fontSize=15, leading=19, alignment=1, textColor=colors.HexColor('#C8102E'))
+    st_subtitle     = ParagraphStyle('ST', fontName=FONT_BOLD, fontSize=12, leading=15, alignment=1)
+    st_body         = ParagraphStyle('B', fontName=FONT_REGULAR, fontSize=11, leading=18, alignment=4)
+    st_body_bold    = ParagraphStyle('BB', fontName=FONT_BOLD, fontSize=11, leading=18, alignment=4)
+    st_sign_title   = ParagraphStyle('STT', fontName=FONT_BOLD, fontSize=11, leading=14, alignment=1)
+    st_sign_sub     = ParagraphStyle('STS', fontName=FONT_ITALIC, fontSize=10, leading=13, alignment=1)
+
+    if form_type == '1-knd':
+        head_tbl = Table([
+            [Paragraph("<b>ĐẢNG CỘNG SẢN VIỆT NAM</b>", st_header_party),
+             Paragraph("<b>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</b><br/><i>Độc lập - Tự do - Hạnh phúc</i>", st_nation_motto)]
+        ], colWidths=[240, 264])
+        story.append(head_tbl)
+        story.append(Spacer(1, 20))
+
+        story.append(Paragraph("DANH SÁCH / ĐƠN XIN VÀO ĐẢNG", st_title))
+        story.append(Spacer(1, 15))
+
+        story.append(Paragraph("<b><u>Kính gửi:</u></b> - Chi ủy Chi bộ: " + chi_bo + "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Đảng ủy Trường Đại học Tây Bắc", st_body_bold))
+        story.append(Spacer(1, 12))
+
+        p1 = f"""
+        Tôi là: {ho_ten}, sinh ngày {ngay_sinh}<br/>
+        Nơi sinh: {que_quan}<br/>
+        Quê quán: {que_quan}<br/>
+        Dân tộc: {dan_toc} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tôn giáo: Không<br/>
+        Trình độ học vấn: Đang học Đại học (Lớp {lop})<br/>
+        Nơi cư trú: Trường Đại học Tây Bắc<br/>
+        Nghề nghiệp: Sinh viên<br/>
+        Đơn vị công tác/Học tập: Lớp {lop}, Trường Đại học Tây Bắc<br/>
+        Chức vụ chính quyền, đoàn thể: {chuc_vu}
+        """
+        story.append(Paragraph(p1, st_body))
+        story.append(Spacer(1, 12))
+
+        p2 = """
+        Sau một thời gian tìm hiểu về Đảng, nghiên cứu Điều lệ Đảng Cộng sản Việt Nam; được sự tuyên truyền, giáo dục và giúp đỡ của Chi bộ, Đoàn thanh niên Trường Đại học Tây Bắc, tôi đã nhận thức sâu sắc về mục đích, lý tưởng cách mạng của Đảng. Tôi tự nguyện xin vào Đảng Cộng sản Việt Nam với mong muốn được cống hiến và trưởng thành.
+        """
+        story.append(Paragraph(p2, st_body))
+        story.append(Spacer(1, 25))
+
+        sign_table = Table([
+            ["", Paragraph(f"<i>Tây Bắc, ngày {datetime.now().day} tháng {datetime.now().month} năm {datetime.now().year}</i>", st_sign_sub)],
+            ["", Paragraph("<b>NGƯỜI LÀM ĐƠN</b>", st_sign_title)],
+            ["", Paragraph("<i>(Ký và ghi rõ họ tên)</i>", st_sign_sub)],
+            ["", Spacer(1, 40)],
+            ["", Paragraph(f"<b>{ho_ten}</b>", st_sign_title)]
+        ], colWidths=[270, 234])
+        story.append(sign_table)
+
+    elif form_type == '2-knd':
+        story.append(Paragraph("MẪU 2-KNĐ", st_header_party))
+        story.append(Spacer(1, 10))
+        story.append(Paragraph("LÝ LỊCH CỦA NGƯỜI XIN VÀO ĐẢNG", st_title))
+        story.append(Spacer(1, 15))
+
+        p_info = f"""
+        Họ và tên khai sinh: {ho_ten}<br/>
+        Họ và tên thường dùng: {ho_ten}<br/>
+        Ngày, tháng, năm sinh: {ngay_sinh}<br/>
+        Quê quán: {que_quan}<br/>
+        Dân tộc: {dan_toc} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lớp: {lop}<br/>
+        Chi bộ công nhận: {chi_bo}<br/>
+        Đảng viên giúp đỡ: {dang_vien_giup_do}
+        """
+        story.append(Paragraph(p_info, st_body))
+        story.append(Spacer(1, 20))
+        story.append(Paragraph("<i>(Hồ sơ lý lịch chi tiết được lưu trữ theo quy định của Ban Tổ chức Trung ương năm 2026)</i>", st_sign_sub))
+
+    elif form_type == '3-knd':
+        story.append(Paragraph("ĐẢNG CỘNG SẢN VIỆT NAM", st_header_party))
+        story.append(Spacer(1, 10))
+        story.append(Paragraph("GIẤY GIỚI THIỆU NGƯỜI VÀO ĐẢNG", st_title))
+        story.append(Paragraph("(Của Đảng viên chính thức)", st_subtitle))
+        story.append(Spacer(1, 15))
+
+        p_intro = f"""
+        Tôi là Đảng viên chính thức: {dang_vien_giup_do}<br/>
+        Sinh hoạt tại Chi bộ: {chi_bo}<br/><br/>
+        Phân công giúp đỡ quần chúng: {ho_ten}, sinh ngày {ngay_sinh}, là học viên/sinh viên Lớp {lop} xin vào Đảng.<br/><br/>
+        Qua quá trình theo dõi, giúp đỡ, tôi nhận thấy quần chúng {ho_ten} có lập trường tư tưởng vững vàng, chấp hành tốt chính sách pháp luật, có tinh thần trách nhiệm cao trong học tập và công tác.
+        """
+        story.append(Paragraph(p_intro, st_body))
+        story.append(Spacer(1, 25))
+
+        sign_table = Table([
+            ["", Paragraph("<b>ĐẢNG VIÊN GIỚI THIỆU</b>", st_sign_title)],
+            ["", Paragraph("<i>(Ký và ghi rõ họ tên)</i>", st_sign_sub)],
+            ["", Spacer(1, 40)],
+            ["", Paragraph(f"<b>{dang_vien_giup_do}</b>", st_sign_title)]
+        ], colWidths=[270, 234])
+        story.append(sign_table)
+
+    elif form_type in ['4-knd', '4a-knd']:
+        story.append(Paragraph("ĐOÀN TNCS HỒ CHÍ MINH / CÔNG ĐOÀN", st_header_party))
+        story.append(Spacer(1, 10))
+        story.append(Paragraph("NGHỊ QUYẾT GIỚI THIỆU ĐOÀN VIÊN ƯU TÚ VÀO ĐẢNG", st_title))
+        story.append(Spacer(1, 15))
+
+        p_doan = f"""
+        Ban Chấp hành Đoàn/Công đoàn Trường Đại học Tây Bắc giới thiệu đoàn viên ưu tú:<br/>
+        Họ và tên: {ho_ten} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sinh ngày: {ngay_sinh}<br/>
+        Sinh hoạt tại Chi đoàn / Lớp: {lop}<br/>
+        Chức vụ: {chuc_vu}<br/><br/>
+        Đoàn viên {ho_ten} đạt tiêu chuẩn Đoàn viên ưu tú, tích cực tham gia các phong trào thi đua và có nguyện vọng tha thiết được kết nạp vào Đảng Cộng sản Việt Nam.
+        """
+        story.append(Paragraph(p_doan, st_body))
+        story.append(Spacer(1, 25))
+
+        sign_table = Table([
+            ["", Paragraph("<b>T/M BAN CHẤP HÀNH</b>", st_sign_title)],
+            ["", Paragraph("BÍ THƯ", st_sign_sub)],
+            ["", Spacer(1, 40)],
+            ["", Paragraph("<i>(Ký, đóng dấu)</i>", st_sign_sub)]
+        ], colWidths=[270, 234])
+        story.append(sign_table)
+
+    elif form_type == '5-knd':
+        story.append(Paragraph("ĐẢNG CỘNG SẢN VIỆT NAM", st_header_party))
+        story.append(Spacer(1, 10))
+        story.append(Paragraph("TỔNG HỢP Ý KIẾN NHẬN XÉT CỦA ĐOÀN THỂ VÀ CHI UỶ NƠI CƯ TRÚ", st_title))
+        story.append(Spacer(1, 15))
+
+        p_yk = f"""
+        Tổng hợp ý kiến nhận xét đối với quần chúng xin vào Đảng: {ho_ten}<br/>
+        Sinh ngày: {ngay_sinh} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lớp: {lop}<br/>
+        Chi bộ công nhận: {chi_bo}<br/><br/>
+        1. Ý kiến của đại diện các đoàn thể chính trị - xã hội nơi làm việc/học tập: Thống nhất cao đề nghị kết nạp.<br/>
+        2. Ý kiến của Chi ủy nơi cư trú: Quần chúng và gia đình chấp hành tốt quy định tại địa phương.
+        """
+        story.append(Paragraph(p_yk, st_body))
+        story.append(Spacer(1, 25))
+
+        sign_table = Table([
+            ["", Paragraph("<b>T/M CHI UỶ</b>", st_sign_title)],
+            ["", Paragraph("BÍ THƯ", st_sign_sub)],
+            ["", Spacer(1, 40)],
+            ["", Paragraph("<i>(Ký và ghi rõ họ tên)</i>", st_sign_sub)]
+        ], colWidths=[270, 234])
+        story.append(sign_table)
+
+    elif form_type in ['mau-i', 'mau-ii']:
+        story.append(Paragraph("ĐẢNG CỘNG SẢN VIỆT NAM", st_header_party))
+        story.append(Spacer(1, 10))
+        story.append(Paragraph("GIẤY CHỨNG NHẬN HỌC LỚP BỒI DƯỠNG NHẬN THỨC VỀ ĐẢNG", st_title))
+        story.append(Spacer(1, 15))
+
+        p_text = f"""
+        Chứng nhận quần chúng: {ho_ten}<br/>
+        Sinh ngày: {ngay_sinh} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dân tộc: {dan_toc}<br/>
+        Đơn vị công tác/Học tập: Lớp {lop}, Trường Đại học Tây Bắc<br/><br/>
+        Đã hoàn thành chương trình <b>Bồi dưỡng nhận thức về Đảng theo quy định mới năm 2026</b>.<br/>
+        Kết quả xếp loại: <b>Khá / Giỏi</b><br/>
+        Số chứng nhận: {so_qd_cc}
+        """
+        story.append(Paragraph(p_text, st_body))
+        story.append(Spacer(1, 25))
+
+        sign_table = Table([
+            ["", Paragraph("<b>T/M BAN THƯỜNG VỤ ĐẢNG UỶ</b>", st_sign_title)],
+            ["", Paragraph("BÍ THƯ", st_sign_sub)],
+            ["", Spacer(1, 40)],
+            ["", Paragraph("<i>(Ký và đóng dấu)</i>", st_sign_sub)]
+        ], colWidths=[270, 234])
+        story.append(sign_table)
+
+    doc.build(story)
+    buf.seek(0)
+    return buf
+
+
+REQUIRED_FORM_FIELDS = {
+    '1-knd': [('ho_ten', 'Họ và tên'), ('ngay_sinh', 'Ngày sinh'), ('que_quan', 'Quê quán'), ('dan_toc', 'Dân tộc'), ('lop', 'Lớp')],
+    '2-knd': [('ho_ten', 'Họ và tên'), ('ngay_sinh', 'Ngày sinh'), ('que_quan', 'Quê quán'), ('dan_toc', 'Dân tộc'), ('lop', 'Lớp'), ('chi_bo_cong_nhan', 'Chi bộ công nhận'), ('dang_vien_giup_do', 'Đảng viên giúp đỡ')],
+    '3-knd': [('ho_ten', 'Họ và tên'), ('chi_bo_cong_nhan', 'Chi bộ công nhận'), ('dang_vien_giup_do', 'Đảng viên giúp đỡ')],
+    '4-knd': [('ho_ten', 'Họ và tên'), ('ngay_sinh', 'Ngày sinh'), ('dan_toc', 'Dân tộc'), ('lop', 'Lớp')],
+    '4a-knd': [('ho_ten', 'Họ và tên'), ('ngay_sinh', 'Ngày sinh'), ('chuc_vu', 'Chức vụ'), ('chi_bo_cong_nhan', 'Đơn vị Chi bộ')],
+    '5-knd': [('ho_ten', 'Họ và tên'), ('chi_bo_cong_nhan', 'Chi bộ công nhận')],
+    'mau-i': [('ho_ten', 'Họ và tên'), ('ngay_sinh', 'Ngày sinh'), ('dan_toc', 'Dân tộc'), ('lop', 'Lớp'), ('so_qd_cc', 'Số chứng chỉ')],
+    'mau-ii': [('ho_ten', 'Họ và tên'), ('ngay_sinh', 'Ngày sinh'), ('dan_toc', 'Dân tộc'), ('lop', 'Lớp'), ('so_qd_cc', 'Số chứng chỉ')],
+}
+
+
+@app.route('/api/export/form/<form_type>/<int:pid>')
+def export_knd_form(form_type, pid):
+    """Xuất các Mẫu phiếu chuẩn PDF: 1-knd, 2-knd, 3-knd, 4-knd, 4a-knd, 5-knd, mau-i, mau-ii"""
+    db = get_db()
+    try:
+        with db.cursor() as cur:
+            cur.execute("SELECT * FROM doi_tuong WHERE id=%s", (pid,))
+            row = cur.fetchone()
+        if not row:
+            return jsonify({'error': 'Not found'}), 404
+
+        # Check required fields
+        req_fields = REQUIRED_FORM_FIELDS.get(form_type, [])
+        missing = [label for key, label in req_fields if not row.get(key)]
+        if missing:
+            return jsonify({
+                'error': 'missing_fields',
+                'form_type': form_type,
+                'doi_tuong_id': pid,
+                'ho_ten': row.get('ho_ten', ''),
+                'missing_fields': missing
+            }), 400
+
+        pdf_buf = build_knd_form_pdf(form_type, row)
+        fname = f"Phieu_{form_type.upper()}_{row.get('ho_ten','').replace(' ','_')}.pdf"
+        return send_file(pdf_buf, as_attachment=True, download_name=fname, mimetype='application/pdf')
+    except Exception as e:
+        import traceback
+        print("=== ERROR IN export_knd_form ===")
+        traceback.print_exc()
+        return jsonify({'error': 'internal_server_error', 'details': str(e)}), 500
+    finally:
+        db.close()
+
+
 if __name__ == '__main__':
     print("=" * 50)
     print("  Flask API (Excel + PDF) – Hệ thống Kết nạp Đảng v1.1")
@@ -603,3 +861,4 @@ if __name__ == '__main__':
     print("  Health check: http://localhost:5000/health")
     print("=" * 50)
     app.run(host='0.0.0.0', port=5000, debug=False)
+

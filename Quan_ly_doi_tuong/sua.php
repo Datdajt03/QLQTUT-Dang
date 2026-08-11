@@ -33,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($data['ho_ten'])) $errors[] = 'Họ và tên không được để trống';
 
     // Handle avatar
-    $avatarPath = $dt['avatar']; // Keep old avatar by default
+    $avatarPath = $dt['avatar'] ?? null; // Keep old avatar by default
     if (isset($_POST['remove_avatar_flag']) && $_POST['remove_avatar_flag'] === '1') {
-        if ($dt['avatar'] && file_exists(dirname(__DIR__) . '/' . $dt['avatar'])) {
+        if (!empty($dt['avatar']) && file_exists(dirname(__DIR__) . '/' . $dt['avatar'])) {
             @unlink(dirname(__DIR__) . '/' . $dt['avatar']);
         }
         $avatarPath = null;
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $allowed = ['jpg','jpeg','png','gif','webp'];
         if (in_array($ext, $allowed) && $_FILES['avatar']['size'] <= 5 * 1024 * 1024) {
             // Delete old file if exists
-            if ($dt['avatar'] && file_exists(dirname(__DIR__) . '/' . $dt['avatar'])) {
+            if (!empty($dt['avatar']) && file_exists(dirname(__DIR__) . '/' . $dt['avatar'])) {
                 @unlink(dirname(__DIR__) . '/' . $dt['avatar']);
             }
             $fname = 'av_' . time() . '_' . rand(1000,9999) . '.' . $ext;
@@ -112,7 +112,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <div class="form-section-title">🖼️ Ảnh đại diện</div>
   <div class="avatar-upload-wrap">
     <div id="avatarPreviewWrap" class="avatar-preview-large">
-      <?php if ($dt['avatar']): ?>
+      <?php if (!empty($dt['avatar'])): ?>
         <img src="<?= BASE_URL . e($dt['avatar']) ?>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
       <?php else: ?>
         📷
@@ -122,7 +122,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <button type="button" class="btn btn-outline" onclick="document.getElementById('avatarInput').click()">
         📁 Chọn ảnh...
       </button>
-      <button type="button" class="btn btn-danger btn-sm" id="removeAvatarBtn" style="<?= $dt['avatar'] ? 'display:inline-flex;' : 'display:none;' ?>" onclick="removeAvatar()">
+      <button type="button" class="btn btn-danger btn-sm" id="removeAvatarBtn" style="<?= !empty($dt['avatar']) ? 'display:inline-flex;' : 'display:none;' ?>" onclick="removeAvatar()">
         🗑️ Xóa ảnh
       </button>
       <div class="avatar-hint">Định dạng: JPG, PNG, WebP · Tối đa: 5MB</div>

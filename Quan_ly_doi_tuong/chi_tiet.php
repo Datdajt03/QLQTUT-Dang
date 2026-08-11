@@ -55,12 +55,28 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       </div>
     </div>
   </div>
-  <div style="display:flex;gap:10px;">
+  <div style="display:flex;gap:10px;align-items:center;">
+    <!-- Dropdown Xuất phiếu chuẩn PDF -->
+    <div style="position:relative;display:inline-block;">
+      <select id="selectExportForm" class="btn btn-gold" style="padding-right:25px;cursor:pointer;" onchange="exportFormPDF(<?= $id ?>)">
+        <option value="">🖨️ Xuất Mẫu Phiếu PDF (Mẫu 2026)...</option>
+        <option value="1-knd">📄 Mẫu 1-KNĐ: Đơn xin vào Đảng</option>
+        <option value="2-knd">📜 Mẫu 2-KNĐ: Lý lịch người vào Đảng (2026)</option>
+        <option value="3-knd">📄 Mẫu 3-KNĐ: Giấy giới thiệu người vào Đảng</option>
+        <option value="4-knd">📄 Mẫu 4-KNĐ: NQ giới thiệu Đoàn viên vào Đảng</option>
+        <option value="4a-knd">📄 Mẫu 4a-KNĐ: NQ giới thiệu ĐV Công đoàn vào Đảng</option>
+        <option value="5-knd">📄 Mẫu 5-KNĐ: Tổng hợp ý kiến nhận xét</option>
+        <option value="mau-i">📜 Mẫu I: Giấy chứng nhận lớp Nhận thức Đảng</option>
+        <option value="mau-ii">📜 Mẫu II: Giấy chứng nhận Cấp ủy cấp</option>
+      </select>
+    </div>
     <a href="sua.php?id=<?= $id ?>" class="btn btn-primary">✏️ Sửa</a>
     <button onclick="confirmDelete()" class="btn btn-danger">🗑️ Xóa</button>
     <a href="danh_sach.php" class="btn btn-outline">← Danh sách</a>
   </div>
 </div>
+
+
 
 <!-- Progress Timeline -->
 <div class="card fade-in" style="margin-bottom:20px;">
@@ -264,6 +280,22 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   </div>
 </div>
 
+<!-- Missing Fields Warning Modal -->
+<div class="modal-overlay" id="missingFieldsModal">
+  <div class="modal" style="max-width:500px;">
+    <div class="modal-title" style="color:var(--gold);"><span class="icon">⚠️</span> Thiếu trường thông tin bắt buộc</div>
+    <div class="modal-body">
+      <p style="margin-bottom:12px;">Hồ sơ của <strong><?= e($dt['ho_ten']) ?></strong> chưa đủ dữ liệu để xuất biểu mẫu PDF này. Vui lòng bổ sung các thông tin còn thiếu dưới đây:</p>
+      <div id="missingFieldsList" style="background:rgba(217,119,6,0.1);border-left:4px solid var(--gold);padding:12px;border-radius:6px;margin-bottom:15px;"></div>
+      <p style="font-size:12px;color:var(--text2);">Bấm nút <strong>"✏️ Điền thông tin ngay"</strong> để chuyển tới trang cập nhật hồ sơ.</p>
+    </div>
+    <div class="modal-actions">
+      <button onclick="document.getElementById('missingFieldsModal').classList.remove('open')" class="btn btn-outline">Để sau</button>
+      <a href="sua.php?id=<?= $id ?>" class="btn btn-primary">✏️ Điền thông tin ngay</a>
+    </div>
+  </div>
+</div>
+
 <script>
 function confirmDelete() { document.getElementById('deleteModal').classList.add('open'); }
 
@@ -272,6 +304,49 @@ function showTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
+}
+
+function exportFormPDF(id) {
+  var sel = document.getElementById('selectExportForm');
+  var formType = sel.value;
+  if (!formType) return;
+
+  var url = `<?= BASE_URL ?>Quan_ly_doi_tuong/api_proxy.php?path=api/export/form/${formType}/${id}`;
+  
+  fetch(url)
+    .then(async res => {
+      if (res.ok) {
+        // Successful download
+        const blob = await res.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = `Phieu_${formType.toUpperCase()}_<?= preg_replace('/\s+/', '_', e($dt['ho_ten'])) ?>.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } else {
+        const data = await res.json();
+        if (data.error === 'missing_fields') {
+          var html = '<ul style="margin:0;padding-left:20px;color:var(--danger);font-weight:600;">';
+          data.missing_fields.forEach(f => {
+            html += `<li>❌ ${f}</li>`;
+          });
+          html += '</ul>';
+          document.getElementById('missingFieldsList').innerHTML = html;
+          document.getElementById('missingFieldsModal').classList.add('open');
+        } else {
+          alert(data.message || 'Không thể xuất biểu mẫu PDF này.');
+        }
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Lỗi kết nối máy chủ xuất file PDF.');
+    })
+    .finally(() => {
+      sel.value = "";
+    });
 }
 </script>
 

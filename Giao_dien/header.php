@@ -90,11 +90,17 @@ try {
           <span class="icon">✍️</span> <span>Gửi hồ sơ đăng ký</span>
         </a>
       <?php endif; ?>
+      <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/edge_ai_check.php" class="nav-item <?= isActive('edge_ai_check.php','Quan_ly_doi_tuong') ?>">
+        <span class="icon">⚡</span> <span>Edge AI Kiểm tra Hồ sơ</span>
+      </a>
     <?php else: ?>
       <!-- Chức năng quản lý/admin -->
       <div class="nav-section-title">Nghiệp vụ</div>
       <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/danh_sach.php" class="nav-item <?= isActive('danh_sach.php','Quan_ly_doi_tuong') ?>">
         <span class="icon">📋</span> <span>Danh sách đối tượng</span>
+      </a>
+      <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/edge_ai_check.php" class="nav-item <?= isActive('edge_ai_check.php','Quan_ly_doi_tuong') ?>">
+        <span class="icon">⚡</span> <span>Edge AI Quét OCR Hồ sơ</span>
       </a>
       <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/them.php" class="nav-item <?= isActive('them.php','Quan_ly_doi_tuong') ?>">
         <span class="icon">➕</span> <span>Thêm đối tượng</span>

@@ -25,21 +25,42 @@ try {
     $sqlFile = __DIR__ . '/db.sql';
     if (file_exists($sqlFile)) {
         $sql = file_get_contents($sqlFile);
-        // Split by semicolon (basic)
-        $statements = array_filter(array_map('trim', explode(';', $sql)));
+        // Remove comments
+        $lines = explode("\n", $sql);
+        $cleanSql = '';
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+            if (!empty($trimmed) && !str_starts_with($trimmed, '--') && !str_starts_with($trimmed, '//')) {
+                $cleanSql .= $line . "\n";
+            }
+        }
+        // Split by semicolon
+        $statements = array_filter(array_map('trim', explode(';', $cleanSql)));
         $cnt = 0;
         foreach ($statements as $stmt) {
-            if (empty($stmt) || str_starts_with($stmt, '--') || str_starts_with($stmt, 'CREATE DATABASE') || str_starts_with($stmt, 'USE ')) continue;
-            try { $pdo->exec($stmt); $cnt++; } catch (PDOException $e) {
-                // Table already exists – ignore
-                if (strpos($e->getMessage(), 'already exists') === false && strpos($e->getMessage(), '1060') === false) {
-                    $status[] = ['warn', '⚠️ ' . htmlspecialchars($e->getMessage())];
+            if (empty($stmt) || str_starts_with($stmt, 'CREATE DATABASE') || str_starts_with($stmt, 'USE ')) continue;
+            try { 
+                $pdo->exec($stmt); 
+                $cnt++; 
+            } catch (PDOException $e) {
+                // Table/data already exists – ignore (1050: Table exists, 1060: Duplicate column, 1062: Duplicate entry)
+                $msg = $e->getMessage();
+                if (strpos($msg, 'already exists') === false && strpos($msg, '1060') === false && strpos($msg, '1062') === false) {
+                    $status[] = ['warn', '⚠️ ' . htmlspecialchars($msg)];
                 }
             }
         }
         $status[] = ['ok', "✅ Đã chạy $cnt câu SQL từ db.sql"];
     } else {
         $status[] = ['warn', '⚠️ Không tìm thấy file db.sql'];
+    }
+
+    // Auto fix missing 'avatar' column if table already existed
+    try {
+        $pdo->exec("ALTER TABLE doi_tuong ADD COLUMN avatar VARCHAR(255) DEFAULT NULL AFTER id");
+        $status[] = ['ok', "✅ Đã tự động bổ sung cột <strong>avatar</strong> vào bảng doi_tuong"];
+    } catch (PDOException $e) {
+        // Column already exists - ignore
     }
 
     // Test connection

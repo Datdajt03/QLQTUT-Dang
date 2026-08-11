@@ -112,6 +112,25 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
             <div style="font-size:11px;color:var(--text2);margin-top:2px;">Chọn nhiều người để xuất danh sách PDF.</div>
           </div>
         </label>
+        <label class="radio-card" onclick="setType(4)">
+          <input type="radio" name="etype" value="4">
+          <div>
+            <div style="font-weight:700;font-size:13px;">📜 Loại 4: Xuất Mẫu Phiếu KNĐ (PDF chuẩn)</div>
+            <div style="font-size:11px;color:var(--text2);margin-top:2px;">Xuất các biểu mẫu chuẩn (1-KNĐ, 3-KNĐ, 4-KNĐ, 5-KNĐ...).</div>
+          </div>
+        </label>
+        <div id="form-select-wrap" style="display:none;padding-left:10px;">
+          <select id="formSelectType" class="form-control">
+            <option value="1-knd">📄 Mẫu 1-KNĐ: Đơn xin vào Đảng</option>
+            <option value="2-knd">📜 Mẫu 2-KNĐ: Lý lịch người vào Đảng (Mẫu 2026)</option>
+            <option value="3-knd">📄 Mẫu 3-KNĐ: Giấy giới thiệu người vào Đảng</option>
+            <option value="4-knd">📄 Mẫu 4-KNĐ: NQ giới thiệu Đoàn viên vào Đảng</option>
+            <option value="4a-knd">📄 Mẫu 4a-KNĐ: NQ giới thiệu ĐV Công đoàn vào Đảng</option>
+            <option value="5-knd">📄 Mẫu 5-KNĐ: Tổng hợp ý kiến nhận xét</option>
+            <option value="mau-i">📜 Mẫu I: Giấy chứng nhận lớp Nhận thức Đảng</option>
+            <option value="mau-ii">📜 Mẫu II: Giấy chứng nhận Cấp ủy cấp</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -151,6 +170,22 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <div id="listBody">
         <!-- Rendered by JS -->
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Missing Fields Warning Modal -->
+<div class="modal-overlay" id="missingFieldsModal">
+  <div class="modal" style="max-width:500px;">
+    <div class="modal-title" style="color:var(--gold);"><span class="icon">⚠️</span> Thiếu trường thông tin bắt buộc</div>
+    <div class="modal-body">
+      <p style="margin-bottom:12px;">Hồ sơ đối tượng này chưa đủ thông tin để xuất mẫu PDF đã chọn. Vui lòng bổ sung các thông tin còn thiếu dưới đây:</p>
+      <div id="missingFieldsList" style="background:rgba(217,119,6,0.1);border-left:4px solid var(--gold);padding:12px;border-radius:6px;margin-bottom:15px;"></div>
+      <p style="font-size:12px;color:var(--text2);">Bấm nút <strong>"✏️ Điền bổ sung ngay"</strong> để mở trang cập nhật thông tin.</p>
+    </div>
+    <div class="modal-actions">
+      <button onclick="document.getElementById('missingFieldsModal').classList.remove('open')" class="btn btn-outline">Để sau</button>
+      <a id="editMissingBtn" href="#" class="btn btn-primary">✏️ Điền bổ sung ngay</a>
     </div>
   </div>
 </div>
@@ -220,6 +255,7 @@ function setScope(s) {
 function setType(t) {
   currentType = t;
   document.querySelectorAll('input[name=etype]').forEach(r => r.checked = parseInt(r.value) === t);
+  document.getElementById('form-select-wrap').style.display = t === 4 ? 'block' : 'none';
   renderList();
   updateExportBtn();
 }
@@ -266,7 +302,7 @@ function renderList() {
       : `<div class="person-avatar-sm default">${initials}</div>`;
 
     var control = '';
-    if (type === 2) {
+    if (type === 2 || type === 4) {
       control = `<input type="radio" name="pid" value="${p.id}" style="accent-color:var(--red);" onchange="updateSelCount()">`;
     } else if (type === 3) {
       control = `<input type="checkbox" class="pcheck" value="${p.id}" style="accent-color:var(--red);width:16px;height:16px;" onchange="updateSelCount()">`;
@@ -292,7 +328,7 @@ function rowClick(e, pid) {
   // If user clicked input, do nothing
   if (e.target.tagName === 'INPUT') return;
   var row = e.currentTarget;
-  if (currentType === 2) {
+  if (currentType === 2 || currentType === 4) {
     var rad = row.querySelector('input[type=radio]');
     if (rad) { rad.checked = true; updateSelCount(); }
   } else if (currentType === 3) {
@@ -325,7 +361,7 @@ function updateSelCount() {
   if (currentType === 3) {
     var checked = document.querySelectorAll('.pcheck:checked').length;
     msg = checked ? `Đã chọn: <strong>${checked}</strong> người` : 'Chưa chọn ai';
-  } else if (currentType === 2) {
+  } else if (currentType === 2 || currentType === 4) {
     var radioChecked = !!document.querySelector('input[name=pid]:checked');
     msg = radioChecked ? '✅ Đã chọn 1 người' : 'Chưa chọn ai';
   } else if (currentType === 1) {
@@ -342,7 +378,7 @@ function updateExportBtn() {
   }
   var ok = false;
   if (currentType === 1) ok = currentList.length > 0;
-  else if (currentType === 2) ok = !!document.querySelector('input[name=pid]:checked');
+  else if (currentType === 2 || currentType === 4) ok = !!document.querySelector('input[name=pid]:checked');
   else if (currentType === 3) ok = document.querySelectorAll('.pcheck:checked').length > 0;
   document.getElementById('btnExport').disabled = !ok;
 }
@@ -371,6 +407,47 @@ function doExport() {
     // PDF (Selected List) - POST → /api/export/selected
     var ids = [...document.querySelectorAll('.pcheck:checked')].map(c => parseInt(c.value));
     fetchDownload('<?= BASE_URL ?>Quan_ly_doi_tuong/api_proxy.php?path=api/export/selected', {ids});
+  } else if (currentType === 4) {
+    // PDF Standard Mẫu Phiếu KNĐ - GET → /api/export/form/{form_type}/{id}
+    var pid = document.querySelector('input[name=pid]:checked')?.value;
+    var ftype = document.getElementById('formSelectType').value;
+    if (!pid || !ftype) return done();
+
+    var url = `<?= BASE_URL ?>Quan_ly_doi_tuong/api_proxy.php?path=api/export/form/${ftype}/${pid}`;
+    fetch(url)
+      .then(async res => {
+        if (res.ok) {
+          const blob = await res.blob();
+          const downloadUrl = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = downloadUrl;
+          a.download = `Phieu_${ftype.toUpperCase()}_DoiTuong_${pid}.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        } else {
+          const data = await res.json();
+          if (data.error === 'missing_fields') {
+            var html = '<ul style="margin:0;padding-left:20px;color:var(--danger);font-weight:600;">';
+            data.missing_fields.forEach(f => {
+              html += `<li>❌ ${f}</li>`;
+            });
+            html += '</ul>';
+            document.getElementById('missingFieldsList').innerHTML = html;
+            document.getElementById('editMissingBtn').href = `<?= BASE_URL ?>Quan_ly_doi_tuong/sua.php?id=${pid}`;
+            document.getElementById('missingFieldsModal').classList.add('open');
+          } else {
+            alert(data.message || 'Không thể xuất biểu mẫu PDF này.');
+          }
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Lỗi kết nối máy chủ xuất file PDF.');
+      })
+      .finally(() => {
+        done();
+      });
   }
 
   function done() { btn.disabled = false; spin.style.display = 'none'; updateExportBtn(); }

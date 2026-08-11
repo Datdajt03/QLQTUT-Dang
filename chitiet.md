@@ -1,18 +1,20 @@
-# BÁO CÁO BÀI TẬP LỚN
-## XÂY DỰNG WEBSITE QUẢN LÝ QUẦN CHÚNG ƯU TÚ PHỤC VỤ KẾT NẠP ĐẢNG
+# BÁO CÁO PROJECT
+
+## QUẢN LÝ QUẦN CHÚNG ƯU TÚ PHỤC VỤ KẾT NẠP ĐẢNG
 
 ---
 
-* **Môn học:** Thiết kế Website / Phát triển Ứng dụng Web / Phân tích Thiết kế Hệ thống
-* **Đề tài:** Thiết kế Website quản lý quần chúng ưu tú phục vụ kết nạp Đảng
-* **Công nghệ:** PHP 8.x + Python Flask + MySQL (XAMPP)
-* **Repository:** https://github.com/Datdajt03/QLQTUT-Dang
-* **Nhóm thực hiện:** [Điền tên nhóm]
-* **Thành viên:**
+- **Môn học:** Thiết kế Website / Phát triển Ứng dụng Web / Phân tích Thiết kế Hệ thống
+- **Đề tài:** Thiết kế Website quản lý quần chúng ưu tú phục vụ kết nạp Đảng
+- **Công nghệ:** PHP 8.x + Python Flask + MySQL (XAMPP)
+- **Repository:** https://github.com/Datdajt03/QLQTUT-Dang
+- **Nhóm thực hiện:** [02]
+- **Thành viên:**
   1. [LÒ MẠNH ĐẠT] – [MSSV 1] – [Phân công: Backend PHP, Database]
-  2. [NGUYỄN HUY HOÀNG] – [MSSV 2] – [Phân công: Frontend CSS/JS, UI/UX]
-  3. [TÒNG LƯU ANH TÚ] – [MSSV 3] – [Phân công: Python API, Báo cáo]
+  2. [NGUYỄN HUY HOÀNG] – [MSSV 2] – [Phân công: Frontend Python API, Edge AI]
+  3. [TÒNG LƯU ANH TÚ] – [MSSV 3] – [Phân công: Báo cáo CSS/JS, UI/UX]
   4. [PHẠM THỊ THANH HẢO] – [MSSV 3] – [Phân công: Python API, Báo cáo]
+
 ---
 
 ## I. GIỚI THIỆU ĐỀ TÀI
@@ -25,21 +27,21 @@ Vì vậy, việc thiết kế một Website chuyên nghiệp để **số hóa 
 
 ### 2. Mục tiêu đề tài
 
-* **Số hóa quy trình:** Chuyển đổi toàn bộ việc nộp hồ sơ, xét duyệt và theo dõi sang môi trường trực tuyến.
-* **Minh bạch thông tin:** Sinh viên tự theo dõi tiến trình kết nạp cá nhân và xem danh sách bạn cùng lớp/chi bộ đã được duyệt.
-* **Tối ưu quản trị:** Cung cấp công cụ quản lý tập trung, sửa nhanh dạng Excel, import/export hàng loạt và thống kê trực quan bằng biểu đồ.
-* **Bảo mật phân quyền:** Hệ thống phân 3 cấp quyền (Sinh viên / Quản lý / Admin) với xác thực session cookie bảo mật.
-* **Tích hợp thông tin:** Hiển thị tin tức thời sự từ các báo chính thống (Dân trí, Nhân Dân, Đảng Cộng sản) ngay trên Dashboard.
+- **Số hóa quy trình:** Chuyển đổi toàn bộ việc nộp hồ sơ, xét duyệt và theo dõi sang môi trường trực tuyến.
+- **Minh bạch thông tin:** Sinh viên tự theo dõi tiến trình kết nạp cá nhân và xem danh sách bạn cùng lớp/chi bộ đã được duyệt.
+- **Tối ưu quản trị:** Cung cấp công cụ quản lý tập trung, sửa nhanh dạng Excel, import/export hàng loạt và thống kê trực quan bằng biểu đồ.
+- **Bảo mật phân quyền:** Hệ thống phân 3 cấp quyền (Sinh viên / Quản lý / Admin) với xác thực session cookie bảo mật.
+- **Tích hợp thông tin:** Hiển thị tin tức thời sự từ các báo chính thống (Dân trí, Nhân Dân, Đảng Cộng sản) ngay trên Dashboard.
 
 ### 3. Phạm vi đề tài
 
-| Phạm vi | Mô tả |
-|---|---|
-| **Đối tượng sử dụng** | Sinh viên – Bí thư Chi bộ – Quản trị viên trường |
-| **Nền tảng** | Web Application chạy trên XAMPP (localhost) |
-| **Ngôn ngữ** | PHP 8.x (Backend chính) + Python 3.x (Export API) + JavaScript ES6 (Frontend) |
-| **Cơ sở dữ liệu** | MySQL 8.x |
-| **Môi trường triển khai** | Windows Server / Localhost XAMPP |
+| Phạm vi                   | Mô tả                                                                         |
+| ------------------------- | ----------------------------------------------------------------------------- |
+| **Đối tượng sử dụng**     | Sinh viên – Bí thư Chi bộ – Quản trị viên trường                              |
+| **Nền tảng**              | Web Application chạy trên XAMPP (localhost)                                   |
+| **Ngôn ngữ**              | PHP 8.x (Backend chính) + Python 3.x (Export API) + JavaScript ES6 (Frontend) |
+| **Cơ sở dữ liệu**         | MySQL 8.x                                                                     |
+| **Môi trường triển khai** | Windows Server / Localhost XAMPP                                              |
 
 ---
 
@@ -54,8 +56,8 @@ Vì vậy, việc thiết kế một Website chuyên nghiệp để **số hóa 
 3. Điền đầy đủ thông tin: Lớp, Email, SĐT, Chi bộ đề xuất, Quê quán, Giới tính, Ngày sinh.
 4. Hồ sơ lưu trạng thái **Chờ duyệt** trong bảng `dang_ky_doi_tuong`.
 5. Quản lý (Bí thư) truy cập trang **Phê duyệt** (`duyet_dang_ky.php`):
-   * **Duyệt:** Đồng bộ hồ sơ vào bảng chính thức `doi_tuong`, xóa khỏi hàng chờ, gửi email chúc mừng tự động.
-   * **Từ chối:** Nhập lý do từ chối, cập nhật trạng thái, gửi email phản hồi lý do cho sinh viên.
+   - **Duyệt:** Đồng bộ hồ sơ vào bảng chính thức `doi_tuong`, xóa khỏi hàng chờ, gửi email chúc mừng tự động.
+   - **Từ chối:** Nhập lý do từ chối, cập nhật trạng thái, gửi email phản hồi lý do cho sinh viên.
 
 #### b. Quy trình Đề xuất Cập nhật Thông tin
 
@@ -64,9 +66,9 @@ Vì vậy, việc thiết kế một Website chuyên nghiệp để **số hóa 
 3. Quần chúng chỉnh sửa thông tin cần cập nhật (SĐT, Email, Lớp, Quê quán, Chức vụ) và gửi yêu cầu.
 4. Yêu cầu lưu vào bảng `yeu_cau_cap_nhat` trạng thái **Chờ duyệt**.
 5. Quản lý truy cập Tab **Phê duyệt cập nhật** trong `duyet_dang_ky.php`:
-   * Bảng so sánh **Cũ ➔ Mới** hiển thị từng trường thay đổi.
-   * **Duyệt:** Ghi đè dữ liệu mới vào bảng `doi_tuong`, cập nhật trạng thái yêu cầu = Đã duyệt.
-   * **Từ chối:** Cập nhật trạng thái = Đã từ chối, lưu lý do từ chối.
+   - Bảng so sánh **Cũ ➔ Mới** hiển thị từng trường thay đổi.
+   - **Duyệt:** Ghi đè dữ liệu mới vào bảng `doi_tuong`, cập nhật trạng thái yêu cầu = Đã duyệt.
+   - **Từ chối:** Cập nhật trạng thái = Đã từ chối, lưu lý do từ chối.
 
 #### c. Quy trình Xuất Báo cáo Excel/PDF
 
@@ -87,16 +89,18 @@ Vì vậy, việc thiết kế một Website chuyên nghiệp để **số hóa 
 Giao diện được thiết kế tối giản, cá nhân hóa, hướng đến trải nghiệm theo dõi tiến trình cá nhân. Bao gồm các cấu phần sau:
 
 **A. Bản tin Thời sự Đa nguồn (Đầu trang Dashboard)**
-* Hiển thị 4 bài báo mới nhất dưới dạng lưới thẻ Card (4 cột, responsive xuống 2 cột / 1 cột trên mobile).
-* Hỗ trợ **3 nguồn báo chính thống** có thể chuyển đổi bằng tab:
+
+- Hiển thị 4 bài báo mới nhất dưới dạng lưới thẻ Card (4 cột, responsive xuống 2 cột / 1 cột trên mobile).
+- Hỗ trợ **3 nguồn báo chính thống** có thể chuyển đổi bằng tab:
   - 📰 **Báo Dân trí** (dantri.com.vn) – Tin tức tổng hợp thời sự
   - 📰 **Báo Nhân Dân** (nhandan.vn) – Cơ quan ngôn luận của Đảng CSVN
   - 📰 **Báo Đảng Cộng sản** (dangcongsan.vn) – Báo điện tử chuyên đề Đảng
-* Cơ chế: PHP RSS parser với timeout 3 giây + logic dự phòng khi Báo Đảng Cộng sản chặn crawler.
-* Mỗi thẻ card gồm: ảnh thumbnail, tiêu đề bài viết, tóm tắt nội dung, thời gian đăng, link đọc bài gốc.
+- Cơ chế: PHP RSS parser với timeout 3 giây + logic dự phòng khi Báo Đảng Cộng sản chặn crawler.
+- Mỗi thẻ card gồm: ảnh thumbnail, tiêu đề bài viết, tóm tắt nội dung, thời gian đăng, link đọc bài gốc.
 
 **B. Khối thông tin cá nhân (Profile Card)**
-* Hiển thị toàn bộ thông tin hồ sơ quần chúng của tài khoản đang đăng nhập:
+
+- Hiển thị toàn bộ thông tin hồ sơ quần chúng của tài khoản đang đăng nhập:
   - Ảnh đại diện chân dung (hỗ trợ upload, preview realtime; nếu chưa upload thì hiển thị avatar chữ cái đầu)
   - Mã Sinh viên / Giảng viên
   - Họ và tên đầy đủ
@@ -108,24 +112,27 @@ Giao diện được thiết kế tối giản, cá nhân hóa, hướng đến 
   - Trạng thái hồ sơ (Đang theo dõi / Đã kết nạp)
 
 **C. Biểu đồ tiến trình (Timeline 5 bước Kết nạp Đảng)**
-* Sơ đồ tuyến tính ngang hiển thị 5 cột mốc quan trọng:
+
+- Sơ đồ tuyến tính ngang hiển thị 5 cột mốc quan trọng:
   1. 🎓 **Lớp cảm tình Đảng** – Ngày tham gia lớp bồi dưỡng, số quyết định mở lớp
   2. 👥 **Phân công Đảng viên giúp đỡ** – Tên đảng viên phụ trách, ngày phân công
   3. 📜 **Nhận chứng chỉ Nhận thức về Đảng** – Ngày cấp CC, số quyết định CC
   4. ⭐ **Quyết định Kết nạp** – Số QĐ, ngày ký quyết định, ngày kết nạp chính thức
   5. 🏅 **Đảng viên chính thức** – Ngày chuyển sinh hoạt Đảng, nơi chuyển tới
-* Bước hiện tại được tô sáng màu Vàng kim `#FFD700`; bước hoàn thành màu Đỏ `#C8102E`; bước chưa đến màu xám nhạt.
-* Hiển thị ngày cụ thể kèm theo mỗi cột mốc đã hoàn thành.
+- Bước hiện tại được tô sáng màu Vàng kim `#FFD700`; bước hoàn thành màu Đỏ `#C8102E`; bước chưa đến màu xám nhạt.
+- Hiển thị ngày cụ thể kèm theo mỗi cột mốc đã hoàn thành.
 
 **D. Bảng danh sách Thành viên cùng Lớp/Chi bộ**
-* Bảng hiển thị tất cả quần chúng ưu tú đã được **duyệt chính thức** trong cùng lớp học với tài khoản đang đăng nhập.
-* Lọc theo: Lớp học (khớp chính xác toàn bộ chuỗi tên lớp) VÀ khóa học (ký tự 1-3 trong mã lớp, ví dụ K62, K63).
-* Thông tin hiển thị mỗi dòng: STT, Ảnh đại diện, Mã SV, Họ tên, Lớp, Chi bộ, Trạng thái kết nạp.
+
+- Bảng hiển thị tất cả quần chúng ưu tú đã được **duyệt chính thức** trong cùng lớp học với tài khoản đang đăng nhập.
+- Lọc theo: Lớp học (khớp chính xác toàn bộ chuỗi tên lớp) VÀ khóa học (ký tự 1-3 trong mã lớp, ví dụ K62, K63).
+- Thông tin hiển thị mỗi dòng: STT, Ảnh đại diện, Mã SV, Họ tên, Lớp, Chi bộ, Trạng thái kết nạp.
 
 **E. Menu Hành động (Sidebar)**
-* Nếu **chưa có hồ sơ**: Hiển thị nút "✍️ Gửi hồ sơ đăng ký mới" → dẫn đến `nhap_thong_tin.php`
-* Nếu **đã được duyệt chính thức**: Hiển thị nút "✏️ Yêu cầu cập nhật thông tin" → dẫn đến `cap_nhat_thong_tin.php`
-* Mục "🏛️ Thành viên cùng Lớp" trong sidebar → dẫn đến `thanh_vien_chi_bo.php`
+
+- Nếu **chưa có hồ sơ**: Hiển thị nút "✍️ Gửi hồ sơ đăng ký mới" → dẫn đến `nhap_thong_tin.php`
+- Nếu **đã được duyệt chính thức**: Hiển thị nút "✏️ Yêu cầu cập nhật thông tin" → dẫn đến `cap_nhat_thong_tin.php`
+- Mục "🏛️ Thành viên cùng Lớp" trong sidebar → dẫn đến `thanh_vien_chi_bo.php`
 
 ---
 
@@ -134,59 +141,80 @@ Giao diện được thiết kế tối giản, cá nhân hóa, hướng đến 
 Màn hình đầy đủ quyền quản trị, bao gồm toàn bộ công cụ xử lý dữ liệu:
 
 **A. Bản tin Thời sự Đa nguồn (Đầu trang)**
-* Giống cấu phần A của Người dùng (có thể chuyển đổi giữa 3 nguồn báo).
+
+- Giống cấu phần A của Người dùng (có thể chuyển đổi giữa 3 nguồn báo).
 
 **B. Dashboard Widgets – 4 thẻ Chỉ số Tổng quan**
-| Thẻ | Dữ liệu hiển thị | Màu sắc |
-|---|---|---|
-| 📋 Tổng đối tượng | Tổng số quần chúng trong hệ thống | Đỏ |
-| 👀 Đang theo dõi | Số người trạng thái "Đang theo dõi" | Vàng |
-| ✅ Đã kết nạp | Số người trạng thái "Đã kết nạp" | Xanh lá |
-| 🔔 Chờ duyệt | Số đơn đăng ký mới chờ xét duyệt | Cam |
+
+| Thẻ               | Dữ liệu hiển thị                    | Màu sắc |
+| ----------------- | ----------------------------------- | ------- |
+| 📋 Tổng đối tượng | Tổng số quần chúng trong hệ thống   | Đỏ      |
+| 👀 Đang theo dõi  | Số người trạng thái "Đang theo dõi" | Vàng    |
+| ✅ Đã kết nạp     | Số người trạng thái "Đã kết nạp"    | Xanh lá |
+| 🔔 Chờ duyệt      | Số đơn đăng ký mới chờ xét duyệt    | Cam     |
 
 **C. Biểu đồ Thống kê (Chart.js)**
-* **Biểu đồ cột (Bar Chart):** Phân bổ số lượng quần chúng theo Chi bộ Đảng, trục X là tên chi bộ, trục Y là số lượng người.
-* **Biểu đồ tròn (Doughnut Chart):** Tỷ lệ phần trăm trạng thái kết nạp (Đang theo dõi / Đã kết nạp / Đã chuyển).
-* Màu sắc phối hợp hệ màu Đảng: Đỏ `#C8102E`, Vàng `#FFD700`, Xanh đậm.
+
+- **Biểu đồ cột (Bar Chart):** Phân bổ số lượng quần chúng theo Chi bộ Đảng, trục X là tên chi bộ, trục Y là số lượng người.
+- **Biểu đồ tròn (Doughnut Chart):** Tỷ lệ phần trăm trạng thái kết nạp (Đang theo dõi / Đã kết nạp / Đã chuyển).
+- Màu sắc phối hợp hệ màu Đảng: Đỏ `#C8102E`, Vàng `#FFD700`, Xanh đậm.
 
 **D. Danh sách Đối tượng (`danh_sach.php`)**
-* Bộ lọc đa trường: Tên, Mã SV, Lớp, Chi bộ, Trạng thái, Giới tính.
-* Phân trang (10/20/50 bản ghi mỗi trang), sắp xếp theo cột.
-* Nút hành động mỗi dòng: Xem chi tiết, Sửa, Xóa (có xác nhận).
-* Cột trạng thái hiển thị badge màu phân loại.
+
+- Bộ lọc đa trường: Tên, Mã SV, Lớp, Chi bộ, Trạng thái, Giới tính.
+- Phân trang (10/20/50 bản ghi mỗi trang), sắp xếp theo cột.
+- Nút hành động mỗi dòng: Xem chi tiết, Sửa, Xóa (có xác nhận).
+- Cột trạng thái hiển thị badge màu phân loại.
 
 **E. Bảng sửa nhanh dạng Excel (`sua_nhanh.php`)**
-* Toàn bộ dữ liệu hiển thị trực tiếp dưới dạng ô nhập liệu trong bảng (input, select, datepicker).
-* **Autosave qua AJAX:** Mỗi khi rời ô (blur event) hoặc thay đổi select, hệ thống tự động gửi request đến `api_sua_nhanh.php` để lưu mà không tải lại trang.
-* Phản hồi trực quan bằng flash màu ô: Vàng (đang lưu) → Xanh (lưu thành công) → Đỏ (lỗi).
-* Hỗ trợ điều hướng bằng bàn phím: `↑ ↓ ← →`, `Enter`, `Tab`, `Esc`.
+
+- Toàn bộ dữ liệu hiển thị trực tiếp dưới dạng ô nhập liệu trong bảng (input, select, datepicker).
+- **Autosave qua AJAX:** Mỗi khi rời ô (blur event) hoặc thay đổi select, hệ thống tự động gửi request đến `api_sua_nhanh.php` để lưu mà không tải lại trang.
+- Phản hồi trực quan bằng flash màu ô: Vàng (đang lưu) → Xanh (lưu thành công) → Đỏ (lỗi).
+- Hỗ trợ điều hướng bằng bàn phím: `↑ ↓ ← →`, `Enter`, `Tab`, `Esc`.
 
 **F. Giao diện Phê duyệt 2 Tab (`duyet_dang_ky.php`)**
-* **Tab 1 – Đơn đăng ký mới:** Hiển thị danh sách hồ sơ trạng thái "Chờ duyệt" từ sinh viên. Mỗi hồ sơ có nút Duyệt (xanh) và Từ chối (đỏ). Khi từ chối hiện popup nhập lý do.
-* **Tab 2 – Đề xuất cập nhật:** Bảng so sánh 2 cột (Thông tin cũ | Thông tin mới đề xuất). Các trường thay đổi được tô vàng nổi bật. Nút Duyệt cập nhật / Từ chối kèm lý do.
+
+- **Tab 1 – Đơn đăng ký mới:** Hiển thị danh sách hồ sơ trạng thái "Chờ duyệt" từ sinh viên. Mỗi hồ sơ có nút Duyệt (xanh) và Từ chối (đỏ). Khi từ chối hiện popup nhập lý do.
+- **Tab 2 – Đề xuất cập nhật:** Bảng so sánh 2 cột (Thông tin cũ | Thông tin mới đề xuất). Các trường thay đổi được tô vàng nổi bật. Nút Duyệt cập nhật / Từ chối kèm lý do.
 
 **G. Import Excel (`import_excel.php`)**
-* Giao diện kéo thả file Excel/CSV (drag & drop) hoặc chọn qua hộp thoại tệp.
-* Hỗ trợ các định dạng: `.xlsx`, `.xls`, `.csv`.
-* Bản xem trước (preview) 10 dòng đầu tiên trước khi xác nhận nhập.
-* Xử lý trùng lặp: kiểm tra Mã SV đã tồn tại trước khi insert.
 
-**H. Xuất dữ liệu báo cáo (`xuat_excel.php`)**
-* **Loại 1 – Excel toàn bộ (.xlsx):** Xuất danh sách theo phạm vi (toàn trường / theo lớp / theo chi bộ) với đầy đủ 35 cột dữ liệu hồ sơ. Định dạng cao cấp: header màu đỏ, dòng xen kẽ, tự động căn chỉnh độ rộng cột.
-* **Loại 2 – PDF hồ sơ cá nhân:** Xuất file PDF hồ sơ đầy đủ của 1 người (chọn từ danh sách radio button). Font Times New Roman hỗ trợ tiếng Việt đầy đủ.
-* **Loại 3 – PDF danh sách nhiều người:** Chọn nhiều người qua checkbox, xuất danh sách PDF tổng hợp.
+- Giao diện kéo thả file Excel/CSV (drag & drop) hoặc chọn qua hộp thoại tệp.
+- Hỗ trợ các định dạng: `.xlsx`, `.xls`, `.csv`.
+- Bản xem trước (preview) 10 dòng đầu tiên trước khi xác nhận nhập.
+- Xử lý trùng lặp: kiểm tra Mã SV đã tồn tại trước khi insert.
+
+**H. Xuất dữ liệu báo cáo (`xuat_excel.php`) & Trích xuất Biểu mẫu PDF 2026**
+
+- **Loại 1 – Excel toàn bộ (.xlsx):** Xuất danh sách theo phạm vi (toàn trường / theo lớp / theo chi bộ) với đầy đủ 35 cột dữ liệu hồ sơ. Định dạng cao cấp: header màu đỏ, dòng xen kẽ, tự động căn chỉnh độ rộng cột.
+- **Loại 2 – PDF hồ sơ cá nhân:** Xuất file PDF hồ sơ đầy đủ của 1 người (chọn từ danh sách radio button). Font Times New Roman hỗ trợ tiếng Việt đầy đủ.
+- **Loại 3 – PDF danh sách nhiều người:** Chọn nhiều người qua checkbox, xuất danh sách PDF tổng hợp.
+- **Loại 4 – PDF Mẫu phiếu Kết nạp Đảng chuẩn 2026 (8 Mẫu chuẩn):** Tự động trích xuất toàn bộ dữ liệu cần thiết của quần chúng từ MySQL để kết xuất ra định dạng PDF chuẩn của các biểu mẫu theo bộ `Bieu_mau_dang_ky_ket_ap_dang` (Mẫu 1-KNĐ, 2-KNĐ, 3-KNĐ, 4-KNĐ, 4a-KNĐ, 5-KNĐ, Mẫu CN-NTVĐ1 & CN-NTVĐ1-2). Đặc biệt, toàn bộ dữ liệu động điền sẵn được **bôi đỏ đậm và đóng khung `[ Dữ liệu ]` nổi bật**, giúp người dùng dễ dàng nhận diện để sao chép (copy) và dán chính xác vào biểu mẫu gốc.
+- **Cơ chế Kiểm tra & Tự động bật Modal khi thiếu trường:** Khi xuất bất kỳ biểu mẫu PDF nào, nếu dữ liệu cá nhân bị khuyết các trường bắt buộc (như _Quê quán, Dân tộc, Chi bộ công nhận, Đảng viên giúp đỡ..._), hệ thống dừng xuất và hiển thị Modal liệt kê chính xác các trường thiếu kèm nút **"✏️ Điền thông tin ngay"** để người dùng/quản lý cập nhật bổ sung trước khi kết xuất file PDF.
 
 **I. Quản lý Chi bộ & Đảng viên**
-* `chi_bo.php`: CRUD danh mục Chi bộ Đảng (Mã chi bộ, Tên chi bộ, Đảng ủy trực thuộc).
-* `dang_vien.php`: CRUD danh mục Đảng viên được phân công giúp đỡ quần chúng.
+
+- `chi_bo.php`: CRUD danh mục Chi bộ Đảng (Mã chi bộ, Tên chi bộ, Đảng ủy trực thuộc).
+- `dang_vien.php`: CRUD danh mục Đảng viên được phân công giúp đỡ quần chúng.
 
 **J. Thống kê & Báo cáo (`thong_ke.php`)**
-* Trang thống kê toàn diện với 4 loại biểu đồ (Cột, Tròn, Đường, Hành lang) phân tích xu hướng phát triển đảng viên theo thời gian.
-* Tìm kiếm nâng cao (`tim_kiem.php`): Kết hợp nhiều trường lọc đồng thời.
 
-**K. Cài đặt Hệ thống (`cai_dat.php`) – Chỉ Admin**
-* Cấu hình tên trường, tên Đảng bộ, thông tin liên hệ hiển thị toàn hệ thống.
-* Đổi mật khẩu Admin và quản lý tài khoản người dùng.
+- Trang thống kê toàn diện với 4 loại biểu đồ (Cột, Tròn, Đường, Hành lang) phân tích xu hướng phát triển đảng viên theo thời gian.
+- Tìm kiếm nâng cao (`tim_kiem.php`): Kết hợp nhiều trường lọc đồng thời.
+
+**K. Edge AI Module (`AI_Module`) & Kiểm tra Hồ sơ Minh chứng (`edge_ai_check.php`)**
+
+- **Tự động OCR Điền Form (`AI_Module/edge_ai_autofill.js`):** Khi sinh viên nộp đơn đăng ký hoặc cập nhật hồ sơ, sinh viên tải lên **ảnh CCCD (Mặt trước & Mặt sau) + Thẻ sinh viên**. Engine AI chạy Tesseract.js trích xuất trực tiếp _Họ tên, Ngày sinh, Mã SV, Giới tính, Quê quán, Dân tộc, Lớp_ và tự động điền (Auto-fill) vào các ô input, giảm 90% thời gian gõ thủ công.
+- **Smart Avatar Validation & Crop 3x4 (`AI_Module/edge_ai_autofill.js`):** Tự động nhận diện khuôn mặt trong ảnh chân dung và dùng Canvas cắt theo chuẩn tỉ lệ ảnh thẻ 3x4 (300x400) sắc nét trước khi tải lên máy chủ.
+- **Trích xuất văn bản OCR Minh chứng:** Sử dụng Tesseract.js & PDF.js chạy tại client để kiểm tra tính hợp lệ của file PDF/Ảnh minh chứng (**tối đa 10MB/file**).
+- **Rule Engine Kiểm tra:** Tự động đối soát từ khóa bắt buộc đối với 5 loại hồ sơ (Bản tự nhận xét, Giấy chứng nhận bồi dưỡng, Minh chứng hoạt động, Phiếu đánh giá, Sơ yếu lý lịch).
+- **Lưu vết Hệ thống:** Tự động đẩy file thực tế về lưu tại `uploads/ho_so_minh_chung/` và lưu nhật ký đánh giá vào bảng MySQL `edge_ai_logs` qua API `api_save_ai_check.php`.
+
+**L. Cài đặt Hệ thống (`cai_dat.php`) – Chỉ Admin**
+
+- Cấu hình tên trường, tên Đảng bộ, thông tin liên hệ hiển thị toàn hệ thống.
+- Đổi mật khẩu Admin và quản lý tài khoản người dùng.
 
 ---
 
@@ -309,11 +337,57 @@ stateDiagram-v2
     GuiMailFail --> [*] : Hoàn tất
 ```
 
-#### 4b. Quy trình Xuất Báo cáo Excel/PDF
+#### 4b. Quy trình Thẩm định Hồ sơ Minh chứng qua Edge AI OCR (Client-Side)
 
 ```mermaid
 stateDiagram-v2
-    [*] --> MoTrang : Quản lý mở trang Xuất dữ liệu
+    [*] --> SV_TaiUp : Sinh viên/Bí thư chọn tệp PDF/Image minh chứng (<=10MB)
+    SV_TaiUp --> DocClient : Tesseract.js / PDF.js nạp và trích xuất OCR tại Trình duyệt
+    DocClient --> ChayRuleEngine : Rule-Engine kiểm tra từ khóa bắt buộc
+    ChayRuleEngine --> KiemTraKetQua : Đánh giá mức độ đầy đủ của Hồ sơ
+
+    state KiemTraKetQua <<choice>>
+    KiemTraKetQua --> ThieuHoSo : Phát hiện thiếu từ khóa / Giấy tờ
+    KiemTraKetQua --> DuHoSo : Hồ sơ đầy đủ & hợp lệ
+
+    ThieuHoSo --> HienCanhBaoAI : Hiển thị cảnh báo đỏ & Lời khuyên khắc phục
+    DuHoSo --> HienXacNhanOK : Hiển thị Badge Xanh "Hồ sơ đạt tiêu chuẩn"
+
+    HienCanhBaoAI --> LuuServer : Gửi Request AJAX lưu tệp & Nhật ký AI
+    HienXacNhanOK --> LuuServer : Gửi Request AJAX lưu tệp & Nhật ký AI
+
+    LuuServer --> LuuDisk : Lưu file vào uploads/ho_so_minh_chung/
+    LuuDisk --> LuuDB : Ghi log phân tích vào bảng MySQL edge_ai_logs
+    LuuDB --> [*] : Hoàn tất
+```
+
+#### 4c. Quy trình Smart Auto-Fill CCCD & Cắt Ảnh Thẻ 3x4 (`AI_Module`)
+
+```mermaid
+stateDiagram-v2
+    [*] --> ChonFile : Sinh viên chọn ảnh CCCD (2 mặt) + Thẻ SV hoặc Ảnh chân dung
+    ChonFile --> PhanLoai : AI Module phân loại loại tệp nạp vào
+
+    state PhanLoai <<choice>>
+    PhanLoai --> ChayOCR : Tệp CCCD / Thẻ SV
+    PhanLoai --> ChayCrop : Ảnh chân dung (Avatar)
+
+    ChayOCR --> TesseractExec : Tesseract.js OCR trích xuất văn bản tiếng Việt
+    TesseractExec --> RegexParse : Regex bóc tách: Họ tên, Ngày sinh, Mã SV, Quê quán, Dân tộc, Lớp
+    RegexParse --> AutoFillInput : Tự động điền (Auto-fill) vào các ô input form
+    AutoFillInput --> [*] : Hoàn tất điền form 90%
+
+    ChayCrop --> DetectFace : AI phát hiện tâm khuôn mặt (Face Detection)
+    DetectFace --> CanvasRender : HTML5 Canvas tự động Crop căn chỉnh tỉ lệ 3x4 (300x400)
+    CanvasRender --> HienPreview : Hiển thị Preview sắc nét & Gắn vào form gửi Server
+    HienPreview --> [*] : Hoàn tất
+```
+
+#### 4d. Quy trình Xuất Báo cáo Excel/PDF & Thẩm định Mẫu 2026
+
+```mermaid
+stateDiagram-v2
+    [*] --> MoTrang : Quản lý mở trang Xuất dữ liệu / Chi tiết hồ sơ
     MoTrang --> KiemTraAPI : PHP kiểm tra Flask API /health
     KiemTraAPI --> APIOnline : API đang chạy
     KiemTraAPI --> APIOffline : API chưa khởi động
@@ -321,14 +395,23 @@ stateDiagram-v2
     APIOffline --> HienThiCanhBao : Hiển thị cảnh báo đỏ
     HienThiCanhBao --> KiemTraAPI : Người dùng bấm Thử lại
 
-    APIOnline --> ChonPhamVi : Chọn phạm vi (Toàn trường/Lớp/Chi bộ)
-    ChonPhamVi --> ChonDinhDang : Chọn định dạng (Excel/PDF)
-    ChonDinhDang --> BamXuat : Nhấn Xuất tài liệu
+    APIOnline --> ChonPhamVi : Chọn phạm vi (Toàn trường/Lớp/Chi bộ) & Biểu mẫu
+    ChonPhamVi --> BamXuat : Nhấn Xuất Mẫu Phiếu PDF (Mẫu 2026)
 
-    BamXuat --> PHPProxy : PHP Proxy chuyển yêu cầu đến Flask:5000
-    PHPProxy --> FlaskQuery : Flask truy vấn MySQL
-    FlaskQuery --> TaoFile : Tạo file Excel (openpyxl) hoặc PDF (reportlab)
-    TaoFile --> TaiXuong : Trả file về browser để tải xuống
+    BamXuat --> PHPProxy : Proxy gọi Flask API /api/export/form/{form}/{id}
+    PHPProxy --> KiemTraTruong : Flask API thẩm định các trường dữ liệu bắt buộc
+
+    state KiemTraTruong <<choice>>
+    KiemTraTruong --> ThieuDuyLieu : Khuyết thông tin (Quê quán, Dân tộc, Chi bộ...)
+    KiemTraTruong --> DuDuLieu : Thông tin đầy đủ 100%
+
+    ThieuDuyLieu --> BietModal : Trả lỗi JSON (400) → Tự động bật Modal Cảnh báo thiếu trường
+    BietModal --> BamSua : Người dùng bấm "✏️ Điền thông tin ngay"
+    BamSua --> [*]
+
+    DuDuLieu --> FlaskQuery : Query MySQL & map dữ liệu vào ReportLab PDF Engine
+    FlaskQuery --> TaoFile : Tạo file PDF sắc nét chuẩn văn bản Đảng 2026
+    TaoFile --> TaiXuong : Trả file về trình duyệt để tải xuống
     TaiXuong --> [*] : Hoàn tất
 ```
 
@@ -388,19 +471,44 @@ sequenceDiagram
     PHP-->>QL: Browser trigger tải xuống file DanhSach_Excel.xlsx
 ```
 
+#### 5c. Thẩm định Hồ sơ qua Edge AI OCR Client-side & Lưu trữ Server
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Sinh viên / Bí thư
+    participant Browser as Trình duyệt (Edge AI JS)
+    participant Tesseract as Engine Tesseract.js / PDF.js
+    participant ServerAPI as REST API (api_save_ai_check.php)
+    participant Disk as Thư mục uploads/ho_so_minh_chung
+    participant DB as MySQL Database (edge_ai_logs)
+
+    User->>Browser: Chọn hoặc Kéo thả tệp minh chứng (PDF/PNG/JPG <=10MB)
+    Browser->>Tesseract: Đọc trích xuất chữ tiếng Việt từ tệp minh chứng
+    Tesseract-->>Browser: Trả về chuỗi văn bản OCR trích xuất (Text)
+    Browser->>Browser: Chạy Rule-Engine kiểm tra từ khóa bắt buộc & Giấy tờ thiếu
+    Browser-->>User: Hiển thị kết quả kiểm tra & Badge đánh giá thời gian thực
+    Browser->>ServerAPI: Request AJAX POST (FormData: file + JSON log kết quả)
+    ServerAPI->>Disk: Lưu file vật lý vào uploads/ho_so_minh_chung/
+    ServerAPI->>DB: INSERT INTO edge_ai_logs (ma_gvsv, ten_file, noi_dung_ocr, danh_gia)
+    DB-->>ServerAPI: Xác nhận lưu DB thành công
+    ServerAPI-->>Browser: Trả về HTTP 200 OK
+    Browser-->>User: Hiển thị "Đã lưu vết minh chứng & Nhật ký AI vào hệ thống"
+```
+
 ---
 
 ### 6. Phân quyền và Bảo mật (Security Model)
 
-| Cơ chế | Chi tiết kỹ thuật |
-|---|---|
-| **Session Authentication** | `session_start()` + `$_SESSION['user_id']` kiểm tra mỗi request |
-| **Role-Based Access Control** | Hàm `requireRole(['Quản lý', 'Admin'])` đặt đầu mỗi file nghiệp vụ |
-| **SQL Injection Prevention** | 100% truy vấn dùng PDO Prepared Statements (`?` placeholder) |
-| **XSS Prevention** | Hàm `e()` bao bọc `htmlspecialchars()` cho mọi output ra HTML |
-| **Data Integrity** | Khóa readonly Họ tên + Mã SV trong form đăng ký/cập nhật để chống mạo danh |
-| **File Upload Security** | Kiểm tra MIME type, giới hạn phần mở rộng, lưu ngoài webroot |
-| **CORS Control** | Flask API dùng `flask-cors` chỉ cho phép origin từ localhost |
+| Cơ chế                        | Chi tiết kỹ thuật                                                          |
+| ----------------------------- | -------------------------------------------------------------------------- |
+| **Session Authentication**    | `session_start()` + `$_SESSION['user_id']` kiểm tra mỗi request            |
+| **Role-Based Access Control** | Hàm`requireRole(['Quản lý', 'Admin'])` đặt đầu mỗi file nghiệp vụ          |
+| **SQL Injection Prevention**  | 100% truy vấn dùng PDO Prepared Statements (`?` placeholder)               |
+| **XSS Prevention**            | Hàm`e()` bao bọc `htmlspecialchars()` cho mọi output ra HTML               |
+| **Data Integrity**            | Khóa readonly Họ tên + Mã SV trong form đăng ký/cập nhật để chống mạo danh |
+| **File Upload Security**      | Kiểm tra MIME type, giới hạn phần mở rộng, lưu ngoài webroot               |
+| **CORS Control**              | Flask API dùng`flask-cors` chỉ cho phép origin từ localhost                |
 
 ---
 
@@ -523,131 +631,142 @@ erDiagram
 
 #### Bảng 1: `nguoi_dung` (Tài khoản đăng nhập & phân quyền)
 
-| Tên cột | Kiểu dữ liệu | Ràng buộc | Mô tả |
-| :--- | :--- | :--- | :--- |
-| `id` | INT | PK, Auto Increment | Mã định danh tự tăng |
-| `username` | VARCHAR(100) | UNIQUE, NOT NULL | Tên đăng nhập (Mã SV hoặc tên Admin) |
-| `password` | VARCHAR(255) | NOT NULL | Mật khẩu đã được băm bằng password_hash() PHP |
-| `ho_ten` | VARCHAR(255) | | Họ và tên đầy đủ hiển thị trên giao diện |
-| `vai_tro` | ENUM | DEFAULT 'Người dùng thường' | Ba giá trị: 'Người dùng thường', 'Quản lý', 'Admin' |
-| `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Thời điểm tạo tài khoản |
+| Tên cột      | Kiểu dữ liệu | Ràng buộc                   | Mô tả                                               |
+| :----------- | :----------- | :-------------------------- | :-------------------------------------------------- |
+| `id`         | INT          | PK, Auto Increment          | Mã định danh tự tăng                                |
+| `username`   | VARCHAR(100) | UNIQUE, NOT NULL            | Tên đăng nhập (Mã SV hoặc tên Admin)                |
+| `password`   | VARCHAR(255) | NOT NULL                    | Mật khẩu đã được băm bằng password_hash() PHP       |
+| `ho_ten`     | VARCHAR(255) |                             | Họ và tên đầy đủ hiển thị trên giao diện            |
+| `vai_tro`    | ENUM         | DEFAULT 'Người dùng thường' | Ba giá trị: 'Người dùng thường', 'Quản lý', 'Admin' |
+| `created_at` | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP   | Thời điểm tạo tài khoản                             |
 
 #### Bảng 2: `doi_tuong` (Hồ sơ quần chúng ưu tú chính thức – 35 cột)
 
-| Tên cột | Kiểu dữ liệu | Mô tả |
-| :--- | :--- | :--- |
-| `id` | INT PK | Mã định danh tự tăng |
-| `ma_gvsv` | VARCHAR(50) | Mã số Sinh viên / Giảng viên |
-| `ho_ten` | VARCHAR(255) NOT NULL | Họ và tên đầy đủ |
-| `sdt` | VARCHAR(20) | Số điện thoại liên hệ |
-| `email` | VARCHAR(255) | Địa chỉ Email nhận thông báo |
-| `gioi_tinh` | VARCHAR(10) | Giới tính (Nam / Nữ) |
-| `ngay_sinh` | DATE | Ngày sinh (định dạng dd/mm/yyyy) |
-| `dan_toc` | VARCHAR(50) | Dân tộc |
-| `que_quan` | TEXT | Địa chỉ quê quán đầy đủ |
-| `chuc_vu` | VARCHAR(100) | Chức vụ trong lớp/khoa/trường |
-| `lop` | VARCHAR(100) | Lớp hành chính sinh hoạt |
-| `chi_bo_cong_nhan` | VARCHAR(255) | Chi bộ Đảng theo dõi và công nhận |
-| `so_bc_cam_tinh` | VARCHAR(50) | Số biên bản cảm tình Đảng |
-| `ngay_hop_cam_tinh` | DATE | Ngày họp chi bộ công nhận cảm tình |
-| `dang_vien_giup_do` | VARCHAR(255) | Họ tên Đảng viên được phân công giúp đỡ |
-| `ngay_phan_cong_giup_do` | DATE | Ngày chi bộ ra quyết định phân công giúp đỡ |
-| `so_qd_mo_lop` | VARCHAR(50) | Số quyết định mở lớp bồi dưỡng nhận thức |
-| `ngay_qd_mo_lop` | DATE | Ngày ký quyết định mở lớp |
-| `tg_lop_boi_duong` | VARCHAR(100) | Thời gian tổ chức lớp bồi dưỡng |
-| `ngay_cap_cc` | DATE | Ngày cấp chứng chỉ nhận thức về Đảng |
-| `so_qd_cc` | VARCHAR(50) | Số quyết định chứng chỉ |
-| `don_vi_cap_cc` | VARCHAR(255) | Đơn vị cấp chứng chỉ |
-| `ten_dv_congtac_khi_cap_cc` | VARCHAR(255) | Tên đơn vị công tác khi cấp CC |
-| `ten_chibo_khi_cap_cc` | VARCHAR(255) | Tên chi bộ sinh hoạt khi cấp CC |
-| `ten_danguy_khi_cap_cc` | VARCHAR(255) | Tên Đảng ủy khi cấp CC |
-| `ten_tinhuy_khi_cap_cc` | VARCHAR(255) | Tên Tỉnh ủy khi cấp CC |
-| `ma_so` | VARCHAR(50) | Mã số hồ sơ phát triển Đảng |
-| `ket_nap_dang` | VARCHAR(100) | Thông tin kết nạp Đảng |
-| `ngay_quyet_dinh` | DATE | Ngày ký quyết định kết nạp |
-| `so_qd_ket_nap` | VARCHAR(50) | Số quyết định kết nạp Đảng viên |
-| `ngay_ket_nap` | DATE | Ngày kết nạp chính thức vào Đảng |
-| `dang_vien_huong_dan` | VARCHAR(255) | Đảng viên chính thức hướng dẫn 12 tháng |
-| `ngay_chuyen_sinh_hoat` | DATE | Ngày làm thủ tục chuyển sinh hoạt Đảng |
-| `noi_chuyen_toi` | VARCHAR(255) | Chi bộ/Đảng bộ chuyển tới |
-| `trang_thai` | VARCHAR(50) | Trạng thái: 'Đang theo dõi', 'Đã kết nạp', 'Đã chuyển' |
-| `avatar` | VARCHAR(255) | Đường dẫn ảnh chân dung trong uploads/avatars/ |
-| `ghi_chu` | TEXT | Ghi chú thêm của Bí thư |
-| `created_at` | TIMESTAMP | Thời điểm tạo hồ sơ |
+| Tên cột                     | Kiểu dữ liệu          | Mô tả                                                  |
+| :-------------------------- | :-------------------- | :----------------------------------------------------- |
+| `id`                        | INT PK                | Mã định danh tự tăng                                   |
+| `ma_gvsv`                   | VARCHAR(50)           | Mã số Sinh viên / Giảng viên                           |
+| `ho_ten`                    | VARCHAR(255) NOT NULL | Họ và tên đầy đủ                                       |
+| `sdt`                       | VARCHAR(20)           | Số điện thoại liên hệ                                  |
+| `email`                     | VARCHAR(255)          | Địa chỉ Email nhận thông báo                           |
+| `gioi_tinh`                 | VARCHAR(10)           | Giới tính (Nam / Nữ)                                   |
+| `ngay_sinh`                 | DATE                  | Ngày sinh (định dạng dd/mm/yyyy)                       |
+| `dan_toc`                   | VARCHAR(50)           | Dân tộc                                                |
+| `que_quan`                  | TEXT                  | Địa chỉ quê quán đầy đủ                                |
+| `chuc_vu`                   | VARCHAR(100)          | Chức vụ trong lớp/khoa/trường                          |
+| `lop`                       | VARCHAR(100)          | Lớp hành chính sinh hoạt                               |
+| `chi_bo_cong_nhan`          | VARCHAR(255)          | Chi bộ Đảng theo dõi và công nhận                      |
+| `so_bc_cam_tinh`            | VARCHAR(50)           | Số biên bản cảm tình Đảng                              |
+| `ngay_hop_cam_tinh`         | DATE                  | Ngày họp chi bộ công nhận cảm tình                     |
+| `dang_vien_giup_do`         | VARCHAR(255)          | Họ tên Đảng viên được phân công giúp đỡ                |
+| `ngay_phan_cong_giup_do`    | DATE                  | Ngày chi bộ ra quyết định phân công giúp đỡ            |
+| `so_qd_mo_lop`              | VARCHAR(50)           | Số quyết định mở lớp bồi dưỡng nhận thức               |
+| `ngay_qd_mo_lop`            | DATE                  | Ngày ký quyết định mở lớp                              |
+| `tg_lop_boi_duong`          | VARCHAR(100)          | Thời gian tổ chức lớp bồi dưỡng                        |
+| `ngay_cap_cc`               | DATE                  | Ngày cấp chứng chỉ nhận thức về Đảng                   |
+| `so_qd_cc`                  | VARCHAR(50)           | Số quyết định chứng chỉ                                |
+| `don_vi_cap_cc`             | VARCHAR(255)          | Đơn vị cấp chứng chỉ                                   |
+| `ten_dv_congtac_khi_cap_cc` | VARCHAR(255)          | Tên đơn vị công tác khi cấp CC                         |
+| `ten_chibo_khi_cap_cc`      | VARCHAR(255)          | Tên chi bộ sinh hoạt khi cấp CC                        |
+| `ten_danguy_khi_cap_cc`     | VARCHAR(255)          | Tên Đảng ủy khi cấp CC                                 |
+| `ten_tinhuy_khi_cap_cc`     | VARCHAR(255)          | Tên Tỉnh ủy khi cấp CC                                 |
+| `ma_so`                     | VARCHAR(50)           | Mã số hồ sơ phát triển Đảng                            |
+| `ket_nap_dang`              | VARCHAR(100)          | Thông tin kết nạp Đảng                                 |
+| `ngay_quyet_dinh`           | DATE                  | Ngày ký quyết định kết nạp                             |
+| `so_qd_ket_nap`             | VARCHAR(50)           | Số quyết định kết nạp Đảng viên                        |
+| `ngay_ket_nap`              | DATE                  | Ngày kết nạp chính thức vào Đảng                       |
+| `dang_vien_huong_dan`       | VARCHAR(255)          | Đảng viên chính thức hướng dẫn 12 tháng                |
+| `ngay_chuyen_sinh_hoat`     | DATE                  | Ngày làm thủ tục chuyển sinh hoạt Đảng                 |
+| `noi_chuyen_toi`            | VARCHAR(255)          | Chi bộ/Đảng bộ chuyển tới                              |
+| `trang_thai`                | VARCHAR(50)           | Trạng thái: 'Đang theo dõi', 'Đã kết nạp', 'Đã chuyển' |
+| `avatar`                    | VARCHAR(255)          | Đường dẫn ảnh chân dung trong uploads/avatars/         |
+| `ghi_chu`                   | TEXT                  | Ghi chú thêm của Bí thư                                |
+| `created_at`                | TIMESTAMP             | Thời điểm tạo hồ sơ                                    |
 
 #### Bảng 3: `dang_ky_doi_tuong` (Đơn đăng ký trực tuyến chờ duyệt)
 
-| Tên cột | Kiểu dữ liệu | Ràng buộc | Mô tả |
-| :--- | :--- | :--- | :--- |
-| `id` | INT | PK, Auto Increment | Mã số đơn đăng ký |
-| `ma_gvsv` | VARCHAR(50) | NOT NULL | Mã số SV (lấy tự động từ session) |
-| `ho_ten` | VARCHAR(255) | NOT NULL | Họ tên sinh viên (lấy tự động từ session) |
-| `sdt` | VARCHAR(20) | | Số điện thoại liên hệ |
-| `email` | VARCHAR(255) | NOT NULL | Email nhận thông báo kết quả duyệt |
-| `lop` | VARCHAR(100) | NOT NULL | Lớp hành chính |
-| `chi_bo_de_xuat` | VARCHAR(255) | | Chi bộ đề xuất theo dõi sinh hoạt |
-| `que_quan` | TEXT | | Quê quán |
-| `gioi_tinh` | VARCHAR(10) | | Giới tính |
-| `ngay_sinh` | DATE | | Ngày sinh |
-| `trang_thai` | VARCHAR(50) | DEFAULT 'Chờ duyệt' | 'Chờ duyệt', 'Đã duyệt', 'Đã từ chối' |
-| `ly_do_tu_choi` | TEXT | | Lý do từ chối của Quản lý |
-| `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Thời điểm nộp đơn |
+| Tên cột          | Kiểu dữ liệu | Ràng buộc                 | Mô tả                                     |
+| :--------------- | :----------- | :------------------------ | :---------------------------------------- |
+| `id`             | INT          | PK, Auto Increment        | Mã số đơn đăng ký                         |
+| `ma_gvsv`        | VARCHAR(50)  | NOT NULL                  | Mã số SV (lấy tự động từ session)         |
+| `ho_ten`         | VARCHAR(255) | NOT NULL                  | Họ tên sinh viên (lấy tự động từ session) |
+| `sdt`            | VARCHAR(20)  |                           | Số điện thoại liên hệ                     |
+| `email`          | VARCHAR(255) | NOT NULL                  | Email nhận thông báo kết quả duyệt        |
+| `lop`            | VARCHAR(100) | NOT NULL                  | Lớp hành chính                            |
+| `chi_bo_de_xuat` | VARCHAR(255) |                           | Chi bộ đề xuất theo dõi sinh hoạt         |
+| `que_quan`       | TEXT         |                           | Quê quán                                  |
+| `gioi_tinh`      | VARCHAR(10)  |                           | Giới tính                                 |
+| `ngay_sinh`      | DATE         |                           | Ngày sinh                                 |
+| `trang_thai`     | VARCHAR(50)  | DEFAULT 'Chờ duyệt'       | 'Chờ duyệt', 'Đã duyệt', 'Đã từ chối'     |
+| `ly_do_tu_choi`  | TEXT         |                           | Lý do từ chối của Quản lý                 |
+| `created_at`     | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP | Thời điểm nộp đơn                         |
 
 #### Bảng 4: `yeu_cau_cap_nhat` (Đề xuất cập nhật thông tin)
 
-| Tên cột | Kiểu dữ liệu | Ràng buộc | Mô tả |
-| :--- | :--- | :--- | :--- |
-| `id` | INT | PK, Auto Increment | Mã yêu cầu tự tăng |
-| `doi_tuong_id` | INT | FK → doi_tuong.id, NOT NULL | Liên kết hồ sơ chính thức |
-| `sdt` | VARCHAR(20) | NOT NULL | Số điện thoại mới đề xuất |
-| `email` | VARCHAR(255) | NOT NULL | Email mới đề xuất |
-| `lop` | VARCHAR(100) | NOT NULL | Lớp mới đề xuất |
-| `que_quan` | TEXT | | Quê quán mới đề xuất |
-| `chuc_vu` | VARCHAR(100) | | Chức vụ mới đề xuất |
-| `trang_thai` | ENUM | DEFAULT 'Chờ duyệt' | 'Chờ duyệt', 'Đã duyệt', 'Đã từ chối' |
-| `ly_do_tu_choi` | TEXT | | Lý do Quản lý không duyệt cập nhật |
-| `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Thời điểm gửi yêu cầu |
+| Tên cột         | Kiểu dữ liệu | Ràng buộc                   | Mô tả                                 |
+| :-------------- | :----------- | :-------------------------- | :------------------------------------ |
+| `id`            | INT          | PK, Auto Increment          | Mã yêu cầu tự tăng                    |
+| `doi_tuong_id`  | INT          | FK → doi_tuong.id, NOT NULL | Liên kết hồ sơ chính thức             |
+| `sdt`           | VARCHAR(20)  | NOT NULL                    | Số điện thoại mới đề xuất             |
+| `email`         | VARCHAR(255) | NOT NULL                    | Email mới đề xuất                     |
+| `lop`           | VARCHAR(100) | NOT NULL                    | Lớp mới đề xuất                       |
+| `que_quan`      | TEXT         |                             | Quê quán mới đề xuất                  |
+| `chuc_vu`       | VARCHAR(100) |                             | Chức vụ mới đề xuất                   |
+| `trang_thai`    | ENUM         | DEFAULT 'Chờ duyệt'         | 'Chờ duyệt', 'Đã duyệt', 'Đã từ chối' |
+| `ly_do_tu_choi` | TEXT         |                             | Lý do Quản lý không duyệt cập nhật    |
+| `created_at`    | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP   | Thời điểm gửi yêu cầu                 |
 
 #### Bảng 5: `chi_bo` (Danh mục Chi bộ Đảng)
 
-| Tên cột | Kiểu dữ liệu | Mô tả |
-| :--- | :--- | :--- |
-| `id` | INT PK | Mã định danh |
-| `ten_chi_bo` | VARCHAR(255) NOT NULL | Tên đầy đủ chi bộ |
-| `ma_chi_bo` | VARCHAR(50) | Mã viết tắt chi bộ |
-| `dang_uy` | VARCHAR(255) | Đảng ủy trực thuộc |
+| Tên cột      | Kiểu dữ liệu          | Mô tả              |
+| :----------- | :-------------------- | :----------------- |
+| `id`         | INT PK                | Mã định danh       |
+| `ten_chi_bo` | VARCHAR(255) NOT NULL | Tên đầy đủ chi bộ  |
+| `ma_chi_bo`  | VARCHAR(50)           | Mã viết tắt chi bộ |
+| `dang_uy`    | VARCHAR(255)          | Đảng ủy trực thuộc |
 
 #### Bảng 6: `dang_vien` (Danh mục Đảng viên giúp đỡ)
 
-| Tên cột | Kiểu dữ liệu | Mô tả |
-| :--- | :--- | :--- |
-| `id` | INT PK | Mã định danh |
-| `ho_ten` | VARCHAR(255) NOT NULL | Họ tên Đảng viên |
-| `chi_bo_id` | INT FK | Chi bộ sinh hoạt |
-| `chuc_vu` | VARCHAR(100) | Chức vụ trong chi bộ |
-| `sdt` | VARCHAR(20) | Số điện thoại liên hệ |
+| Tên cột     | Kiểu dữ liệu          | Mô tả                 |
+| :---------- | :-------------------- | :-------------------- |
+| `id`        | INT PK                | Mã định danh          |
+| `ho_ten`    | VARCHAR(255) NOT NULL | Họ tên Đảng viên      |
+| `chi_bo_id` | INT FK                | Chi bộ sinh hoạt      |
+| `chuc_vu`   | VARCHAR(100)          | Chức vụ trong chi bộ  |
+| `sdt`       | VARCHAR(20)           | Số điện thoại liên hệ |
 
 #### Bảng 7: `lich_su` (Nhật ký thao tác hệ thống)
 
-| Tên cột | Kiểu dữ liệu | Mô tả |
-| :--- | :--- | :--- |
-| `id` | INT PK | Mã định danh |
-| `doi_tuong_id` | INT FK | Hồ sơ liên quan |
-| `hanh_dong` | VARCHAR(100) | Loại hành động (Duyệt, Từ chối, Sửa, Xóa...) |
-| `mo_ta` | TEXT | Mô tả chi tiết thao tác |
-| `nguoi_thuc_hien` | VARCHAR(100) | Username người thực hiện |
-| `thoi_gian` | TIMESTAMP | Thời điểm xảy ra |
+| Tên cột           | Kiểu dữ liệu | Mô tả                                        |
+| :---------------- | :----------- | :------------------------------------------- |
+| `id`              | INT PK       | Mã định danh                                 |
+| `doi_tuong_id`    | INT FK       | Hồ sơ liên quan                              |
+| `hanh_dong`       | VARCHAR(100) | Loại hành động (Duyệt, Từ chối, Sửa, Xóa...) |
+| `mo_ta`           | TEXT         | Mô tả chi tiết thao tác                      |
+| `nguoi_thuc_hien` | VARCHAR(100) | Username người thực hiện                     |
+| `thoi_gian`       | TIMESTAMP    | Thời điểm xảy ra                             |
 
 #### Bảng 8: `cai_dat` (Cấu hình hệ thống)
 
-| Tên cột | Kiểu dữ liệu | Mô tả |
-| :--- | :--- | :--- |
-| `id` | INT PK | Mã định danh |
-| `ten_truong` | VARCHAR(255) | Tên trường Đại học |
-| `ten_dang_bo` | VARCHAR(255) | Tên Đảng bộ / Chi bộ chủ quản |
-| `ma_truong` | VARCHAR(50) | Mã trường |
-| `dia_chi` | TEXT | Địa chỉ trường |
-| `email_lien_he` | VARCHAR(255) | Email liên hệ |
+| Tên cột         | Kiểu dữ liệu | Mô tả                         |
+| :-------------- | :----------- | :---------------------------- |
+| `id`            | INT PK       | Mã định danh                  |
+| `ten_truong`    | VARCHAR(255) | Tên trường Đại học            |
+| `ten_dang_bo`   | VARCHAR(255) | Tên Đảng bộ / Chi bộ chủ quản |
+| `ma_truong`     | VARCHAR(50)  | Mã trường                     |
+| `dia_chi`       | TEXT         | Địa chỉ trường                |
+| `email_lien_he` | VARCHAR(255) | Email liên hệ                 |
+
+#### Bảng 9: `edge_ai_logs` (Nhật ký phân tích Edge AI OCR & Tệp minh chứng)
+
+| Tên cột       | Kiểu dữ liệu | Mô tả                                                                 |
+| :------------ | :----------- | :-------------------------------------------------------------------- |
+| `id`          | INT PK       | Khóa chính tự tăng                                                    |
+| `user_id`     | INT FK       | ID người dùng nộp minh chứng                                          |
+| `trang_thai`  | VARCHAR(100) | Trạng thái AI đánh giá ('Đầy đủ hợp lệ', 'Cần bổ sung')               |
+| `raw_summary` | TEXT         | Nội dung chi tiết báo cáo kiểm tra AI                                 |
+| `files_json`  | TEXT         | Mảng JSON chứa đường dẫn tệp minh chứng (`uploads/ho_so_minh_chung/`) |
+| `created_at`  | TIMESTAMP    | Thời điểm thực hiện quét OCR và lưu tệp                               |
 
 ---
 
@@ -706,22 +825,22 @@ web1/
 
 ### 2. Công nghệ sử dụng
 
-| Lớp | Công nghệ | Phiên bản | Vai trò |
-|---|---|---|---|
-| **Frontend** | HTML5 | — | Cấu trúc trang |
-| **Frontend** | Vanilla CSS3 | — | 1016 dòng, Dark Mode Đỏ-Vàng, Responsive |
-| **Frontend** | JavaScript ES6 | — | AJAX Fetch API, Chart.js, Drag & Drop |
-| **Frontend** | Chart.js | 4.x (CDN) | Biểu đồ thống kê (Bar, Doughnut, Line) |
-| **Backend** | PHP | 8.x | Logic nghiệp vụ chính, session, PDO |
-| **Backend** | Python Flask | 3.x | REST API xuất báo cáo Excel + PDF |
-| **Backend** | Flask-CORS | 4.x | Cho phép PHP gọi cross-origin |
-| **Database** | MySQL | 8.x | Lưu trữ toàn bộ dữ liệu hệ thống |
-| **ORM/Query** | PDO (PHP) | — | Prepared Statements chống SQL Injection |
-| **Excel** | openpyxl | 3.1.x | Tạo file .xlsx với định dạng cao cấp |
-| **PDF** | reportlab | 4.x | Tạo file .pdf với font Times New Roman tiếng Việt |
-| **RSS Parser** | simplexml (PHP) | — | Nạp tin tức từ Dân trí, Nhân Dân, Đảng Cộng sản |
-| **Web Server** | Apache (XAMPP) | 2.4.x | Phục vụ PHP trên localhost |
-| **Environment** | XAMPP | 8.2.x | Gói phát triển local (Apache + MySQL + PHP) |
+| Lớp             | Công nghệ       | Phiên bản | Vai trò                                           |
+| --------------- | --------------- | --------- | ------------------------------------------------- |
+| **Frontend**    | HTML5           | —         | Cấu trúc trang                                    |
+| **Frontend**    | Vanilla CSS3    | —         | 1016 dòng, Dark Mode Đỏ-Vàng, Responsive          |
+| **Frontend**    | JavaScript ES6  | —         | AJAX Fetch API, Chart.js, Drag & Drop             |
+| **Frontend**    | Chart.js        | 4.x (CDN) | Biểu đồ thống kê (Bar, Doughnut, Line)            |
+| **Backend**     | PHP             | 8.x       | Logic nghiệp vụ chính, session, PDO               |
+| **Backend**     | Python Flask    | 3.x       | REST API xuất báo cáo Excel + PDF                 |
+| **Backend**     | Flask-CORS      | 4.x       | Cho phép PHP gọi cross-origin                     |
+| **Database**    | MySQL           | 8.x       | Lưu trữ toàn bộ dữ liệu hệ thống                  |
+| **ORM/Query**   | PDO (PHP)       | —         | Prepared Statements chống SQL Injection           |
+| **Excel**       | openpyxl        | 3.1.x     | Tạo file .xlsx với định dạng cao cấp              |
+| **PDF**         | reportlab       | 4.x       | Tạo file .pdf với font Times New Roman tiếng Việt |
+| **RSS Parser**  | simplexml (PHP) | —         | Nạp tin tức từ Dân trí, Nhân Dân, Đảng Cộng sản   |
+| **Web Server**  | Apache (XAMPP)  | 2.4.x     | Phục vụ PHP trên localhost                        |
+| **Environment** | XAMPP           | 8.2.x     | Gói phát triển local (Apache + MySQL + PHP)       |
 
 ### 3. Kiến trúc Hệ thống (Architecture Overview)
 
@@ -750,48 +869,54 @@ Apache/PHP (XAMPP) ────────────────────�
 
 Sau quá trình nghiên cứu, phân tích và triển khai, nhóm đã xây dựng thành công hệ thống Website quản lý quần chúng ưu tú phục vụ kết nạp Đảng với đầy đủ các chức năng đã đề ra:
 
-| STT | Chức năng | Trạng thái |
-|---|---|---|
-| 1 | Đăng nhập / Đăng ký phân quyền 3 cấp | ✅ Hoàn thành |
-| 2 | Dashboard thông tin cá nhân (Timeline 5 bước) | ✅ Hoàn thành |
-| 3 | Form đăng ký trực tuyến + Hệ thống phê duyệt | ✅ Hoàn thành |
-| 4 | Đề xuất cập nhật thông tin + So sánh Cũ/Mới | ✅ Hoàn thành |
-| 5 | Bảng sửa nhanh trực tiếp dạng Excel (Autosave) | ✅ Hoàn thành |
-| 6 | Import dữ liệu từ Excel/CSV kéo thả | ✅ Hoàn thành |
-| 7 | Xuất Excel đầy đủ 35 cột qua Python Flask | ✅ Hoàn thành |
-| 8 | Xuất PDF hồ sơ cá nhân/danh sách qua Python Flask | ✅ Hoàn thành |
-| 9 | Thống kê biểu đồ Chart.js đa dạng | ✅ Hoàn thành |
-| 10 | Xem danh sách bạn cùng Lớp/Chi bộ | ✅ Hoàn thành |
-| 11 | Tin tức thời sự đa nguồn (3 báo) | ✅ Hoàn thành |
-| 12 | Giao diện Dark Mode Responsive Đỏ-Vàng | ✅ Hoàn thành |
-| 13 | Gửi email thông báo (Log file trong môi trường local) | ✅ Hoàn thành |
+| STT | Chức năng                                             | Trạng thái    |
+| --- | ----------------------------------------------------- | ------------- |
+| 1   | Đăng nhập / Đăng ký phân quyền 3 cấp                  | ✅ Hoàn thành |
+| 2   | Dashboard thông tin cá nhân (Timeline 5 bước)         | ✅ Hoàn thành |
+| 3   | Form đăng ký trực tuyến + Hệ thống phê duyệt          | ✅ Hoàn thành |
+| 4   | Đề xuất cập nhật thông tin + So sánh Cũ/Mới           | ✅ Hoàn thành |
+| 5   | Bảng sửa nhanh trực tiếp dạng Excel (Autosave)        | ✅ Hoàn thành |
+| 6   | Import dữ liệu từ Excel/CSV kéo thả                   | ✅ Hoàn thành |
+| 7   | Xuất Excel đầy đủ 35 cột qua Python Flask             | ✅ Hoàn thành |
+| 8   | Xuất PDF hồ sơ cá nhân/danh sách qua Python Flask     | ✅ Hoàn thành |
+| 9   | Thống kê biểu đồ Chart.js đa dạng                     | ✅ Hoàn thành |
+| 10  | Xem danh sách bạn cùng Lớp/Chi bộ                     | ✅ Hoàn thành |
+| 11  | Tin tức thời sự đa nguồn (3 báo)                      | ✅ Hoàn thành |
+| 12  | Giao diện Dark Mode Responsive Đỏ-Vàng                | ✅ Hoàn thành |
+| 13  | Gửi email thông báo (Log file trong môi trường local) | ✅ Hoàn thành |
 
 ### 2. Ưu điểm
 
-* **Giao diện chuyên nghiệp:** Hệ màu Đỏ cờ Đảng – Vàng kim trên nền Dark Mode trang nghiêm, hiện đại, responsive trên mọi thiết bị.
-* **Quy trình số hóa hoàn chỉnh:** Toàn bộ vòng đời hồ sơ từ nộp đơn → phê duyệt → theo dõi tiến trình → kết nạp đều được xử lý trong hệ thống.
-* **Bảo mật chặt chẽ:** Phân quyền 3 cấp, PDO Prepared Statements chống SQL Injection, XSS prevention đầy đủ.
-* **Trải nghiệm người dùng cao:** Autosave, Timeline trực quan, Dashboard cá nhân hóa, thẻ card tin tức.
-* **Xuất báo cáo chuyên nghiệp:** File Excel định dạng cao cấp màu Đảng bộ + PDF hỗ trợ tiếng Việt qua Python.
-* **Tích hợp thông tin thời sự:** 3 nguồn báo chính thống với cơ chế dự phòng thông minh.
+- **Giao diện chuyên nghiệp:** Hệ màu Đỏ cờ Đảng – Vàng kim trên nền Dark Mode trang nghiêm, hiện đại, responsive trên mọi thiết bị.
+- **Quy trình số hóa hoàn chỉnh:** Toàn bộ vòng đời hồ sơ từ nộp đơn → phê duyệt → theo dõi tiến trình → kết nạp đều được xử lý trong hệ thống.
+- **Bảo mật chặt chẽ:** Phân quyền 3 cấp, PDO Prepared Statements chống SQL Injection, XSS prevention đầy đủ.
+- **Trải nghiệm người dùng cao:** Autosave, Timeline trực quan, Dashboard cá nhân hóa, thẻ card tin tức.
+- **Xuất báo cáo chuyên nghiệp:** File Excel định dạng cao cấp màu Đảng bộ + PDF hỗ trợ tiếng Việt qua Python.
+- **Tích hợp thông tin thời sự:** 3 nguồn báo chính thống với cơ chế dự phòng thông minh.
 
 ### 3. Hạn chế
 
-* **Phụ thuộc môi trường:** Cần cài Python và chạy Flask API thủ công khi muốn xuất báo cáo.
-* **Email thực:** Chưa tích hợp SMTP thực (Gmail API) – email hiện tại chỉ ghi log file.
-* **Đa người dùng đồng thời:** Chưa có cơ chế lock hàng khi nhiều Quản lý sửa cùng một hồ sơ.
-* **Backup tự động:** Chưa có tính năng tự động sao lưu database định kỳ.
+- **Phụ thuộc môi trường:** Cần cài Python và chạy Flask API thủ công khi muốn xuất báo cáo.
+- **Email thực:** Chưa tích hợp SMTP thực (Gmail API) – email hiện tại chỉ ghi log file.
+- **Đa người dùng đồng thời:** Chưa có cơ chế lock hàng khi nhiều Quản lý sửa cùng một hồ sơ.
+- **Backup tự động:** Chưa có tính năng tự động sao lưu database định kỳ.
 
 ### 4. Hướng phát triển
 
-* 📧 **Tích hợp SMTP Gmail thực tế:** Gửi email thông báo duyệt/từ chối trực tiếp đến sinh viên qua Gmail API OAuth2.
-* 📱 **Ứng dụng mobile:** Phát triển bản app Android/iOS hỗ trợ Bí thư quản lý và phê duyệt di động.
-* 🔔 **Thông báo realtime:** Tích hợp WebSocket để Quản lý nhận thông báo tức thì khi có hồ sơ mới.
-* ☁️ **Triển khai Cloud:** Deploy lên VPS/Hosting có domain thực để dùng trong môi trường sản xuất.
-* 📊 **Báo cáo nâng cao:** Biểu đồ phân tích xu hướng phát triển Đảng nhiều năm, so sánh giữa các khóa học.
-* 🔒 **2FA Authentication:** Bổ sung xác thực 2 bước cho tài khoản Admin và Quản lý.
+- 📧 **Tích hợp SMTP Gmail thực tế:** Gửi email thông báo duyệt/từ chối trực tiếp đến sinh viên qua Gmail API OAuth2.
+- 📱 **Ứng dụng mobile:** Phát triển bản app Android/iOS hỗ trợ Bí thư quản lý và phê duyệt di động.
+- 🔔 **Thông báo realtime:** Tích hợp WebSocket để Quản lý nhận thông báo tức thì khi có hồ sơ mới.
+- ☁️ **Triển khai Cloud:** Deploy lên VPS/Hosting có domain thực để dùng trong môi trường sản xuất.
+- 📊 **Báo cáo nâng cao:** Biểu đồ phân tích xu hướng phát triển Đảng nhiều năm, so sánh giữa các khóa học.
+- 🔒 **2FA Authentication:** Bổ sung xác thực 2 bước cho tài khoản Admin và Quản lý.
 
 ---
 
-*Tài liệu được tạo và duy trì bởi nhóm sinh viên thực hiện Đồ án môn học.*
-*Mã nguồn dự án: https://github.com/Datdajt03/QLQTUT-Dang*
+### 📝 Tài liệu Tham khảo Kỹ thuật Mở rộng
+
+- 🤖 **[AI_Module/readme_ai.md - Tài liệu Kỹ thuật Chi tiết Module Edge AI &amp; OCR Auto-Fill](AI_Module/readme_ai.md)**
+
+---
+
+_Tài liệu được tạo và duy trì bởi nhóm sinh viên thực hiện Đồ án môn học._
+_Mã nguồn dự án: https://github.com/Datdajt03/QLQTUT-Dang_
