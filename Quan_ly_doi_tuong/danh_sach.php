@@ -54,6 +54,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <div class="page-subtitle">Tổng cộng <?= number_format($total) ?> đối tượng</div>
   </div>
   <div style="display:flex;gap:10px;">
+    <button type="button" id="btnBatchDelete" class="btn btn-danger" style="display:none;" onclick="confirmBatchDelete()">
+      🗑️ Xóa đối tượng đã chọn (<span id="selectedCount">0</span>)
+    </button>
     <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/them.php" class="btn btn-primary">➕ Thêm mới</a>
     <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php?<?= http_build_query(['search'=>$search,'trang_thai'=>$trangThai,'lop'=>$lop]) ?>" class="btn btn-gold">📤 Xuất Excel</a>
   </div>
@@ -80,6 +83,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 </form>
 
 <!-- Table -->
+<form id="batchForm" action="xoa.php" method="post">
 <div class="card fade-in">
   <div class="card-body" style="padding:0;">
     <?php if (empty($rows)): ?>
@@ -93,6 +97,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <table class="data-table">
         <thead>
           <tr>
+            <th style="width:40px;text-align:center;">
+              <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)" style="cursor:pointer;transform:scale(1.2);">
+            </th>
             <th>STT</th>
             <th>Mã GV/SV</th>
             <th>Họ và tên</th>
@@ -108,6 +115,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
         <tbody>
           <?php foreach ($rows as $i => $row): ?>
           <tr>
+            <td style="text-align:center;">
+              <input type="checkbox" name="ids[]" value="<?= $row['id'] ?>" class="item-checkbox" onclick="updateBatchButton()" style="cursor:pointer;transform:scale(1.1);">
+            </td>
             <td style="color:var(--text2);"><?= $offset + $i + 1 ?></td>
             <td><code style="color:var(--gold);font-size:12px;"><?= e($row['ma_gvsv'] ?: '—') ?></code></td>
             <td>
@@ -175,31 +185,75 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <?php endif; ?>
   </div>
 </div>
+</form>
 
 <!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
     <div class="modal-title">🗑️ Xác nhận xóa</div>
     <div class="modal-body">
-      Bạn có chắc muốn xóa đối tượng <strong id="deleteName"></strong>?
+      Bạn có chắc muốn xóa <span id="deleteModalContent">đối tượng <strong id="deleteName"></strong></span>?
       <br>Hành động này <strong style="color:var(--danger)">không thể hoàn tác</strong>.
     </div>
     <div class="modal-actions">
-      <button onclick="closeModal()" class="btn btn-outline">Hủy</button>
-      <a href="#" id="deleteBtn" class="btn btn-danger">🗑️ Xóa</a>
+      <button type="button" onclick="closeModal()" class="btn btn-outline">Hủy</button>
+      <button type="button" id="confirmDeleteSubmitBtn" onclick="executeDelete()" class="btn btn-danger">🗑️ Xác nhận xóa</button>
     </div>
   </div>
 </div>
 
 <script>
+var isBatchAction = false;
+var singleDeleteUrl = '';
+
+function toggleSelectAll(master) {
+  var checkboxes = document.querySelectorAll('.item-checkbox');
+  checkboxes.forEach(function(cb) {
+    cb.checked = master.checked;
+  });
+  updateBatchButton();
+}
+
+function updateBatchButton() {
+  var selected = document.querySelectorAll('.item-checkbox:checked');
+  var btn = document.getElementById('btnBatchDelete');
+  var countSpan = document.getElementById('selectedCount');
+  
+  if (selected.length > 0) {
+    btn.style.display = 'inline-flex';
+    countSpan.textContent = selected.length;
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
 function confirmDelete(id, name) {
-  document.getElementById('deleteName').textContent = name;
-  document.getElementById('deleteBtn').href = 'xoa.php?id=' + id + '&ref=danh_sach';
+  isBatchAction = false;
+  singleDeleteUrl = 'xoa.php?id=' + id + '&ref=danh_sach';
+  document.getElementById('deleteModalContent').innerHTML = 'đối tượng <strong>' + name + '</strong>';
   document.getElementById('deleteModal').classList.add('open');
 }
+
+function confirmBatchDelete() {
+  var selected = document.querySelectorAll('.item-checkbox:checked');
+  if (selected.length === 0) return;
+  isBatchAction = true;
+  document.getElementById('deleteModalContent').innerHTML = '<strong style="color:var(--danger)">' + selected.length + ' đối tượng</strong> đã chọn';
+  document.getElementById('deleteModal').classList.add('open');
+}
+
+function executeDelete() {
+  if (isBatchAction) {
+    document.getElementById('batchForm').submit();
+  } else {
+    window.location.href = singleDeleteUrl;
+  }
+}
+
 function closeModal() {
   document.getElementById('deleteModal').classList.remove('open');
 }
+
 document.getElementById('deleteModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });

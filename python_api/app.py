@@ -521,6 +521,65 @@ def get_list():
         db.close()
 
 
+@app.route('/api/export/template')
+def export_template():
+    """Xuất file Excel mẫu chuẩn hóa có tiêu đề cột và ID tên cột tương ứng để nhập dữ liệu"""
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = 'Mau_Nhap_Du_Lieu'
+
+    # Rows: Row 1 = DB Column ID (Hidden/Reference), Row 2 = Display Header Title
+    db_col_ids = [
+        'stt_dummy', 'ma_gvsv', 'ho_ten', 'sdt', 'gioi_tinh', 'ngay_sinh', 'dan_toc',
+        'que_quan', 'chuc_vu', 'lop', 'chi_bo_cong_nhan', 'so_bc_cam_tinh',
+        'ngay_hop_cam_tinh', 'dang_vien_giup_do', 'ngay_phan_cong_giup_do',
+        'so_qd_mo_lop', 'ngay_qd_mo_lop', 'tg_lop_boi_duong', 'ngay_cap_cc',
+        'so_qd_cc', 'don_vi_cap_cc', 'ten_dv_congtac_khi_cap_cc',
+        'ten_chibo_khi_cap_cc', 'ten_danguy_khi_cap_cc', 'ten_tinhuy_khi_cap_cc',
+        'ma_so', 'ket_nap_dang', 'ngay_quyet_dinh', 'so_qd_ket_nap', 'ngay_ket_nap',
+        'dang_vien_huong_dan', 'ngay_chuyen_sinh_hoat', 'noi_chuyen_toi', 'trang_thai'
+    ]
+
+    # Row 1: DB Column IDs
+    ws.append([f'[ID: {cid}]' for cid in db_col_ids])
+    for col_idx in range(1, len(db_col_ids) + 1):
+        cell = ws.cell(row=1, column=col_idx)
+        cell.font = XLFont(name='Times New Roman', bold=True, size=9, color='777777')
+        cell.fill = XLPatternFill(start_color='F1F5F9', end_color='F1F5F9', fill_type='solid')
+        cell.alignment = XLAlignment(horizontal='center', vertical='center')
+
+    # Row 2: Human Display Headers
+    ws.append(HEADERS)
+    header_style = make_header_style()
+    for col_idx in range(1, len(HEADERS) + 1):
+        cell = ws.cell(row=2, column=col_idx)
+        cell.font = header_style['font']
+        cell.fill = header_style['fill']
+        cell.alignment = header_style['align']
+        cell.border = header_style['border']
+    ws.row_dimensions[2].height = 30
+
+    # Sample demo row 3
+    demo_row = [
+        1, 'SV001', 'Nguyen Van A', '0912345678', 'Nam', '20/10/2002', 'Kinh',
+        'Ha Noi', 'Lop truong', 'K63 CNTT', 'Chi bo 1', '01-BC/CB',
+        '15/01/2024', 'Tran Van B', '20/01/2024', '123-QD/DU',
+        '01/02/2024', '01/02/2024 - 10/02/2024', '15/02/2024', '456/CN',
+        'Truong DH', 'Khoa CNTT', 'Chi bo 1', 'Dang uy Truong', 'Tinh uy',
+        'DU01', 'Chua ket nap', '', '', '', '', '', '', 'Dang theo doi'
+    ]
+    ws.append(demo_row)
+
+    # Column widths
+    for i, w in enumerate(COL_WIDTHS[:len(HEADERS)], 1):
+        ws.column_dimensions[get_column_letter(i)].width = w
+
+    buf = io.BytesIO()
+    wb.save(buf); buf.seek(0)
+    return send_file(buf, as_attachment=True, download_name='File_Mau_Nhap_Du_Lieu_DangVien.xlsx',
+                     mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+
 @app.route('/api/export/all', methods=['POST'])
 def export_all():
     """Loại 1: Xuất danh sách Excel toàn bộ (Excel format)"""

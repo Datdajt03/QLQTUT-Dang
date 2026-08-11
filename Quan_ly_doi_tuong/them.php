@@ -36,14 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $uploadDir = dirname(__DIR__) . '/uploads/avatars/';
         if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
         $ext = strtolower(pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION));
-        $allowed = ['jpg','jpeg','png','gif','webp'];
-        if (in_array($ext, $allowed) && $_FILES['avatar']['size'] <= 5 * 1024 * 1024) {
+        $allowed = ['jpg','jpeg','png','gif','webp','bmp','svg','tiff','heic'];
+        if ($_FILES['avatar']['size'] <= 20 * 1024 * 1024) {
             $fname = 'av_' . time() . '_' . rand(1000,9999) . '.' . $ext;
             if (move_uploaded_file($_FILES['avatar']['tmp_name'], $uploadDir . $fname)) {
                 $avatarPath = 'uploads/avatars/' . $fname;
             }
         } else {
-            $errors[] = 'Ảnh phải là JPG/PNG/GIF/WebP và nhỏ hơn 5MB';
+            $errors[] = 'Kích thước ảnh đại diện vượt quá giới hạn cho phép (tối đa 20MB)';
         }
     }
 
@@ -118,7 +118,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <button type="button" class="btn btn-danger btn-sm" id="removeAvatarBtn" style="display:none;" onclick="removeAvatar()">
         🗑️ Xóa ảnh
       </button>
-      <div class="avatar-hint">Định dạng: JPG, PNG, WebP · Tối đa: 5MB</div>
+      <div class="avatar-hint">Hỗ trợ tất cả định dạng ảnh · Tối đa: 20MB</div>
     </div>
     <input type="file" name="avatar" id="avatarInput" class="avatar-input-hidden" accept="image/*" onchange="previewAvatar(this)">
   </div>

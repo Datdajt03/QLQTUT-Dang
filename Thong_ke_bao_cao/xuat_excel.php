@@ -98,6 +98,13 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
             <div style="font-size:11px;color:var(--text2);margin-top:2px;">Xuất danh sách cấp ủy, thông tin tất cả cột.</div>
           </div>
         </label>
+        <label class="radio-card" style="border-color:var(--gold);background:rgba(255,215,0,0.06);" onclick="window.open('http://localhost:5000/api/export/template','_blank')">
+          <input type="radio" name="etype" value="template">
+          <div>
+            <div style="font-weight:700;font-size:13px;color:var(--gold);">📥 Tải Mẫu Excel Cho Các Lớp Điền (Kèm ID Cột)</div>
+            <div style="font-size:11px;color:var(--text2);margin-top:2px;">Tải file mẫu Excel chuẩn hóa gồm Tiêu đề & Mã ID trường để tránh bị lệch cột.</div>
+          </div>
+        </label>
         <label class="radio-card" onclick="setType(2)">
           <input type="radio" name="etype" value="2">
           <div>

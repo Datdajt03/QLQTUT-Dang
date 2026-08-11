@@ -181,6 +181,13 @@ Màn hình đầy đủ quyền quản trị, bao gồm toàn bộ công cụ x�
 **G. Import Excel (`import_excel.php`)**
 
 - Giao diện kéo thả file Excel/CSV (drag & drop) hoặc chọn qua hộp thoại tệp.
+- **AI Agent Phân loại & Ánh xạ Tên cột Excel Thông minh (`AI_Module/excel_column_agent.js`):**
+  - **Tự động quét & Phân tích tên cột:** Khi chọn file, AI Agent dùng thuật toán `normalizeHeader()` loại bỏ toàn bộ dấu tiếng Việt và ký tự đặc biệt, sau đó chạy ma trận đối soát với Từ điển Từ khóa CSDL `DB_COLUMNS_DICTIONARY` để tự động nhận diện các tiêu đề viết tắt/biến thể (ví dụ: `Qli`, `QL`, `Quản lý`, `Bán cán sự`, `MSSV`, `Hoten`, `Mã SV`...).
+  - **Xử lý Cột Trống Tiêu Đề:** Nếu trong file Excel có ô tiêu đề bị trống/thiếu (không có chữ), AI Agent tự động định danh theo vị trí chữ cái cột `⚠️ Cột A (Trống tiêu đề)`, `⚠️ Cột B (Trống tiêu đề)`..., tô viền đỏ nổi bật và đưa lên Modal để người dùng chọn trường CSDL cần đẩy vào.
+  - **Modal Tab AI Agent:** Tự động hiển thị Modal Tab chứa bảng so sánh:
+    - **Cột bên trái:** Tên tiêu đề thực tế từ file Excel người dùng tải lên (hoặc tên vị trí cột trống).
+    - **Cột Chọn Trường CSDL:** Thẻ Dropdown tự động chọn sẵn trường CSDL ứng với dự đoán của Agent (`chuc_vu`, `ho_ten`, `ma_gvsv`...), đồng thời cho phép người quản lý bấm đổi chọn lại bất kỳ trường CSDL nào mong muốn.
+    - **Cột Độ tin cậy (Confidence Badge):** Đánh giá độ tin cậy của thuật toán Agent (`High`, `Medium`, `Low`, `Cột Trống (Cần chọn)`).
 - Hỗ trợ các định dạng: `.xlsx`, `.xls`, `.csv`.
 - Bản xem trước (preview) 10 dòng đầu tiên trước khi xác nhận nhập.
 - Xử lý trùng lặp: kiểm tra Mã SV đã tồn tại trước khi insert.
@@ -207,11 +214,18 @@ Màn hình đầy đủ quyền quản trị, bao gồm toàn bộ công cụ x�
 
 - **Tự động OCR Điền Form (`AI_Module/edge_ai_autofill.js`):** Khi sinh viên nộp đơn đăng ký hoặc cập nhật hồ sơ, sinh viên tải lên **ảnh CCCD (Mặt trước & Mặt sau) + Thẻ sinh viên**. Engine AI chạy Tesseract.js trích xuất trực tiếp _Họ tên, Ngày sinh, Mã SV, Giới tính, Quê quán, Dân tộc, Lớp_ và tự động điền (Auto-fill) vào các ô input, giảm 90% thời gian gõ thủ công.
 - **Smart Avatar Validation & Crop 3x4 (`AI_Module/edge_ai_autofill.js`):** Tự động nhận diện khuôn mặt trong ảnh chân dung và dùng Canvas cắt theo chuẩn tỉ lệ ảnh thẻ 3x4 (300x400) sắc nét trước khi tải lên máy chủ.
+- **Excel Column Mapper Agent (`AI_Module/excel_column_agent.js`):** AI Agent Client-side phân loại tiêu đề cột Excel thông minh và mở Modal Tab cho phép người dùng chọn/ánh xạ chính xác tiêu đề cột ghi tắt vào CSDL trước khi Import.
+- **Tự động Setup 1-Click (`setup_newcomputer.bat`):** Script tự động hóa toàn bộ quy trình thiết lập dự án khi sao chép sang máy tính mới: Tự động khởi tạo thư mục `uploads`, tự động bật `extension=zip` trong `php.ini`, tự động nạp Database `ql_dangvien` vào MySQL và cài đặt/khởi chạy Python Microservice Server.
 - **Trích xuất văn bản OCR Minh chứng:** Sử dụng Tesseract.js & PDF.js chạy tại client để kiểm tra tính hợp lệ của file PDF/Ảnh minh chứng (**tối đa 10MB/file**).
 - **Rule Engine Kiểm tra:** Tự động đối soát từ khóa bắt buộc đối với 5 loại hồ sơ (Bản tự nhận xét, Giấy chứng nhận bồi dưỡng, Minh chứng hoạt động, Phiếu đánh giá, Sơ yếu lý lịch).
 - **Lưu vết Hệ thống:** Tự động đẩy file thực tế về lưu tại `uploads/ho_so_minh_chung/` và lưu nhật ký đánh giá vào bảng MySQL `edge_ai_logs` qua API `api_save_ai_check.php`.
 
-**L. Cài đặt Hệ thống (`cai_dat.php`) – Chỉ Admin**
+**L. Xóa Hàng Loạt Nhiều Đối Tượng & Mẫu Excel Điền Chuẩn (`danh_sach.php`)**
+
+- **Xóa Hàng Loạt (Bulk Delete):** Tích hợp cột Checkbox chọn từng dòng và ô **"Select All"** ở đầu bảng `danh_sach.php`. Khi chọn một hoặc nhiều đối tượng, nút **`🗑️ Xóa đối tượng đã chọn (N)`** xuất hiện ở góc trên. Bấm xóa sẽ gửi danh sách ID qua POST tới `Quan_ly_doi_tuong/xoa.php` để thực hiện xóa an toàn toàn bộ trong một truy vấn SQL `DELETE FROM doi_tuong WHERE id IN (...)`.
+- **Mẫu Excel Điền Chuẩn Kèm ID Cột (`/api/export/template`):** Cho phép tải tệp Excel mẫu gồm mã ID chuẩn `[ID: ho_ten]`, `[ID: ma_gvsv]` ở dòng 1 và Tiêu đề tiếng Việt ở dòng 2, gửi cho các Lớp điền để nhập dữ liệu không bao giờ bị lệch cột.
+
+**M. Cài đặt Hệ thống (`cai_dat.php`) – Chỉ Admin**
 
 - Cấu hình tên trường, tên Đảng bộ, thông tin liên hệ hiển thị toàn hệ thống.
 - Đổi mật khẩu Admin và quản lý tài khoản người dùng.
