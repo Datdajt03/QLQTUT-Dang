@@ -1,4 +1,4 @@
-<div align="center">
+<div style="text-align: justify">
 
 ## 🎨 Giao diện & Trải nghiệm Người dùng (UX/UI)
 
@@ -357,3 +357,5 @@ Hệ thống quản lý cơ sở dữ liệu quan hệ chặt chẽ với các b
 ---
 
 *Phát triển bởi Nhóm sinh viên – Đồ án Quản lý Quần chúng Ưu tú.*
+
+</div>
