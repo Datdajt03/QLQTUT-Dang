@@ -145,17 +145,12 @@ Edge AI Engine chạy hoàn toàn client-side (không làm nặng Server), tích
 | **4** | **Phiếu đánh giá chất lượng đoàn viên** | `phieu_danh_gia` | Họ tên đoàn viên, Tên Chi đoàn, Kết quả xếp loại đoàn viên, Xác nhận/Chữ ký Bí thư Chi đoàn |
 | **5** | **Minh chứng hoạt động phong trào / Giấy khen** | `minh_chung_hoat_dong` | Tên hoạt động (Hiến máu, Tình nguyện...), Họ tên người nhận, Đơn vị khen thưởng, Thời gian thực hiện |
 
-### Quy trình & Thuật toán Thẩm định (Hỗ trợ MỌI Loại Phiếu):
+### Quy trình Phối hợp Multi-Agent Suite (`AIDocumentInspectorAgent`):
 1. **OCR Trích xuất Client-side:** Tệp PDF/Ảnh tải lên được trích xuất văn bản bằng `pdf.js` / `Tesseract.js`.
-2. **Chiến lược Phân loại Kép (Dual Classification Strategy):**
-   - **Mẫu phiếu tiêu chuẩn:** Chấm điểm ma trận từ khóa chọn 1 trong 5 Mẫu phiếu Kết nạp Đảng tiêu chuẩn.
-   - **Mẫu phiếu tùy chỉnh / Bất kỳ tệp phiếu nào khác:** Thuật toán `extractUniversalFormStructure` tự động nhận diện Tiêu đề phiếu từ dòng đầu và bóc tách ma trận nhãn trường `[Nhãn_Trường]: [Giá_trị]`.
-3. **Deep Field Inspection & Empty Field Detection (Soi & Phát hiện Ô Trống):**
-   - Hàm `cleanFieldValue` lọc bỏ chấm lửng (`.....`), gạch dưới (`_____`), ô trống.
-   - Nếu nhãn không có dữ liệu thực tế ➔ Đánh dấu `missingFields` và phát cảnh báo đỏ **`[CẢNH BÁO TRỐNG/THIẾU TRƯỜNG: ...]`**.
-   - Nếu nhãn có dữ liệu ➔ Đánh dấu `foundFields` và trích xuất đoạn văn bản hiển thị lên Dashboard.
-4. **Portfolio Aggregation:** Tổng hợp trạng thái đầy đủ % của cả bộ phiếu tiêu chuẩn lẫn các phiếu tùy chỉnh nộp kèm.
-5. **Interactive UI Report & Persistence:** Hiển thị Card kết quả tương ứng và lưu nhật ký đánh giá vào MySQL `edge_ai_logs` qua `api_save_ai_check.php`.
+2. **Semantic Document Synopsis Agent:** Tự động đọc và nhận diện Tiêu đề văn bản/Mẫu phiếu.
+3. **Dynamic Form Field Extractor Agent:** Bóc tách ma trận nhãn trường `[Nhãn_Trường]: [Dữ_liệu / Ô_trống]`.
+4. **Gap Diagnostic & AI Verdict Agent:** Tự động đưa ra kết luận đánh giá thông minh (`agentVerdict`) kèm lời khuyên khắc phục (`actionAdvice`).
+5. **Executive Synthesis Agent:** Hiển thị **AI Agent Synthesis Dashboard** tổng hợp cấp cao và lưu nhật ký vào MySQL `edge_ai_logs` qua `api_save_ai_check.php`.
 
 ---
 

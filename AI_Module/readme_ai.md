@@ -53,14 +53,13 @@ Edge AI tích hợp bộ 5 mô hình soi tệp minh chứng và kiểm tra chi t
   3. **Phát hiện Cột Trống Tiêu Đề**: Tự động đánh dấu vị trí `⚠️ Cột A (Trống tiêu đề)` để buộc chọn trường CSDL.
   4. **Giao diện Modal Tab Agent**: Bật Modal Tab cho phép cán bộ quản lý xem xét và đổi chọn lại trường CSDL trước khi xác nhận Import.
 
-### 5. 🔬 Universal Dynamic Document Field Inspector (`AI_Module/document_inspector.js`)
-- **Mục tiêu**: Tự động nhận diện tiêu đề, trích xuất cấu trúc trường nhãn và **thẩm định cảnh báo trường bị thiếu/trống cho MỌI LOẠI PHIẾU BẤT KỲ** mà người dùng nộp lên.
-- **Chiến lược Thẩm định Kép (Dual Inspection Strategy)**:
-  1. **Chiến lược A (Khớp 5 Mẫu Phiếu Kết nạp Đảng tiêu chuẩn):** Kiểm tra đối soát danh sách từ khóa mở rộng của 5 Mẫu phiếu tiêu chuẩn (*Bản tự nhận xét, Giấy chứng nhận, Sơ yếu lý lịch, Phiếu đánh giá, Minh chứng*).
-  2. **Chiến lược B (Mẫu Phiếu Tùy Chỉnh / Bất kỳ tệp phiếu nào khác):**
-     - **Thuật toán `extractUniversalFormStructure`**: Tự động bóc tách Tiêu đề phiếu từ 8 dòng đầu tệp và dùng biểu thức chính quy (Regex) tự động quét toàn bộ các cặp `[Nhãn_Trường]: [Nội_dung / Chấm_lửng / Ô_trống]`.
-     - **Hàm `cleanFieldValue`**: Lọc sạch các khoảng trắng rác, chấm lửng (`.....`), gạch dưới (`_____`). Nếu sau nhãn không có dữ liệu thực tế ➔ Tự động gán nhãn **`[CẢNH BÁO TRỐNG/THIẾU]`** và in đỏ nổi bật tên trường bị thiếu của phiếu tùy chỉnh đó.
-- **Báo cáo Tỷ lệ Phần trăm Đầy đủ**: $\text{ScorePercent} = (\text{Số trường đã điền} / \text{Tổng số trường phát hiện trong phiếu}) \times 100\%$.
+### 5. 🤖 Multi-Agent Suite: AI Inspector & Gap Diagnostic Agent (`AI_Module/document_inspector.js`)
+- **Mục tiêu**: Phối hợp đa Agent AI để tự động đọc hiểu, nhận định lý do, ra kết luận đánh giá thông minh (**AI Agent Verdict**) và đưa ra khuyến nghị khắc phục cụ thể cho từng tệp tệp nộp.
+- **Kiến trúc Phối hợp Multi-Agent**:
+  1. **Agent 1 - Semantic Document Synopsis Agent**: Tự động đọc và bóc tách Tiêu đề / Mục đích tệp (`generateDocumentSynopsis`).
+  2. **Agent 2 - Dynamic Form Field Extractor Agent**: Bóc tách ma trận nhãn trường `[Nhãn_Trường]: [Nội_dung / Ô_trống]`.
+  3. **Agent 3 - Gap Diagnostic & Verdict Agent**: Tự động đánh giá lý do tệp bị thiếu/trống trường, xuất kết luận nhận xét thông minh (`agentVerdict`) và khuyến nghị hướng sửa (`actionAdvice`).
+  4. **Agent 4 - Executive Synthesis Agent**: Tổng hợp toàn bộ bộ hồ sơ, đưa ra bảng **Báo cáo Kết luận AI Agent Synthesis Dashboard** ở cấp độ toàn hệ thống.
 
 ---
 

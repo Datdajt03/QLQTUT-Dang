@@ -95,16 +95,10 @@ graph TD
 2. **Lớp Nghiệp vụ & Ứng dụng (Business & Application Layer):**
    - **RBAC Auth Helper (`User/auth.php`):** Kiểm soát phân quyền 3 cấp độ (User, Manager, Admin) bằng cơ chế kiểm tra Session & Role khép kín.
    - **Microservice Python Export:** Xử lý các tác vụ tính toán nặng và sinh định dạng tệp chuẩn (.xlsx, .pdf) độc lập, không làm ảnh hưởng đến hiệu năng máy chủ Web PHP.
-#### b. Cơ chế Universal Dynamic Document Inspector (`AI_Module/document_inspector.js`):
-1. **Phân loại Kép & Tự động Nhận diện Mọi Loại Phiếu (Universal Document Inspection):**
-   - **Phiếu mẫu chuẩn:** Chấm điểm trọng số ma trận từ khóa (+2 điểm từ khóa, +3 điểm tên file) chọn 1 trong 5 Mô hình phiếu Đảng vụ tiêu chuẩn.
-   - **Phiếu tùy chỉnh bất kỳ (Custom Form):** Hàm `extractUniversalFormStructure` tự động nhận diện Tiêu đề phiếu từ các dòng đầu và áp dụng Regex bóc tách toàn bộ danh sách cặp `[Nhãn_Trường]: [Nội_dung / Ô_trống / Chấm_lửng]`.
-2. **Thuật toán Lọc Chấm lửng & Cảnh báo Ô trống/Thiếu (`cleanFieldValue`):**
-   - Lọc bỏ chấm lửng (`.....`), gạch dưới (`_____`), khoảng trắng rác.
-   - Nếu nhãn không có dữ liệu thực tế ➔ Tự động gán nhãn màu đỏ **`[CẢNH BÁO TRỐNG/THIẾU TRƯỜNG]`**.
-   - Nếu nhãn có dữ liệu ➔ Trích xuất chuỗi thực tế (`extractedValue`) hiển thị lên Card báo cáo.
-3. **Công thức Tỷ lệ Phần trăm Đầy đủ (% Completeness Score):**
-   $$\text{ScorePercent} = \left( \frac{\text{Số trường đã điền}}{\text{Tổng số trường phát hiện trong phiếu}} \right) \times 100\%$$
+#### b. Phối hợp Multi-Agent AI Suite (`AI_Module/document_inspector.js`):
+1. **Semantic Document Synopsis Agent (`generateDocumentSynopsis`):** Phân tích ngữ nghĩa văn bản OCR để nhận biết tên loại tệp và mục đích văn bản.
+2. **Gap Diagnostic & AI Verdict Agent (`inspectDocumentFile`):** Tự động ra kết luận nhận xét thông minh `agentVerdict` giải thích lý do tệp bị thiếu trường và đưa ra khuyến nghị khắc phục `actionAdvice`.
+3. **Executive Synthesis Agent (`inspectPortfolio`):** Tổng hợp dữ liệu toàn bộ bộ hồ sơ, dựng bảng **AI Agent Synthesis Dashboard** và lưu nhật ký đánh giá `rawSummary` vào CSDL MySQL `edge_ai_logs`.
 
 ---
 

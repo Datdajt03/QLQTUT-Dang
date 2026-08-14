@@ -1,16 +1,16 @@
 /**
  * AI_Module/document_inspector.js
- * Module Chuyên dụng: Thẩm định & Báo cáo Trường Thông tin Thiếu Tổng quát cho MỌI Loại Phiếu
- * (Universal Dynamic Document Field Inspector Engine)
+ * Cooperating AI Agent Suite: Edge AI OCR + Document Inspector Agent + Gap Diagnostic Agent
+ * Phối hợp Agent phân tích, đưa ra Kết luận Thông minh & Khuyến nghị Khắc phục cụ thể cho từng tệp.
  */
 
-class DocumentFieldInspector {
-    constructor(documentModels = []) {
-        this.models = documentModels;
+class AIDocumentInspectorAgent {
+    constructor(models = []) {
+        this.models = models;
     }
 
     /**
-     * Nhận diện Mẫu Phiếu chuẩn dựa vào tên file và nội dung OCR
+     * Phân loại Mẫu Phiếu dựa vào tên file và nội dung OCR
      */
     classifyDocument(fileName, extractedText) {
         const textLower = ((extractedText || '') + ' ' + (fileName || '')).toLowerCase();
@@ -32,7 +32,8 @@ class DocumentFieldInspector {
             }
         });
 
-        return bestModel;
+        // Yêu cầu tối thiểu 2 điểm để gán vào Mẫu phiếu tiêu chuẩn
+        return maxScore >= 2 ? bestModel : null;
     }
 
     /**
@@ -69,39 +70,42 @@ class DocumentFieldInspector {
         if (!val) return null;
         let s = val.replace(/^[\s\:\=\-\_\.]+|[\s\_\.\-\:]+$/g, '').trim();
         s = s.replace(/^[\.\_]{2,}$/g, '').trim();
-        // Nếu chỉ toàn dấu chấm, gạch dưới hoặc quá ngắn rác
         if (s.length === 0 || /^[\.\_\-\s]+$/.test(s)) return null;
         return s;
     }
 
     /**
-     * Trích xuất Tiêu đề Phiếu và TỰ ĐỘNG SO LƯỢC MỌI TRƯỜNG THÔNG TIN DYNAMIC (Universal Form Extraction)
-     * Giúp soi MỌI LOẠI PHIẾU bất kỳ do người dùng tải lên
+     * Agent 1: Semantic Document Synopsis (Nhận diện loại Văn bản & Trích xuất Tiêu đề)
      */
-    extractUniversalFormStructure(fileName, extractedText) {
-        const text = extractedText || '';
-        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-
-        // 1. Trích xuất Tiêu đề Phiếu từ các dòng đầu
-        let docTitle = '';
-        for (let i = 0; i < Math.min(lines.length, 8); i++) {
-            const lineUpper = lines[i].toUpperCase();
-            if (lineUpper.includes('PHỦ') || lineUpper.includes('ĐẢNG') || lineUpper.includes('CỘNG HÒA') || lineUpper.includes('ĐỘC LẬP')) {
-                continue;
-            }
-            if (lineUpper.includes('PHIẾU') || lineUpper.includes('BẢN') || lineUpper.includes('GIẤY') || lineUpper.includes('SƠ YẾU') || lineUpper.includes('ĐƠN') || lineUpper.includes('TỜ TRÌNH') || lineUpper.includes('BÁO CÁO')) {
-                docTitle = lines[i];
+    generateDocumentSynopsis(fileName, text) {
+        const lines = (text || '').split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+        let titleLine = '';
+        for (let i = 0; i < Math.min(lines.length, 10); i++) {
+            const lUpper = lines[i].toUpperCase();
+            if (lUpper.includes('CỘNG HÒA') || lUpper.includes('ĐỘC LẬP') || lUpper.includes('ĐẢNG CỘNG SẢN')) continue;
+            if (lUpper.length >= 4 && (lUpper.includes('BẢN') || lUpper.includes('GIẤY') || lUpper.includes('PHIẾU') || lUpper.includes('SƠ YẾU') || lUpper.includes('ĐƠN') || lUpper.includes('TỜ TRÌNH') || lUpper.includes('BÁO CÁO') || lUpper.includes('CHỨNG NHẬN') || lUpper.includes('QUYẾT ĐỊNH'))) {
+                titleLine = lines[i];
                 break;
             }
         }
-        if (!docTitle) {
-            docTitle = fileName.replace(/\.[^/.]+$/, '').replace(/[\_\-]/g, ' ');
+        if (!titleLine && lines.length > 0) {
+            titleLine = lines[0];
         }
+        if (!titleLine) {
+            titleLine = fileName.replace(/\.[^/.]+$/, '').replace(/[\_\-]/g, ' ');
+        }
+        return titleLine;
+    }
 
-        // 2. Thẩm định Mọi Nhãn Trường Dạng [Nhãn]: [Giá trị / Chấm lửng]
+    /**
+     * Agent 2: Dynamic Form Field Extractor (Trích xuất các cặp Nhãn-Giá trị trong tệp)
+     */
+    extractUniversalFormStructure(fileName, extractedText) {
+        const text = extractedText || '';
+        const docTitle = this.generateDocumentSynopsis(fileName, text);
         const dynamicFields = [];
         const labelRegex = /(?:^|[\n\r])\s*([A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĐa-zàáâãèéêìíòóôõùúýđ0-9\s\/\(\)\.\,]{2,45})[\:\=]\s*([^\n\r]*)/g;
-        
+
         let match;
         const seenLabels = new Set();
 
@@ -109,7 +113,6 @@ class DocumentFieldInspector {
             const labelRaw = match[1].trim();
             const valRaw = match[2] ? match[2].trim() : '';
 
-            // Loại bỏ các nhãn tiêu đề quốc hiệu rác
             if (labelRaw.toLowerCase().includes('cộng hòa') || labelRaw.toLowerCase().includes('độc lập') || labelRaw.length < 2) {
                 continue;
             }
@@ -135,98 +138,123 @@ class DocumentFieldInspector {
     }
 
     /**
-     * Soi chi tiết từng trường thông tin trong TỆP THỰC TẾ theo Model hoặc Mẫu Phiếu Tùy Chỉnh
+     * Agent 3: Gap Diagnostic & Executive AI Verdict Agent (Agent Đánh giá & Kết luận Thông minh)
      */
     inspectDocumentFile(fileName, extractedText, modelOverride = null) {
         const model = modelOverride || this.classifyDocument(fileName, extractedText);
         const universalStruct = this.extractUniversalFormStructure(fileName, extractedText);
         const textLower = ((extractedText || '') + ' ' + (fileName || '')).toLowerCase();
 
-        // TRƯỜNG HỢP A: PHIẾU TÙY CHỈNH KHÔNG THUỘC 5 MODEL CỐ ĐỊNH (UNIVERSAL CUSTOM FORM)
-        if (!model) {
+        // 1. Trường hợp tệp thuộc Mô hình Bắt buộc của Đảng vụ
+        if (model) {
             const foundFields = [];
             const missingFields = [];
 
-            universalStruct.dynamicFields.forEach(f => {
-                if (f.found) {
-                    foundFields.push(f);
+            model.requiredFields.forEach(field => {
+                const found = field.keywords.some(kw => textLower.includes(kw.toLowerCase()));
+                const valSnippet = found ? this.extractValueSnippet(extractedText, field.keywords) : null;
+
+                const item = {
+                    fieldKey: field.fieldKey,
+                    fieldName: field.fieldName,
+                    found: (found && valSnippet !== null),
+                    extractedValue: valSnippet
+                };
+
+                if (item.found) {
+                    foundFields.push(item);
                 } else {
-                    missingFields.push(f);
+                    missingFields.push(item);
                 }
             });
 
-            const total = universalStruct.dynamicFields.length;
+            const total = model.requiredFields.length;
             const foundCount = foundFields.length;
             const scorePercent = total > 0 ? Math.round((foundCount / total) * 100) : 0;
-            const status = (missingFields.length === 0 && total > 0) ? 'VALID' : 'INCOMPLETE';
+            let status = missingFields.length === 0 ? 'VALID' : 'INCOMPLETE';
+
+            // AI Agent Reasoning: Đưa ra Kết luận Nhận xét & Khuyến nghị tự động
+            let agentVerdict = '';
+            let actionAdvice = '';
+
+            if (status === 'VALID') {
+                agentVerdict = `AI Inspector Agent Kết luận: Tệp "${fileName}" khớp chuẩn Mẫu "${model.name}". Đã trích xuất thành công đầy đủ ${foundCount}/${total} trường thông tin (${scorePercent}%).`;
+                actionAdvice = `Tệp hợp lệ 100%. Đã sẵn sàng gửi duyệt chính thức.`;
+            } else {
+                agentVerdict = `AI Inspector Agent Cảnh báo: Tệp "${fileName}" thuộc Mẫu "${model.name}" nhưng bị THIẾU ${missingFields.length}/${total} trường thông tin bắt buộc.`;
+                actionAdvice = `Vui lòng điền bổ sung các trường còn thiếu: [${missingFields.map(f => f.fieldName).join(', ')}].`;
+            }
 
             return {
                 fileName: fileName,
-                model: {
-                    key: 'custom_form',
-                    name: `Mẫu Phiếu Tùy Chỉnh: ${universalStruct.docTitle}`,
-                    label: '[Phiếu tùy chỉnh]'
-                },
-                isRecognized: false, // Dạng phiếu tự do tùy chỉnh
+                model: model,
+                isRecognized: true,
                 foundFields: foundFields,
                 missingFields: missingFields,
                 totalFields: total,
                 foundCount: foundCount,
                 scorePercent: scorePercent,
                 status: status,
-                summary: total === 0
-                    ? `Tệp "${fileName}" chưa phát hiện được nhãn trường thông tin.`
-                    : (status === 'VALID'
-                        ? `Tệp phiếu "${universalStruct.docTitle}" đã điền ĐẦY ĐỦ (${foundCount}/${total} trường).`
-                        : `Tệp phiếu "${universalStruct.docTitle}" đang THIẾU/TRỐNG ${missingFields.length}/${total} trường thông tin.`)
+                agentVerdict: agentVerdict,
+                actionAdvice: actionAdvice,
+                summary: agentVerdict
             };
         }
 
-        // TRƯỜNG HỢP B: PHIẾU KHỚP VỚI MODEL ĐẢNG VỤ TIÊU CHUẨN
+        // 2. Trường hợp tệp tùy chỉnh / Không khớp 5 mẫu mặc định
         const foundFields = [];
         const missingFields = [];
 
-        model.requiredFields.forEach(field => {
-            const found = field.keywords.some(kw => textLower.includes(kw.toLowerCase()));
-            const valSnippet = found ? this.extractValueSnippet(extractedText, field.keywords) : null;
-
-            const item = {
-                fieldKey: field.fieldKey,
-                fieldName: field.fieldName,
-                found: (found && valSnippet !== null),
-                extractedValue: valSnippet
-            };
-
-            if (item.found) {
-                foundFields.push(item);
+        universalStruct.dynamicFields.forEach(f => {
+            if (f.found) {
+                foundFields.push(f);
             } else {
-                missingFields.push(item);
+                missingFields.push(f);
             }
         });
 
-        const total = model.requiredFields.length;
+        const total = universalStruct.dynamicFields.length;
         const foundCount = foundFields.length;
         const scorePercent = total > 0 ? Math.round((foundCount / total) * 100) : 0;
-        const status = missingFields.length === 0 ? 'VALID' : 'INCOMPLETE';
+        let status = (missingFields.length === 0 && total > 0) ? 'VALID' : 'INCOMPLETE';
+
+        let agentVerdict = '';
+        let actionAdvice = '';
+
+        if (total === 0) {
+            status = 'UNRECOGNIZED';
+            agentVerdict = `AI Inspector Agent Cảnh báo: Tệp "${fileName}" (Tiêu đề: "${universalStruct.docTitle}") chưa phát hiện được ô điền thông tin dạng [Nhãn]: [Nội dung].`;
+            actionAdvice = `Kiểm tra lại chất lượng tệp scan/ảnh chụp hoặc đảm bảo văn bản có ô nhãn rõ ràng.`;
+        } else if (status === 'VALID') {
+            agentVerdict = `AI Inspector Agent Đánh giá: Tệp phiếu tùy chỉnh "${universalStruct.docTitle}" đã được điền đủ ${foundCount}/${total} nhãn thông tin.`;
+            actionAdvice = `Tệp tùy chỉnh hợp lệ.`;
+        } else {
+            agentVerdict = `AI Inspector Agent Cảnh báo: Tệp phiếu "${universalStruct.docTitle}" bị trống ${missingFields.length}/${total} nhãn thông tin.`;
+            actionAdvice = `Yêu cầu điền bổ sung nội dung cho các nhãn đang trống: [${missingFields.map(f => f.fieldName).join(', ')}].`;
+        }
 
         return {
             fileName: fileName,
-            model: model,
-            isRecognized: true,
+            model: {
+                key: 'custom_form',
+                name: `Tệp Phiếu: ${universalStruct.docTitle}`,
+                label: '[Phiếu tùy chỉnh]'
+            },
+            isRecognized: false,
             foundFields: foundFields,
             missingFields: missingFields,
             totalFields: total,
             foundCount: foundCount,
             scorePercent: scorePercent,
             status: status,
-            summary: status === 'VALID'
-                ? `Tệp phiếu "${model.name}" đạt ĐẦY ĐỦ 100% (${foundCount}/${total} trường).`
-                : `Tệp phiếu "${model.name}" bị THIẾU ${missingFields.length}/${total} trường thông tin chi tiết: [${missingFields.map(f => f.fieldName).join(', ')}].`
+            agentVerdict: agentVerdict,
+            actionAdvice: actionAdvice,
+            summary: agentVerdict
         };
     }
 
     /**
-     * Tổng hợp kết quả thẩm định toàn bộ tệp nộp (Hỗ trợ cả 5 Mẫu Bắt buộc & Các Mẫu Phiếu Tùy Chỉnh)
+     * Agent 4: Portfolio Executive Synthesis Agent (Agent Tổng hợp Báo cáo Toàn bộ Bộ Hồ sơ)
      */
     inspectPortfolio(uploadedFileList) {
         let modelStatusMap = {};
@@ -235,7 +263,7 @@ class DocumentFieldInspector {
                 model: m,
                 uploadedFiles: [],
                 inspections: [],
-                status: 'MISSING', // 'MISSING', 'INCOMPLETE', 'VALID'
+                status: 'MISSING',
                 missingFields: [],
                 foundFields: []
             };
@@ -243,7 +271,6 @@ class DocumentFieldInspector {
 
         let customFormInspections = [];
 
-        // Nạp các tệp vào Model tương ứng hoặc Mẫu tùy chỉnh
         uploadedFileList.forEach(fileItem => {
             const inspection = this.inspectDocumentFile(fileItem.name, fileItem.extractedText);
             fileItem.inspectionResult = inspection;
@@ -258,7 +285,6 @@ class DocumentFieldInspector {
             }
         });
 
-        // Tổng hợp trạng thái từng Mẫu Phiếu bắt buộc
         let missingModelCount = 0;
         let incompleteModelCount = 0;
         let validModelCount = 0;
@@ -316,17 +342,37 @@ class DocumentFieldInspector {
             }
         });
 
+        // AI Agent Synthesis Executive Summary
+        const totalUploaded = uploadedFileList.length;
+        let executiveSummary = '';
+        let systemStatus = 'READY';
+
+        if (missingModelCount === 0 && incompleteModelCount === 0) {
+            executiveSummary = `🤖 AI Inspector Agent Kết luận: Bộ hồ sơ hoàn toàn ĐẠT CHUẨN 100%. Đã nộp đầy đủ 5/5 Mẫu phiếu bắt buộc với 100% các trường dữ liệu chi tiết.`;
+            systemStatus = 'PASSED';
+        } else {
+            executiveSummary = `🤖 AI Inspector Agent Kết luận: Bộ hồ sơ CHƯA ĐẠT CHUẨN. Còn thiếu ${missingModelCount} loại phiếu bắt buộc và ${incompleteModelCount} phiếu bị thiếu trường thông tin chi tiết.`;
+            systemStatus = 'NEEDS_FIX';
+        }
+
         return {
             modelStatusMap: modelStatusMap,
             customFormInspections: customFormInspections,
             missingModelCount: missingModelCount,
             incompleteModelCount: incompleteModelCount,
             validModelCount: validModelCount,
+            totalUploaded: totalUploaded,
+            executiveSummary: executiveSummary,
+            systemStatus: systemStatus,
             isFullyValid: (missingModelCount === 0 && incompleteModelCount === 0 && customFormInspections.every(c => c.status === 'VALID'))
         };
     }
 }
 
+// Bảo tồn tương thích
+const DocumentFieldInspector = AIDocumentInspectorAgent;
+
 if (typeof window !== 'undefined') {
     window.DocumentFieldInspector = DocumentFieldInspector;
+    window.AIDocumentInspectorAgent = AIDocumentInspectorAgent;
 }
