@@ -145,15 +145,17 @@ Edge AI Engine chạy hoàn toàn client-side (không làm nặng Server), tích
 | **4** | **Phiếu đánh giá chất lượng đoàn viên** | `phieu_danh_gia` | Họ tên đoàn viên, Tên Chi đoàn, Kết quả xếp loại đoàn viên, Xác nhận/Chữ ký Bí thư Chi đoàn |
 | **5** | **Minh chứng hoạt động phong trào / Giấy khen** | `minh_chung_hoat_dong` | Tên hoạt động (Hiến máu, Tình nguyện...), Họ tên người nhận, Đơn vị khen thưởng, Thời gian thực hiện |
 
-### Quy trình & Thuật toán Thẩm định:
+### Quy trình & Thuật toán Thẩm định (Hỗ trợ MỌI Loại Phiếu):
 1. **OCR Trích xuất Client-side:** Tệp PDF/Ảnh tải lên được trích xuất văn bản bằng `pdf.js` / `Tesseract.js`.
-2. **Weighted Keyword Matrix Classification (Phân loại Mô hình):** Chấm điểm từ khóa loại phiếu (+2 điểm) và tên file (+3 điểm) để gán tệp vào Mẫu phiếu chính xác nhất.
-3. **Multi-Key Substring Matching & Regex Traversal (Soi Trường Thiếu & Trích xuất):**
-   - Lớp `DocumentFieldInspector` duyệt ma trận từ khóa mở rộng của từng trường thông tin bắt buộc.
-   - Nếu **không phát hiện từ khóa** ➔ Đánh dấu `missingFields` và phát cảnh báo đỏ `[CẢNH BÁO THIẾU]`.
-   - Nếu **phát hiện từ khóa** ➔ Dùng `extractValueSnippet()` trích xuất đoạn dữ liệu thực tế (`extractedValue`).
-4. **Portfolio Aggregation:** Tổng hợp trạng thái 5 loại phiếu: **✅ Đầy đủ 100%**, **⚠️ Đã nộp nhưng thiếu trường thông tin chi tiết**, **❌ Chưa nộp (Thiếu phiếu)**.
-5. **Interactive UI Report & Persistence:** Hiển thị báo cáo trực quan và lưu nhật ký đánh giá vào MySQL `edge_ai_logs` qua `api_save_ai_check.php`.
+2. **Chiến lược Phân loại Kép (Dual Classification Strategy):**
+   - **Mẫu phiếu tiêu chuẩn:** Chấm điểm ma trận từ khóa chọn 1 trong 5 Mẫu phiếu Kết nạp Đảng tiêu chuẩn.
+   - **Mẫu phiếu tùy chỉnh / Bất kỳ tệp phiếu nào khác:** Thuật toán `extractUniversalFormStructure` tự động nhận diện Tiêu đề phiếu từ dòng đầu và bóc tách ma trận nhãn trường `[Nhãn_Trường]: [Giá_trị]`.
+3. **Deep Field Inspection & Empty Field Detection (Soi & Phát hiện Ô Trống):**
+   - Hàm `cleanFieldValue` lọc bỏ chấm lửng (`.....`), gạch dưới (`_____`), ô trống.
+   - Nếu nhãn không có dữ liệu thực tế ➔ Đánh dấu `missingFields` và phát cảnh báo đỏ **`[CẢNH BÁO TRỐNG/THIẾU TRƯỜNG: ...]`**.
+   - Nếu nhãn có dữ liệu ➔ Đánh dấu `foundFields` và trích xuất đoạn văn bản hiển thị lên Dashboard.
+4. **Portfolio Aggregation:** Tổng hợp trạng thái đầy đủ % của cả bộ phiếu tiêu chuẩn lẫn các phiếu tùy chỉnh nộp kèm.
+5. **Interactive UI Report & Persistence:** Hiển thị Card kết quả tương ứng và lưu nhật ký đánh giá vào MySQL `edge_ai_logs` qua `api_save_ai_check.php`.
 
 ---
 

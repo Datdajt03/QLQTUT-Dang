@@ -53,19 +53,14 @@ Edge AI tích hợp bộ 5 mô hình soi tệp minh chứng và kiểm tra chi t
   3. **Phát hiện Cột Trống Tiêu Đề**: Tự động đánh dấu vị trí `⚠️ Cột A (Trống tiêu đề)` để buộc chọn trường CSDL.
   4. **Giao diện Modal Tab Agent**: Bật Modal Tab cho phép cán bộ quản lý xem xét và đổi chọn lại trường CSDL trước khi xác nhận Import.
 
-### 5. 🔬 Module Thẩm định & Cảnh báo Trường Thông tin Thiếu trong Phiếu (`AI_Module/document_inspector.js`)
-- **Mục tiêu**: Tự động soi chi tiết từng trường thông tin bắt buộc trong tệp nộp và cảnh báo chính xác tên các trường bị khuyết trong phiếu đó.
-- **Cơ chế Phân loại Tệp (Document Classification Algorithm)**:
-  - Sử dụng thuật toán **Weighted Keyword Matrix Classification (Ma trận Từ khóa & Chấm điểm Trọng số)**:
-    - Tìm từ khóa định danh mẫu phiếu (`typeKeywords`): **+2 điểm**.
-    - Tìm thấy mã/tên loại phiếu trong tên file (`fileName`): **+3 điểm**.
-    - Mô hình đạt **Tổng điểm (Score) cao nhất** được gán làm Mô hình Mẫu phiếu chính thức (`matchedModel`).
-- **Cơ chế Soi Trường Thiếu & Trích xuất Dữ liệu (Deep Field Inspection & Value Extraction)**:
-  - Thuật toán **Multi-Key Substring Matching & Regex Traversal**:
-    1. Lớp `DocumentFieldInspector` duyệt ma trận từ khóa trường mở rộng (`field.keywords`).
-    2. Nếu **không tìm thấy từ khóa nào của trường** ➔ Gán vào danh sách **`missingFields` (`[CẢNH BÁO THIẾU]`)** và bật cảnh báo đỏ.
-    3. Nếu **tìm thấy từ khóa** ➔ Gán vào danh sách **`foundFields` (`[ĐÃ CÓ]`)** và sử dụng hàm `extractValueSnippet()` trích xuất đoạn văn bản đứng sau dấu hai chấm/từ khóa.
-    4. Tính tỷ lệ phần trăm đầy đủ: $\text{ScorePercent} = (\text{Số trường phát hiện} / \text{Tổng trường bắt buộc}) \times 100\%$.
+### 5. 🔬 Universal Dynamic Document Field Inspector (`AI_Module/document_inspector.js`)
+- **Mục tiêu**: Tự động nhận diện tiêu đề, trích xuất cấu trúc trường nhãn và **thẩm định cảnh báo trường bị thiếu/trống cho MỌI LOẠI PHIẾU BẤT KỲ** mà người dùng nộp lên.
+- **Chiến lược Thẩm định Kép (Dual Inspection Strategy)**:
+  1. **Chiến lược A (Khớp 5 Mẫu Phiếu Kết nạp Đảng tiêu chuẩn):** Kiểm tra đối soát danh sách từ khóa mở rộng của 5 Mẫu phiếu tiêu chuẩn (*Bản tự nhận xét, Giấy chứng nhận, Sơ yếu lý lịch, Phiếu đánh giá, Minh chứng*).
+  2. **Chiến lược B (Mẫu Phiếu Tùy Chỉnh / Bất kỳ tệp phiếu nào khác):**
+     - **Thuật toán `extractUniversalFormStructure`**: Tự động bóc tách Tiêu đề phiếu từ 8 dòng đầu tệp và dùng biểu thức chính quy (Regex) tự động quét toàn bộ các cặp `[Nhãn_Trường]: [Nội_dung / Chấm_lửng / Ô_trống]`.
+     - **Hàm `cleanFieldValue`**: Lọc sạch các khoảng trắng rác, chấm lửng (`.....`), gạch dưới (`_____`). Nếu sau nhãn không có dữ liệu thực tế ➔ Tự động gán nhãn **`[CẢNH BÁO TRỐNG/THIẾU]`** và in đỏ nổi bật tên trường bị thiếu của phiếu tùy chỉnh đó.
+- **Báo cáo Tỷ lệ Phần trăm Đầy đủ**: $\text{ScorePercent} = (\text{Số trường đã điền} / \text{Tổng số trường phát hiện trong phiếu}) \times 100\%$.
 
 ---
 

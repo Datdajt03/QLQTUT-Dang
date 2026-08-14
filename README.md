@@ -149,16 +149,14 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 - **Xác Nhận Modal An Toàn**: Bấm xóa hàng loạt sẽ hiển thị cửa sổ Modal xác nhận số lượng đối tượng cần xóa để ngăn ngừa thao tác nhầm lẫn.
 - **Mẫu Excel Điền Chuẩn Kèm ID Cột (`/api/export/template`)**: Cung cấp tính năng tải mẫu Excel chuẩn gồm Tiêu đề & Mã ID trường dữ liệu (`[ID: ho_ten]`, `[ID: ma_gvsv]`,...) giúp các Lớp điền đúng 100%, không lo bị lệch cột khi Import.
 
-### 9. Edge AI Engine: Thuật toán Phân loại Mô hình & Soi Trường Thiếu (`AI_Module/document_inspector.js`) [NEW]
+### 9. Edge AI Engine: Thuật toán Quét & Soi Trường Thiếu Mọi Loại Phiếu (`AI_Module/document_inspector.js`) [NEW]
 
-- **Thuật toán Phân loại Mô hình (Weighted Keyword Matrix Classification)**:
-  - Tệp PDF/Ảnh OCR được đối soát ma trận từ khóa loại phiếu (`typeKeywords`) (+2 điểm) và mã/tên loại phiếu trong tên file (+3 điểm).
-  - Gán tệp chính xác vào 1 trong 5 Mẫu phiếu tiêu chuẩn (*Bản tự nhận xét, Giấy chứng nhận, Sơ yếu lý lịch, Phiếu đánh giá, Minh chứng phong trào*).
-- **Thuật toán Soi Trường Thiếu (Multi-Key Substring Matching & Regex Traversal)**:
-  - Lớp `DocumentFieldInspector` duyệt ma trận từ khóa mở rộng của từng trường thông tin bắt buộc trong Mẫu phiếu đó.
-  - Trường **không phát hiện từ khóa** ➔ Gán nhãn `missingFields` và phát cảnh báo đỏ **`[CẢNH BÁO THIẾU]`** trực tiếp trên Dashboard.
-  - Trường **phát hiện từ khóa** ➔ Gán nhãn `foundFields` và áp dụng biểu thức chính quy Regex `extractValueSnippet()` trích xuất đoạn dữ liệu thực tế.
-- **Báo cáo Tỷ lệ Phần trăm Đầy đủ**: Tính toán công thức $\text{ScorePercent} = (\text{Số trường phát hiện} / \text{Tổng số trường bắt buộc}) \times 100\%$ và ghi nhật ký đánh giá vào bảng MySQL `edge_ai_logs`.
+- **Khả năng Soi Mọi Loại Phiếu Tùy Chỉnh (Universal Form Field Inspection)**:
+  - Hệ thống không giới hạn ở 5 phiếu mẫu tiêu chuẩn. Bất kỳ phiếu/văn bản tùy chỉnh nào do người dùng tải lên (`Đơn xin chuyển sinh hoạt`, `Tờ trình`, `Giấy giới thiệu`...) đều được tự động bóc tách **Tiêu đề phiếu** và ma trận các **Trường Nhãn Dữ Liệu**.
+- **Thuật toán Phát hiện Ô Trống/Thiếu Thông Tin**:
+  - Tự động lọc bỏ các ký tự rác, chấm lửng (`.....`), gạch dưới (`_____`).
+  - Nếu sau nhãn trường không chứa dữ liệu thực tế ➔ Lập tức bật cảnh báo đỏ **`[CẢNH BÁO TRỐNG/THIẾU TRƯỜNG: Tên_Trường]`** kèm danh sách chi tiết các thông tin cần bổ sung.
+- **Báo cáo Tỷ lệ Phần trăm Đầy đủ**: Tính toán công thức $\text{ScorePercent} = (\text{Số trường đã điền} / \text{Tổng số trường trong phiếu}) \times 100\%$ và ghi vết nhật ký đánh giá vào bảng MySQL `edge_ai_logs`.
 
 ---
 

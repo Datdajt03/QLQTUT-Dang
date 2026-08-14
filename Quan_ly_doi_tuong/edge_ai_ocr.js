@@ -1,5 +1,5 @@
 // Quan_ly_doi_tuong/edge_ai_ocr.js
-// Edge AI Engine: Kết nối với Module DocumentFieldInspector để Soi Thẩm Định Trường Thông Tin Thiếu
+// Edge AI Engine: Kết nối với Module DocumentFieldInspector để Soi Thẩm Định Trường Thông Tin Thiếu Mọi Loại Phiếu
 
 // 5 Cấu trúc Models tiêu chuẩn cho Hồ sơ Kết nạp Đảng
 const DOCUMENT_MODELS = [
@@ -146,7 +146,7 @@ function renderFileList() {
             badgeText = 'Đang quét Edge AI...';
         } else if (item.status === 'success') {
             badgeClass = 'status-success';
-            badgeText = item.matchedModel ? `Đã nhận diện: ${item.matchedModel.name}` : 'Đã quét OCR';
+            badgeText = item.matchedModel ? `Đã nhận diện: ${item.matchedModel.name}` : 'Đã quét Universal OCR';
         }
 
         div.innerHTML = `
@@ -166,7 +166,7 @@ async function startEdgeAnalysis() {
     if (btnAnalyze) btnAnalyze.disabled = true;
     if (progressContainer) progressContainer.style.display = 'block';
     if (resultBox) {
-        resultBox.innerHTML = '<div style="color:var(--accent-color);font-weight:bold;">Đang kích hoạt Module Thẩm định DocumentFieldInspector & Edge AI Engine...</div>';
+        resultBox.innerHTML = '<div style="color:var(--accent-color);font-weight:bold;">Đang kích hoạt Universal Document Field Inspector & Edge AI Engine...</div>';
     }
 
     let completed = 0;
@@ -212,7 +212,7 @@ async function startEdgeAnalysis() {
         } catch(e){}
     }
 
-    // Chạy Module Thẩm định chuyên dụng kiểm tra trường thiếu
+    // Chạy Module Thẩm định chuyên dụng soi trường thiếu cho MỌI LOẠI PHIẾU
     runEdgeModelAnalysis();
 }
 
@@ -230,7 +230,7 @@ async function extractTextFromPDF(file) {
     return fullText;
 }
 
-// Báo cáo chi tiết các trường thông tin khuyết dựa trên Module DocumentFieldInspector
+// Báo cáo chi tiết các trường thông tin khuyết dựa trên Module Universal DocumentFieldInspector
 function runEdgeModelAnalysis() {
     const resultBox = document.getElementById('analysisResult');
 
@@ -239,22 +239,23 @@ function runEdgeModelAnalysis() {
         return;
     }
 
-    // Thẩm định tổng thể các tệp theo 5 Models
+    // Thẩm định tổng thể các tệp (Hỗ trợ cả 5 Mẫu Bắt buộc & Mẫu Phiếu Tùy Chỉnh)
     const portfolioReport = inspectorEngine.inspectPortfolio(uploadedFiles);
     const map = portfolioReport.modelStatusMap;
+    const customInspections = portfolioReport.customFormInspections || [];
 
     let html = `
         <div style="font-family: inherit; color: var(--text-main);">
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 15px;">
-                <h4 style="margin:0; color: var(--accent-color); font-size:16px;">KẾT QUẢ THẨM ĐỊNH TRƯỜNG THÔNG TIN THIẾU CỦA MODULE DOCUMENT INSPECTOR</h4>
+                <h4 style="margin:0; color: var(--accent-color); font-size:16px;">KẾT QUẢ THẨM ĐỊNH TRƯỜNG THÔNG TIN THIẾU TỔNG QUÁT (UNIVERSAL INSPECTOR)</h4>
                 <span class="status-badge ${portfolioReport.isFullyValid ? 'status-success' : 'status-warning'}">
                     ${portfolioReport.isFullyValid ? 'HỒ SƠ ĐẦY ĐỦ 100%' : 'CẢNH BÁO: CẦN BỔ SUNG TRƯỜNG THIẾU'}
                 </span>
             </div>
 
-            <!-- DANH SÁCH 5 MẪU PHIẾU VÀ CHI TIẾT TRƯỜNG CÓ/THIẾU -->
+            <!-- DANH SÁCH 5 MẪU PHIẾU BẮT BUỘC -->
             <div style="margin-bottom: 18px;">
-                <strong style="color:var(--text-main); font-size:14px;">Báo cáo Chi tiết Trường Thông tin theo từng Mẫu Phiếu:</strong>
+                <strong style="color:var(--text-main); font-size:14px;">Báo cáo Chi tiết 5 Mẫu Phiếu Kết nạp Đảng Tiêu chuẩn:</strong>
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 10px;">
     `;
 
@@ -284,7 +285,6 @@ function runEdgeModelAnalysis() {
                     <ul style="margin:0; padding-left:16px; color:var(--text-main);">
         `;
 
-        // Liệt kê các trường ĐÃ CÓ
         entry.foundFields.forEach(ff => {
             html += `<li style="color:#22c55e; margin-bottom:3px;">
                 <strong>[ĐÃ CÓ]</strong> ${ff.fieldName}
@@ -292,7 +292,6 @@ function runEdgeModelAnalysis() {
             </li>`;
         });
 
-        // Liệt kê nổi bật các trường BỊ THIẾU (MÀU ĐỎ CẢNH BÁO)
         entry.missingFields.forEach(mf => {
             html += `<li style="color:#ef4444; font-weight:bold; margin-bottom:3px;">
                 <strong>[CẢNH BÁO THIẾU]</strong> ${mf.fieldName}
@@ -311,6 +310,62 @@ function runEdgeModelAnalysis() {
             </div>
     `;
 
+    // PHẦN HIỂN THỊ PHIẾU TÙY CHỈNH KHI NGƯỜI DÙNG NỘP PHIẾU KHÁC (UNIVERSAL DYNAMIC FORM CARDS)
+    if (customInspections.length > 0) {
+        html += `
+            <div style="margin-bottom: 18px;">
+                <strong style="color:var(--accent-color); font-size:14px;">Báo cáo Chi tiết Các Mẫu Phiếu Tùy Chỉnh / Tệp Khác Đã Nộp (${customInspections.length} tệp):</strong>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 10px;">
+        `;
+
+        customInspections.forEach(ci => {
+            let color = ci.status === 'VALID' ? '#22c55e' : '#f59e0b';
+            let bg = ci.status === 'VALID' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(245, 158, 11, 0.1)';
+            let statusBadge = ci.status === 'VALID'
+                ? '<span style="color:#22c55e; font-weight:bold;">Đã điền ĐẦY ĐỦ</span>'
+                : `<span style="color:#f59e0b; font-weight:bold;">CẢNH BÁO THIẾU ${ci.missingFields.length} TRƯỜNG</span>`;
+
+            html += `
+                <div style="background:${bg}; border:1px solid ${color}; border-radius:8px; padding:12px; font-size:12px;">
+                    <div style="font-weight:bold; color:${color}; font-size:13px; margin-bottom:4px;">📄 ${ci.model.name}</div>
+                    <div style="color:var(--text-sub); font-size:11px; margin-bottom:6px;">Tệp gốc: <code>${ci.fileName}</code></div>
+                    <div style="margin-bottom:8px;">${statusBadge} (Đạt ${ci.scorePercent}%)</div>
+
+                    <div style="border-top:1px dashed ${color}; padding-top:6px;">
+                        <div style="font-weight:bold; margin-bottom:4px; color:var(--text-main);">Các trường phát hiện tự động:</div>
+                        <ul style="margin:0; padding-left:16px;">
+            `;
+
+            ci.foundFields.forEach(ff => {
+                html += `<li style="color:#22c55e; margin-bottom:2px;">
+                    <strong>[ĐÃ ĐIỀN]</strong> ${ff.fieldName}
+                    ${ff.extractedValue ? `<div style="color:var(--text-sub); font-size:11px;">➜ Dữ liệu: <em>"${ff.extractedValue}"</em></div>` : ''}
+                </li>`;
+            });
+
+            ci.missingFields.forEach(mf => {
+                html += `<li style="color:#ef4444; font-weight:bold; margin-bottom:2px;">
+                    <strong>[CẢNH BÁO TRỐNG/THIẾU]</strong> ${mf.fieldName}
+                </li>`;
+            });
+
+            if (ci.totalFields === 0) {
+                html += `<li style="color:#94a3b8;">Chưa phát hiện nhãn trường thông tin định dạng [Tên_trường]: [Nội_dung].</li>`;
+            }
+
+            html += `
+                        </ul>
+                    </div>
+                </div>
+            `;
+        });
+
+        html += `
+                </div>
+            </div>
+        `;
+    }
+
     // CẢNH BÁO TỔNG HỢP CÁC TRƯỜNG BỊ THIẾU TRONG TOÀN BỘ TỆP
     let allMissingAlerts = [];
     DOCUMENT_MODELS.forEach(m => {
@@ -323,10 +378,17 @@ function runEdgeModelAnalysis() {
         }
     });
 
+    customInspections.forEach(ci => {
+        if (ci.missingFields.length > 0) {
+            const missingNames = ci.missingFields.map(f => f.fieldName).join(', ');
+            allMissingAlerts.push(`Tệp phiếu tùy chỉnh <strong>${ci.model.name}</strong> (Tệp <code>${ci.fileName}</code>): ⚠️ Đang trống/thiếu các trường [<strong>${missingNames}</strong>].`);
+        }
+    });
+
     if (allMissingAlerts.length > 0) {
         html += `
             <div style="background: rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
-                <strong style="color: #fca5a5;">DANH SÁCH THÔNG TIN CẦN BỔ SUNG NGAY:</strong>
+                <strong style="color: #fca5a5;">DANH SÁCH THÔNG TIN CẦN BỔ SUNG NGAY CỦA CÁC PHIẾU:</strong>
                 <ul style="margin: 6px 0 0 18px; padding: 0; color: #fca5a5; font-size: 13px;">
                     ${allMissingAlerts.map(alert => `<li>${alert}</li>`).join('')}
                 </ul>
@@ -339,7 +401,7 @@ function runEdgeModelAnalysis() {
         <div style="background: rgba(56, 189, 248, 0.1); border-left: 4px solid var(--accent-color); padding: 12px; border-radius: 6px;">
             <strong style="color: var(--accent-color);">HƯỚNG DẪN KHẮC PHỤC:</strong>
             ${!portfolioReport.isFullyValid ? `
-                <div style="color: #bae6fd; font-size: 13px; margin-top: 4px;">Vui lòng điền bổ sung đầy đủ các trường bị cảnh báo đỏ trong các tệp trên trước khi lưu hồ sơ chính thức.</div>
+                <div style="color: #bae6fd; font-size: 13px; margin-top: 4px;">Vui lòng kiểm tra và điền bổ sung đầy đủ các trường bị cảnh báo đỏ trong các tệp trên trước khi lưu hồ sơ chính thức.</div>
             ` : `
                 <div style="color: #86efac; font-size: 13px; margin-top: 4px;">Chúc mừng! Hồ sơ hoàn toàn đầy đủ 100% tất cả các trường thông tin chi tiết.</div>
             `}
@@ -351,7 +413,7 @@ function runEdgeModelAnalysis() {
     resultBox.innerHTML = html;
 
     // Chuẩn bị rawSummary cho DB
-    let rawSummaryText = `BÁO CÁO MODULE DOCUMENT FIELD INSPECTOR\n`;
+    let rawSummaryText = `BÁO CÁO MODULE UNIVERSAL DOCUMENT INSPECTOR\n`;
     rawSummaryText += `────────────────────────────────────────\n`;
     DOCUMENT_MODELS.forEach(m => {
         const entry = map[m.key];
@@ -362,6 +424,15 @@ function runEdgeModelAnalysis() {
             rawSummaryText += `[Cảnh báo Thiếu] ${m.name}: Khuyết [${missingNames}]\n`;
         } else {
             rawSummaryText += `[Thiếu tệp] ${m.name}: Chưa nộp tệp\n`;
+        }
+    });
+
+    customInspections.forEach(ci => {
+        if (ci.status === 'VALID') {
+            rawSummaryText += `[Tùy chỉnh Đầy đủ] ${ci.model.name} (${ci.fileName}): Đầy đủ 100%\n`;
+        } else {
+            const missingNames = ci.missingFields.map(f => f.fieldName).join(', ');
+            rawSummaryText += `[Tùy chỉnh Thiếu] ${ci.model.name} (${ci.fileName}): Trống [${missingNames}]\n`;
         }
     });
 

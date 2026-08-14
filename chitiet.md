@@ -95,16 +95,16 @@ graph TD
 2. **Lớp Nghiệp vụ & Ứng dụng (Business & Application Layer):**
    - **RBAC Auth Helper (`User/auth.php`):** Kiểm soát phân quyền 3 cấp độ (User, Manager, Admin) bằng cơ chế kiểm tra Session & Role khép kín.
    - **Microservice Python Export:** Xử lý các tác vụ tính toán nặng và sinh định dạng tệp chuẩn (.xlsx, .pdf) độc lập, không làm ảnh hưởng đến hiệu năng máy chủ Web PHP.
-#### b. Cơ chế & Thuật toán Edge AI Thẩm định Mẫu Phiếu (`AI_Module/document_inspector.js`):
-1. **Weighted Keyword Matrix Classification (Phân loại Mô hình Phiếu):**
-   - Đánh giá từ khóa loại phiếu (`typeKeywords`) trong văn bản OCR (+2 điểm) và tên file (+3 điểm).
-   - Xác định Mô hình Mẫu phiếu chính xác nhất trong 5 mô hình Đảng vụ (*Bản tự nhận xét, Giấy chứng nhận, Sơ yếu lý lịch, Phiếu đánh giá, Minh chứng*).
-2. **Multi-Key Substring Matching & Regex Traversal (Soi Trường Thiếu & Trích xuất):**
-   - Duyệt ma trận từ khóa mở rộng cho từng trường bắt buộc của Mẫu phiếu.
-   - Nếu **không tìm thấy từ khóa** ➔ Gán ngay vào `missingFields` (`[CẢNH BÁO THIẾU]`) và bật cảnh báo đỏ.
-   - Nếu **tìm thấy từ khóa** ➔ Dùng `extractValueSnippet()` trích xuất dữ liệu thực tế (`extractedValue`).
+#### b. Cơ chế Universal Dynamic Document Inspector (`AI_Module/document_inspector.js`):
+1. **Phân loại Kép & Tự động Nhận diện Mọi Loại Phiếu (Universal Document Inspection):**
+   - **Phiếu mẫu chuẩn:** Chấm điểm trọng số ma trận từ khóa (+2 điểm từ khóa, +3 điểm tên file) chọn 1 trong 5 Mô hình phiếu Đảng vụ tiêu chuẩn.
+   - **Phiếu tùy chỉnh bất kỳ (Custom Form):** Hàm `extractUniversalFormStructure` tự động nhận diện Tiêu đề phiếu từ các dòng đầu và áp dụng Regex bóc tách toàn bộ danh sách cặp `[Nhãn_Trường]: [Nội_dung / Ô_trống / Chấm_lửng]`.
+2. **Thuật toán Lọc Chấm lửng & Cảnh báo Ô trống/Thiếu (`cleanFieldValue`):**
+   - Lọc bỏ chấm lửng (`.....`), gạch dưới (`_____`), khoảng trắng rác.
+   - Nếu nhãn không có dữ liệu thực tế ➔ Tự động gán nhãn màu đỏ **`[CẢNH BÁO TRỐNG/THIẾU TRƯỜNG]`**.
+   - Nếu nhãn có dữ liệu ➔ Trích xuất chuỗi thực tế (`extractedValue`) hiển thị lên Card báo cáo.
 3. **Công thức Tỷ lệ Phần trăm Đầy đủ (% Completeness Score):**
-   $$\text{ScorePercent} = \left( \frac{\text{Số trường phát hiện}}{\text{Tổng số trường bắt buộc của Mẫu phiếu}} \right) \times 100\%$$
+   $$\text{ScorePercent} = \left( \frac{\text{Số trường đã điền}}{\text{Tổng số trường phát hiện trong phiếu}} \right) \times 100\%$$
 
 ---
 
