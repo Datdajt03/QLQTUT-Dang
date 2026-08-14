@@ -13,6 +13,9 @@ define('SITE_NAME', 'Quản lý Kết nạp Đảng');
 define('SITE_TITLE', 'Thiết kế Website quản lý quần chúng ưu tú phục vụ kết nạp Đảng');
 define('BASE_URL', 'http://localhost/web1/');
 
+// Include SVG icon helper engine
+require_once __DIR__ . '/Giao_dien/icons.php';
+
 // Kết nối PDO
 function getDB(): PDO {
     static $pdo = null;

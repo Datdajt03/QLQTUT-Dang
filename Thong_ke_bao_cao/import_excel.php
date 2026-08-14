@@ -228,19 +228,19 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <a href="<?= BASE_URL ?>index.php">Dashboard</a><span class="sep">›</span>
       <span class="current">Import Excel</span>
     </div>
-    <div class="page-title">📥 Import <span>Excel</span></div>
+    <div class="page-title">Import <span>Excel</span></div>
     <div class="page-subtitle">Nhập danh sách đối tượng từ file Excel hoặc CSV</div>
   </div>
   <a href="danh_sach.php" class="btn btn-outline">← Danh sách</a>
 </div>
 
 <?php if ($errors): ?>
-<div class="flash flash-danger">❌ <?= implode('<br>', array_map('e', $errors)) ?></div>
+<div class="flash flash-danger"><?= implode('<br>', array_map('e', $errors)) ?></div>
 <?php endif; ?>
 
 <?php if ($stats): ?>
 <div class="flash flash-success">
-  ✅ Import thành công: <strong><?= $stats['inserted'] ?></strong> bản ghi.
+  Import thành công: <strong><?= $stats['inserted'] ?></strong> bản ghi.
   <?php if ($stats['skipped']): ?> Bỏ qua: <strong><?= $stats['skipped'] ?></strong><?php endif; ?>
 </div>
 <?php endif; ?>
@@ -250,7 +250,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <!-- Upload form -->
   <div class="card fade-in">
     <div class="card-header">
-      <div class="card-title"><span class="icon">📁</span> Chọn file</div>
+      <div class="card-title">Chọn file</div>
     </div>
     <div class="card-body">
       <form id="mainImportForm" method="post" enctype="multipart/form-data">
@@ -262,7 +262,6 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
                ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
                ondragleave="this.style.borderColor='var(--border2)'"
                ondrop="handleDrop(event)">
-            <div style="font-size:40px;margin-bottom:12px;">📂</div>
             <div style="color:var(--text2);font-size:14px;">Kéo thả file vào đây hoặc <span style="color:var(--gold);font-weight:600;">click để chọn</span></div>
             <div style="color:var(--text2);font-size:12px;margin-top:8px;">Hỗ trợ: .xlsx, .csv (tối đa 10MB)</div>
             <div id="fileName" style="color:var(--success);margin-top:12px;font-weight:600;"></div>
@@ -271,10 +270,10 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
                  onchange="document.getElementById('fileName').textContent = this.files[0]?.name || ''">
         </div>
         <div class="flash flash-warning" style="margin-bottom:20px;">
-          ⚠️ Dữ liệu import sẽ được <strong>thêm mới</strong> vào hệ thống (không ghi đè).
+          Dữ liệu import sẽ được <strong>thêm mới</strong> vào hệ thống (không ghi đè).
           Đảm bảo file đúng định dạng mẫu.
         </div>
-        <button type="submit" class="btn btn-primary btn-lg" style="width:100%">📥 Import dữ liệu</button>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Import dữ liệu</button>
       </form>
     </div>
   </div>
@@ -282,9 +281,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <!-- Hướng dẫn -->
   <div class="card fade-in">
     <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
-      <div class="card-title"><span class="icon">📖</span> Hướng dẫn & Mẫu file</div>
+      <div class="card-title">Hướng dẫn & Mẫu file</div>
       <a href="http://localhost:5000/api/export/template" target="_blank" class="btn btn-success btn-sm" style="font-weight:600;">
-        📊 Tải Mẫu Excel Điền Chuẩn (Kèm ID Cột)
+        Tải Mẫu Excel Điền Chuẩn (Kèm ID Cột)
       </a>
     </div>
     <div class="card-body">
@@ -297,7 +296,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
             $cols = [
               ['A','STT (bỏ qua)',''],
               ['B','Mã GV/SV',''],
-              ['C','Họ và tên','✅'],
+              ['C','Họ và tên','Bắt buộc'],
               ['D','SĐT',''],
               ['E','Giới tính',''],
               ['F','Ngày sinh',''],
@@ -324,7 +323,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       </div>
       <div style="margin-top:16px;">
         <a href="../Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold" style="width:100%;justify-content:center;">
-          📤 Tải mẫu file (xuất CSV hiện tại)
+          Tải mẫu file (xuất CSV hiện tại)
         </a>
       </div>
     </div>
@@ -336,12 +335,12 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <div class="modal-content card fade-in" style="width:90%;max-width:850px;background:var(--bg-card,#1e293b);color:var(--text,#f8fafc);border:1px solid var(--border,#334155);border-radius:12px;padding:24px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border,#334155);padding-bottom:12px;">
       <h3 style="margin:0;font-size:18px;color:var(--gold,#f59e0b);display:flex;align-items:center;gap:8px;">
-        🤖 AI Agent: Phân Loại Tên Cột Dữ Liệu Excel
+        AI Agent: Phân Loại Tên Cột Dữ Liệu Excel
       </h3>
       <button type="button" onclick="closeAiModal()" style="background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer;">✕</button>
     </div>
     <div style="background:rgba(245,158,11,0.1);border-left:4px solid var(--gold,#f59e0b);padding:12px;margin-bottom:16px;border-radius:4px;font-size:13px;color:#cbd5e1;">
-      ℹ️ Hệ thống phát hiện các tiêu đề cột từ file Excel (Ví dụ: <code>Qli</code>, <code>QL</code>, <code>Hoten</code>...). Vui lòng xác nhận hoặc chọn trường dữ liệu CSDL ở cột bên trái để AI Agent ánh xạ chính xác trước khi nhập!
+      Hệ thống phát hiện các tiêu đề cột từ file Excel (Ví dụ: <code>Qli</code>, <code>QL</code>, <code>Hoten</code>...). Vui lòng xác nhận hoặc chọn trường dữ liệu CSDL ở cột bên trái để AI Agent ánh xạ chính xác trước khi nhập!
     </div>
     
     <div style="max-height:380px;overflow-y:auto;margin-bottom:20px;padding-right:8px;">
@@ -361,7 +360,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
     <div style="display:flex;justify-content:flex-end;gap:12px;">
       <button type="button" onclick="closeAiModal()" class="btn btn-outline" style="padding:8px 16px;">Hủy bỏ</button>
-      <button type="button" onclick="confirmAiMapping()" class="btn btn-primary" style="padding:8px 20px;background:var(--gold,#f59e0b);border:none;color:#000;font-weight:600;">✅ Xác nhận & Tiến hành Import</button>
+      <button type="button" onclick="confirmAiMapping()" class="btn btn-primary" style="padding:8px 20px;background:var(--gold,#f59e0b);border:none;color:#000;font-weight:600;">Xác nhận & Tiến hành Import</button>
     </div>
   </div>
 </div>
@@ -434,8 +433,8 @@ function showAiAgentMappingModal(headers) {
   headers.forEach((header, idx) => {
     const isBlank = !header || header.toString().trim() === '';
     const displayHeaderName = isBlank 
-      ? `⚠️ Cột ${getColumnLetter(idx)} (Trống tiêu đề)` 
-      : `📄 ${header}`;
+      ? `Cột ${getColumnLetter(idx)} (Trống tiêu đề)` 
+      : `${header}`;
     
     const match = window.ExcelColumnAgent.matchColumn(header);
     
@@ -494,13 +493,6 @@ function confirmAiMapping() {
     }
   });
 
-  // DB columns order matching SQL insert:
-  // 0:STT(skip), 1:ma_gvsv, 2:ho_ten, 3:sdt, 4:gioi_tinh, 5:ngay_sinh, 6:dan_toc, 7:que_quan, 8:chuc_vu, 9:lop,
-  // 10:chi_bo_cong_nhan, 11:so_bc_cam_tinh, 12:ngay_hop_cam_tinh, 13:dang_vien_giup_do, 14:ngay_phan_cong_giup_do,
-  // 15:so_qd_mo_lop, 16:ngay_qd_mo_lop, 17:tg_lop_boi_duong, 18:ngay_cap_cc, 19:so_qd_cc, 20:don_vi_cap_cc,
-  // 21:ten_dv_congtac_khi_cap_cc, 22:ten_chibo_khi_cap_cc, 23:ten_danguy_khi_cap_cc, 24:ten_tinhuy_khi_cap_cc,
-  // 25:ma_so, 26:ket_nap_dang, 27:ngay_quyet_dinh, 28:so_qd_ket_nap, 29:ngay_ket_nap, 30:dang_vien_huong_dan,
-  // 31:ngay_chuyen_sinh_hoat, 32:noi_chuyen_toi
   const dbFieldsOrder = [
     'stt_dummy', 'ma_gvsv', 'ho_ten', 'sdt', 'gioi_tinh', 'ngay_sinh', 'dan_toc', 'que_quan', 'chuc_vu', 'lop',
     'chi_bo_cong_nhan', 'so_bc_cam_tinh', 'ngay_hop_cam_tinh', 'dang_vien_giup_do', 'ngay_phan_cong_giup_do',
@@ -526,7 +518,6 @@ function confirmAiMapping() {
     document.getElementById('jsonParsedRowsInput').value = JSON.stringify(remappedRows);
   }
 
-  // Ensure form submit event proceeds with json parsed data
   const form = document.getElementById('mainImportForm');
   form.submit();
 }

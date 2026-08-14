@@ -54,17 +54,17 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <span class="sep">›</span>
       <span class="current">Sửa Excel trực tiếp</span>
     </div>
-    <div class="page-title">✏️ Bảng Excel <span>Chỉnh sửa trực tiếp</span></div>
+    <div class="page-title">Bảng Excel <span>Chỉnh sửa trực tiếp</span></div>
     <div class="page-subtitle">Nhấp chọn ô để nhập dữ liệu trực tiếp. Hệ thống tự động lưu khi nhập xong.</div>
   </div>
-  <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/danh_sach.php" class="btn btn-outline">📋 Về danh sách thường</a>
+  <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/danh_sach.php" class="btn btn-outline">Về danh sách thường</a>
 </div>
 
 <!-- Filter Bar -->
 <form method="get" class="filter-bar">
   <!-- Ô tìm kiếm văn bản -->
   <input type="text" name="search" class="form-control filter-search" 
-         placeholder="🔍 Nhập tên, mã, SĐT hoặc lớp..." value="<?= e($searchFilter) ?>">
+         placeholder="Nhập tên, mã, SĐT hoặc lớp..." value="<?= e($searchFilter) ?>">
 
   <!-- Chọn Lớp -->
   <select name="lop" class="form-control">
@@ -91,7 +91,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <option value="Tạm dừng"      <?= $trangThaiFilter==='Tạm dừng'?'selected':'' ?>>Tạm dừng</option>
   </select>
 
-  <button type="submit" class="btn btn-primary">🔍 Tìm & Lọc</button>
+  <button type="submit" class="btn btn-primary">Tìm & Lọc</button>
   <a href="sua_nhanh.php" class="btn btn-outline">Reset</a>
 </form>
 
@@ -102,19 +102,18 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <div class="card fade-in">
   <div class="card-header">
     <div class="card-title">
-      <span class="icon">📊</span> Danh sách quần chúng (Lưới Excel)
+      Danh sách quần chúng (Lưới Excel)
       <span style="font-size:12px; color:var(--text2); font-weight:normal; margin-left:8px;">
         (Tìm thấy: <?= count($rows) ?> người)
       </span>
     </div>
     <div style="font-size:12px; color:var(--text2);">
-      💡 Phím tắt di chuyển: <kbd>Enter</kbd> / <kbd>↓</kbd> xuống ô dưới | <kbd>↑</kbd> lên ô trên | <kbd>→</kbd> qua phải | <kbd>←</kbd> qua trái | <kbd>Tab</kbd> di chuyển ngang
+      Phím tắt di chuyển: <kbd>Enter</kbd> / <kbd>↓</kbd> xuống ô dưới | <kbd>↑</kbd> lên ô trên | <kbd>→</kbd> qua phải | <kbd>←</kbd> qua trái | <kbd>Tab</kbd> di chuyển ngang
     </div>
   </div>
   <div class="card-body" style="padding:0;">
     <?php if (empty($rows)): ?>
     <div class="empty-state">
-      <div class="icon">📂</div>
       <h3>Không tìm thấy dữ liệu phù hợp</h3>
       <p>Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm của bạn.</p>
     </div>
@@ -288,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
         td.classList.add('save-success');
         setTimeout(() => td.classList.remove('save-success'), 1500);
         
-        showToast('✓ Đã tự động lưu thay đổi.', 'var(--success)');
+        showToast('Đã tự động lưu thay đổi.', 'var(--success)');
       } else {
         // Lỗi kiểm tra đầu vào hoặc DB
         restoreField(td, input, oldValue, data.error);
@@ -309,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function () {
     td.classList.add('save-error');
     setTimeout(() => td.classList.remove('save-error'), 1500);
     
-    showToast('❌ Lỗi: ' + errorMsg, 'var(--danger)');
+    showToast('Lỗi: ' + errorMsg, 'var(--danger)');
   }
 
   // Lắng nghe sự kiện bàn phím để di chuyển giống Excel

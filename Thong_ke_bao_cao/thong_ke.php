@@ -68,27 +68,27 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <a href="<?= BASE_URL ?>index.php">Dashboard</a><span class="sep">›</span>
       <span class="current">Thống kê</span>
     </div>
-    <div class="page-title">📊 Thống kê <span>& Báo cáo</span></div>
+    <div class="page-title">Thống kê <span>& Báo cáo</span></div>
   </div>
-  <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold">📤 Xuất báo cáo</a>
+  <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold">Xuất báo cáo</a>
 </div>
 
 <!-- Stat Cards -->
 <div class="stat-grid">
-  <div class="stat-card red"><div class="stat-icon">👥</div><div class="stat-info"><div class="stat-number"><?= $stats['tong'] ?></div><div class="stat-label">Tổng đối tượng</div></div></div>
-  <div class="stat-card gold"><div class="stat-icon">🔄</div><div class="stat-info"><div class="stat-number"><?= $stats['dang_theo_doi'] ?></div><div class="stat-label">Đang theo dõi</div></div></div>
-  <div class="stat-card green"><div class="stat-icon">⭐</div><div class="stat-info"><div class="stat-number"><?= $stats['da_ket_nap'] ?></div><div class="stat-label">Đã kết nạp</div></div></div>
-  <div class="stat-card blue"><div class="stat-icon">↗️</div><div class="stat-info"><div class="stat-number"><?= $stats['da_chuyen'] ?></div><div class="stat-label">Đã chuyển SH</div></div></div>
+  <div class="stat-card red"><div class="stat-info"><div class="stat-number"><?= $stats['tong'] ?></div><div class="stat-label">Tổng đối tượng</div></div></div>
+  <div class="stat-card gold"><div class="stat-info"><div class="stat-number"><?= $stats['dang_theo_doi'] ?></div><div class="stat-label">Đang theo dõi</div></div></div>
+  <div class="stat-card green"><div class="stat-info"><div class="stat-number"><?= $stats['da_ket_nap'] ?></div><div class="stat-label">Đã kết nạp</div></div></div>
+  <div class="stat-card blue"><div class="stat-info"><div class="stat-number"><?= $stats['da_chuyen'] ?></div><div class="stat-label">Đã chuyển SH</div></div></div>
 </div>
 
 <!-- Charts Row 1 -->
 <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px;">
   <div class="card fade-in">
-    <div class="card-header"><div class="card-title"><span class="icon">📈</span> Đối tượng thêm mới theo tháng</div></div>
+    <div class="card-header"><div class="card-title">Đối tượng thêm mới theo tháng</div></div>
     <div class="card-body"><div style="height:250px;"><canvas id="chartThemMoi"></canvas></div></div>
   </div>
   <div class="card fade-in">
-    <div class="card-header"><div class="card-title"><span class="icon">🍩</span> Theo giới tính</div></div>
+    <div class="card-header"><div class="card-title">Theo giới tính</div></div>
     <div class="card-body"><div style="height:250px;"><canvas id="chartGioiTinh"></canvas></div></div>
   </div>
 </div>
@@ -96,11 +96,11 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Charts Row 2 -->
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
   <div class="card fade-in">
-    <div class="card-header"><div class="card-title"><span class="icon">⭐</span> Kết nạp theo tháng</div></div>
+    <div class="card-header"><div class="card-title">Kết nạp theo tháng</div></div>
     <div class="card-body"><div style="height:220px;"><canvas id="chartKetNap"></canvas></div></div>
   </div>
   <div class="card fade-in">
-    <div class="card-header"><div class="card-title"><span class="icon">📚</span> Top lớp nhiều nhất</div></div>
+    <div class="card-header"><div class="card-title">Top lớp nhiều nhất</div></div>
     <div class="card-body"><div style="height:220px;"><canvas id="chartLop"></canvas></div></div>
   </div>
 </div>
@@ -110,7 +110,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
   <!-- Chi bộ -->
   <div class="card fade-in">
-    <div class="card-header"><div class="card-title"><span class="icon">🏛️</span> Thống kê theo Chi bộ</div></div>
+    <div class="card-header"><div class="card-title">Thống kê theo Chi bộ</div></div>
     <div class="card-body" style="padding:0;">
       <table class="data-table">
         <thead><tr><th>Chi bộ</th><th>Tổng</th><th>Đã kết nạp</th><th>Tỷ lệ</th></tr></thead>
@@ -139,16 +139,15 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
   <!-- Top ĐV giúp đỡ -->
   <div class="card fade-in">
-    <div class="card-header"><div class="card-title"><span class="icon">🤝</span> Đảng viên giúp đỡ nhiều nhất</div></div>
+    <div class="card-header"><div class="card-title">Đảng viên giúp đỡ nhiều nhất</div></div>
     <div class="card-body">
       <?php foreach ($topDV as $i => $dv):
         $max = $topDV[0]['so_luong'];
         $pct = round($dv['so_luong'] / $max * 100);
-        $medals = ['🥇','🥈','🥉','4️⃣','5️⃣'];
       ?>
       <div style="margin-bottom:16px;">
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-          <span style="font-size:13px;font-weight:600;"><?= $medals[$i] ?> <?= e($dv['dang_vien_giup_do']) ?></span>
+          <span style="font-size:13px;font-weight:600;"><?= ($i + 1) ?>. <?= e($dv['dang_vien_giup_do']) ?></span>
           <span style="color:var(--gold);font-weight:700;"><?= $dv['so_luong'] ?></span>
         </div>
         <div style="background:var(--bg3);border-radius:4px;height:6px;">
@@ -157,7 +156,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       </div>
       <?php endforeach; ?>
       <?php if (empty($topDV)): ?>
-      <div class="empty-state" style="padding:20px;"><div class="icon">📊</div><p>Chưa có dữ liệu</p></div>
+      <div class="empty-state" style="padding:20px;"><p>Chưa có dữ liệu</p></div>
       <?php endif; ?>
     </div>
   </div>

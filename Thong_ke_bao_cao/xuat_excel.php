@@ -24,18 +24,18 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <a href="<?= BASE_URL ?>index.php">Dashboard</a><span class="sep">›</span>
       <span class="current">Xuất dữ liệu</span>
     </div>
-    <div class="page-title">📤 Xuất <span>dữ liệu báo cáo</span></div>
+    <div class="page-title">Xuất <span>dữ liệu báo cáo</span></div>
     <div class="page-subtitle">Chọn phạm vi và loại xuất để tải tệp Excel hoặc tài liệu PDF</div>
   </div>
 </div>
 
 <!-- API Status Banner -->
 <div id="apiBanner" class="flash flash-warning" style="display:none;">
-  ⚠️ Python API chưa chạy. <strong>Hãy mở <code>python_api/start_api.bat</code></strong> để có thể xuất dữ liệu.
-  <button onclick="checkApi()" style="margin-left:12px;" class="btn btn-warning btn-sm">🔄 Thử lại</button>
+  Python API chưa chạy. <strong>Hãy mở <code>python_api/start_api.bat</code></strong> để có thể xuất dữ liệu.
+  <button onclick="checkApi()" style="margin-left:12px;" class="btn btn-warning btn-sm">Thử lại</button>
 </div>
 <div id="apiOk" class="flash flash-success" style="display:none;">
-  ✅ Python API đang chạy – Sẵn sàng xuất dữ liệu!
+  Python API đang chạy – Sẵn sàng xuất dữ liệu!
 </div>
 
 <!-- Wizard Layout -->
@@ -54,11 +54,11 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       </div>
       <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
         <label class="radio-card" onclick="setScope('all')">
-          <input type="radio" name="scope" value="all" checked> 🏫 Toàn trường
+          <input type="radio" name="scope" value="all" checked> Toàn trường
           <span class="badge badge-red" style="margin-left:auto;"><?= $totalObjects ?> người</span>
         </label>
         <label class="radio-card" onclick="setScope('lop')">
-          <input type="radio" name="scope" value="lop"> 📚 Theo lớp
+          <input type="radio" name="scope" value="lop"> Theo lớp
         </label>
         <div id="lop-select-wrap" style="display:none;padding-left:16px;">
           <select id="lopSelect" class="form-control" onchange="loadListPHP()">
@@ -69,7 +69,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
           </select>
         </div>
         <label class="radio-card" onclick="setScope('chibo')">
-          <input type="radio" name="scope" value="chibo"> 🏛️ Theo chi bộ
+          <input type="radio" name="scope" value="chibo"> Theo chi bộ
         </label>
         <div id="chibo-select-wrap" style="display:none;padding-left:16px;">
           <select id="chiboSelect" class="form-control" onchange="loadListPHP()">
@@ -94,48 +94,48 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
         <label class="radio-card" onclick="setType(1)">
           <input type="radio" name="etype" value="1" checked>
           <div>
-            <div style="font-weight:700;font-size:13px;">📊 Loại 1: Xuất Excel toàn bộ</div>
+            <div style="font-weight:700;font-size:13px;">Loại 1: Xuất Excel toàn bộ</div>
             <div style="font-size:11px;color:var(--text2);margin-top:2px;">Xuất danh sách cấp ủy, thông tin tất cả cột.</div>
           </div>
         </label>
         <label class="radio-card" style="border-color:var(--gold);background:rgba(255,215,0,0.06);" onclick="window.open('http://localhost:5000/api/export/template','_blank')">
           <input type="radio" name="etype" value="template">
           <div>
-            <div style="font-weight:700;font-size:13px;color:var(--gold);">📥 Tải Mẫu Excel Cho Các Lớp Điền (Kèm ID Cột)</div>
+            <div style="font-weight:700;font-size:13px;color:var(--gold);">Tải Mẫu Excel Cho Các Lớp Điền (Kèm ID Cột)</div>
             <div style="font-size:11px;color:var(--text2);margin-top:2px;">Tải file mẫu Excel chuẩn hóa gồm Tiêu đề & Mã ID trường để tránh bị lệch cột.</div>
           </div>
         </label>
         <label class="radio-card" onclick="setType(2)">
           <input type="radio" name="etype" value="2">
           <div>
-            <div style="font-weight:700;font-size:13px;">📄 Loại 2: Xuất PDF hồ sơ chi tiết</div>
+            <div style="font-weight:700;font-size:13px;">Loại 2: Xuất PDF hồ sơ chi tiết</div>
             <div style="font-size:11px;color:var(--text2);margin-top:2px;">Xuất file PDF hồ sơ cá nhân của 1 người.</div>
           </div>
         </label>
         <label class="radio-card" onclick="setType(3)">
           <input type="radio" name="etype" value="3">
           <div>
-            <div style="font-weight:700;font-size:13px;">📋 Loại 3: Xuất PDF danh sách chọn</div>
+            <div style="font-weight:700;font-size:13px;">Loại 3: Xuất PDF danh sách chọn</div>
             <div style="font-size:11px;color:var(--text2);margin-top:2px;">Chọn nhiều người để xuất danh sách PDF.</div>
           </div>
         </label>
         <label class="radio-card" onclick="setType(4)">
           <input type="radio" name="etype" value="4">
           <div>
-            <div style="font-weight:700;font-size:13px;">📜 Loại 4: Xuất Mẫu Phiếu KNĐ (PDF chuẩn)</div>
+            <div style="font-weight:700;font-size:13px;">Loại 4: Xuất Mẫu Phiếu KNĐ (PDF chuẩn)</div>
             <div style="font-size:11px;color:var(--text2);margin-top:2px;">Xuất các biểu mẫu chuẩn (1-KNĐ, 3-KNĐ, 4-KNĐ, 5-KNĐ...).</div>
           </div>
         </label>
         <div id="form-select-wrap" style="display:none;padding-left:10px;">
           <select id="formSelectType" class="form-control">
-            <option value="1-knd">📄 Mẫu 1-KNĐ: Đơn xin vào Đảng</option>
-            <option value="2-knd">📜 Mẫu 2-KNĐ: Lý lịch người vào Đảng (Mẫu 2026)</option>
-            <option value="3-knd">📄 Mẫu 3-KNĐ: Giấy giới thiệu người vào Đảng</option>
-            <option value="4-knd">📄 Mẫu 4-KNĐ: NQ giới thiệu Đoàn viên vào Đảng</option>
-            <option value="4a-knd">📄 Mẫu 4a-KNĐ: NQ giới thiệu ĐV Công đoàn vào Đảng</option>
-            <option value="5-knd">📄 Mẫu 5-KNĐ: Tổng hợp ý kiến nhận xét</option>
-            <option value="mau-i">📜 Mẫu I: Giấy chứng nhận lớp Nhận thức Đảng</option>
-            <option value="mau-ii">📜 Mẫu II: Giấy chứng nhận Cấp ủy cấp</option>
+            <option value="1-knd">Mẫu 1-KNĐ: Đơn xin vào Đảng</option>
+            <option value="2-knd">Mẫu 2-KNĐ: Lý lịch người vào Đảng (Mẫu 2026)</option>
+            <option value="3-knd">Mẫu 3-KNĐ: Giấy giới thiệu người vào Đảng</option>
+            <option value="4-knd">Mẫu 4-KNĐ: NQ giới thiệu Đoàn viên vào Đảng</option>
+            <option value="4a-knd">Mẫu 4a-KNĐ: NQ giới thiệu ĐV Công đoàn vào Đảng</option>
+            <option value="5-knd">Mẫu 5-KNĐ: Tổng hợp ý kiến nhận xét</option>
+            <option value="mau-i">Mẫu I: Giấy chứng nhận lớp Nhận thức Đảng</option>
+            <option value="mau-ii">Mẫu II: Giấy chứng nhận Cấp ủy cấp</option>
           </select>
         </div>
       </div>
@@ -152,10 +152,10 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <div class="card-body">
         <div id="selCount" style="font-size:12px;color:var(--text2);margin-bottom:12px;"></div>
         <button id="btnExport" onclick="doExport()" class="btn btn-gold btn-lg" style="width:100%;justify-content:center;" disabled>
-          📥 Xuất tài liệu
+          Xuất tài liệu
         </button>
         <div id="exportSpinner" style="display:none;text-align:center;margin-top:12px;">
-          <span style="color:var(--text2);font-size:12px;">⏳ Đang tạo file tải về…</span>
+          <span style="color:var(--text2);font-size:12px;">Đang tạo file tải về…</span>
         </div>
       </div>
     </div>
@@ -165,10 +165,10 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <!-- RIGHT: Person list -->
   <div class="card fade-in" id="listCard">
     <div class="card-header">
-      <div class="card-title"><span class="icon">👥</span> Danh sách quần chúng <span id="listCount" style="color:var(--text2);font-size:13px;font-weight:400;"></span></div>
+      <div class="card-title">Danh sách quần chúng <span id="listCount" style="color:var(--text2);font-size:13px;font-weight:400;"></span></div>
       <div style="display:flex;gap:8px;align-items:center;">
         <input type="text" id="filterInput" class="form-control" style="max-width:200px;padding:6px 12px;"
-               placeholder="🔍 Lọc nhanh..." oninput="filterTable()">
+               placeholder="Lọc nhanh..." oninput="filterTable()">
         <button onclick="selectAll()" class="btn btn-outline btn-sm" id="selAllBtn" style="display:none;">Chọn tất cả</button>
         <button onclick="deselectAll()" class="btn btn-outline btn-sm" id="deselAllBtn" style="display:none;">Bỏ chọn</button>
       </div>
@@ -184,15 +184,15 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Missing Fields Warning Modal -->
 <div class="modal-overlay" id="missingFieldsModal">
   <div class="modal" style="max-width:500px;">
-    <div class="modal-title" style="color:var(--gold);"><span class="icon">⚠️</span> Thiếu trường thông tin bắt buộc</div>
+    <div class="modal-title" style="color:var(--gold);">Thiếu trường thông tin bắt buộc</div>
     <div class="modal-body">
       <p style="margin-bottom:12px;">Hồ sơ đối tượng này chưa đủ thông tin để xuất mẫu PDF đã chọn. Vui lòng bổ sung các thông tin còn thiếu dưới đây:</p>
       <div id="missingFieldsList" style="background:rgba(217,119,6,0.1);border-left:4px solid var(--gold);padding:12px;border-radius:6px;margin-bottom:15px;"></div>
-      <p style="font-size:12px;color:var(--text2);">Bấm nút <strong>"✏️ Điền bổ sung ngay"</strong> để mở trang cập nhật thông tin.</p>
+      <p style="font-size:12px;color:var(--text2);">Bấm nút <strong>"Điền bổ sung ngay"</strong> để mở trang cập nhật thông tin.</p>
     </div>
     <div class="modal-actions">
       <button onclick="document.getElementById('missingFieldsModal').classList.remove('open')" class="btn btn-outline">Để sau</button>
-      <a id="editMissingBtn" href="#" class="btn btn-primary">✏️ Điền bổ sung ngay</a>
+      <a id="editMissingBtn" href="#" class="btn btn-primary">Điền bổ sung ngay</a>
     </div>
   </div>
 </div>
@@ -295,7 +295,7 @@ function renderList() {
   document.getElementById('deselAllBtn').style.display = (type === 3 && list.length) ? 'inline-flex' : 'none';
 
   if (!list.length) {
-    document.getElementById('listBody').innerHTML = '<div class="empty-state" style="padding:60px 20px;"><div class="icon">📂</div><h3>Không có dữ liệu</h3><p>Chọn phạm vi/bộ lọc để hiển thị danh sách</p></div>';
+    document.getElementById('listBody').innerHTML = '<div class="empty-state" style="padding:60px 20px;"><h3>Không có dữ liệu</h3><p>Chọn phạm vi/bộ lọc để hiển thị danh sách</p></div>';
     updateSelCount();
     return;
   }
@@ -332,7 +332,6 @@ function renderList() {
 }
 
 function rowClick(e, pid) {
-  // If user clicked input, do nothing
   if (e.target.tagName === 'INPUT') return;
   var row = e.currentTarget;
   if (currentType === 2 || currentType === 4) {
@@ -370,7 +369,7 @@ function updateSelCount() {
     msg = checked ? `Đã chọn: <strong>${checked}</strong> người` : 'Chưa chọn ai';
   } else if (currentType === 2 || currentType === 4) {
     var radioChecked = !!document.querySelector('input[name=pid]:checked');
-    msg = radioChecked ? '✅ Đã chọn 1 người' : 'Chưa chọn ai';
+    msg = radioChecked ? 'Đã chọn 1 người' : 'Chưa chọn ai';
   } else if (currentType === 1) {
     msg = currentList.length ? `Sẽ xuất: <strong>${currentList.length}</strong> người` : '';
   }
@@ -402,20 +401,16 @@ function doExport() {
          : ft === 'chibo' ? document.getElementById('chiboSelect').value : '';
 
   if (currentType === 1) {
-    // Excel - POST → /api/export/all
     fetchDownload('<?= BASE_URL ?>Quan_ly_doi_tuong/api_proxy.php?path=api/export/all', {filter_type: ft, filter_value: fv});
   } else if (currentType === 2) {
-    // PDF (Single Profile) - GET → /api/export/single/{id}
     var pid = document.querySelector('input[name=pid]:checked')?.value;
     if (!pid) return done();
     window.location = `<?= BASE_URL ?>Quan_ly_doi_tuong/api_proxy.php?path=api/export/single/${pid}`;
     setTimeout(done, 1500);
   } else if (currentType === 3) {
-    // PDF (Selected List) - POST → /api/export/selected
     var ids = [...document.querySelectorAll('.pcheck:checked')].map(c => parseInt(c.value));
     fetchDownload('<?= BASE_URL ?>Quan_ly_doi_tuong/api_proxy.php?path=api/export/selected', {ids});
   } else if (currentType === 4) {
-    // PDF Standard Mẫu Phiếu KNĐ - GET → /api/export/form/{form_type}/{id}
     var pid = document.querySelector('input[name=pid]:checked')?.value;
     var ftype = document.getElementById('formSelectType').value;
     if (!pid || !ftype) return done();
@@ -437,7 +432,7 @@ function doExport() {
           if (data.error === 'missing_fields') {
             var html = '<ul style="margin:0;padding-left:20px;color:var(--danger);font-weight:600;">';
             data.missing_fields.forEach(f => {
-              html += `<li>❌ ${f}</li>`;
+              html += `<li>${f}</li>`;
             });
             html += '</ul>';
             document.getElementById('missingFieldsList').innerHTML = html;

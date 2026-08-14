@@ -1,0 +1,46 @@
+/* ============================================================
+   manager.css - Theme & UI Styles Tailored for Managers (Bí thư Chi bộ)
+   Rich Crimson Red & Gold Party Manager Theme
+   ============================================================ */
+
+body.role-manager {
+  --red:              #E51737;
+  --red-dark:         #9A0B20;
+  --red-light:        #FF2E4D;
+  --border2:          rgba(229, 23, 55, 0.4);
+  --shadow-red:       0 8px 25px rgba(229, 23, 55, 0.4);
+  --shadow-glow:      0 0 35px rgba(229, 23, 55, 0.2);
+}
+
+/* Sidebar Logo Accent for Manager */
+body.role-manager .sidebar-logo {
+  background: linear-gradient(135deg, rgba(154, 11, 32, 0.45) 0%, rgba(19, 27, 46, 0.95) 100%);
+  border-bottom: 2px solid rgba(229, 23, 55, 0.5);
+}
+body.role-manager .sidebar-logo .logo-icon {
+  background: linear-gradient(135deg, var(--red) 0%, var(--gold) 100%);
+  box-shadow: 0 4px 15px rgba(229, 23, 55, 0.5);
+}
+
+/* Header Top Accent Line for Manager */
+body.role-manager .header {
+  border-bottom: 2px solid rgba(229, 23, 55, 0.35);
+  box-shadow: 0 4px 20px rgba(229, 23, 55, 0.15);
+}
+
+/* Page Header Manager Banner */
+body.role-manager .page-header {
+  background: linear-gradient(135deg, rgba(229, 23, 55, 0.12) 0%, rgba(19, 27, 46, 0.6) 100%);
+  padding: 18px 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(229, 23, 55, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Manager User Badge */
+body.role-manager .user-badge {
+  border-color: rgba(255, 215, 0, 0.4);
+}
+body.role-manager .user-badge .avatar {
+  background: linear-gradient(135deg, var(--red), var(--gold));
+}

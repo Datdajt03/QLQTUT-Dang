@@ -1,0 +1,51 @@
+/* ============================================================
+   variables.css - Central Design System Tokens & Color Variables
+   ============================================================ */
+
+:root {
+  /* Core Brand Colors */
+  --red:          #E51737;
+  --red-dark:     #9A0B20;
+  --red-light:    #FF2E4D;
+  --gold:         #FFD700;
+  --gold-dark:    #D4AF37;
+  --gold-light:   #FFE55C;
+
+  /* Surface & Layering (Dark Glassmorphism) */
+  --bg:           #0B0F19;
+  --bg2:          #131B2E;
+  --bg3:          #1C273E;
+  --bg4:          #253350;
+  --card-bg:      rgba(19, 27, 46, 0.85);
+
+  /* Border & Accents */
+  --border:       rgba(255, 255, 255, 0.08);
+  --border2:      rgba(229, 23, 55, 0.35);
+  --border-gold:  rgba(255, 215, 0, 0.35);
+
+  /* Text Colors */
+  --text:         #F1F5F9;
+  --text2:        #94A3B8;
+  --text3:        #64748B;
+
+  /* Status Identifiers */
+  --success:      #10B981;
+  --warning:      #F59E0B;
+  --danger:       #EF4444;
+  --info:         #3B82F6;
+
+  /* Layout & Sizing */
+  --sidebar-w:    260px;
+  --header-h:     68px;
+  --radius:       12px;
+  --radius-lg:    18px;
+
+  /* Shadows & Glows */
+  --shadow-sm:    0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow:       0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(229, 23, 55, 0.05);
+  --shadow-red:   0 8px 25px rgba(229, 23, 55, 0.35);
+  --shadow-gold:  0 8px 25px rgba(255, 215, 0, 0.25);
+  --shadow-glow:  0 0 35px rgba(229, 23, 55, 0.15);
+
+  --transition:   0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}

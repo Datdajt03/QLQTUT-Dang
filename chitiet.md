@@ -47,7 +47,95 @@ Vì vậy, việc thiết kế một Website chuyên nghiệp để **số hóa 
 
 ## II. PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG (SYSTEM ANALYSIS & DESIGN)
 
-### 1. Quy trình Nghiệp vụ (Business Workflows)
+### 1. Tổng quan Kiến trúc Hệ thống (System Architecture Overview)
+
+Hệ thống được thiết kế theo **Mô hình Phân tầng Lai (Layered & Microservice-Lite Architecture)** kết hợp giữa Web Core PHP, Microservice xử lý file độc lập bằng Python Flask và Engine Trí tuệ Nhân tạo Edge AI chạy trực tiếp tại Client-side.
+
+```mermaid
+graph TD
+    subgraph Client["🖥️ CLIENT-SIDE LAYER (Trình duyệt Người dùng)"]
+        UI_User["Giao diện Sinh viên / Quần chúng"]
+        UI_Mgr["Giao diện Bí thư / Quản lý"]
+        UI_Admin["Giao diện Quản trị viên"]
+        EdgeAI["🧠 Edge AI Engine (Tesseract.js / PDF.js)<br>• Smart Auto-fill CCCD/Thẻ SV<br>• Phân loại 5 loại phiếu & Soi thông tin khuyết<br>• Smart Avatar Crop 3x4 Canvas"]
+    end
+
+    subgraph WebServer["⚙️ APPLICATION & BUSINESS LOGIC LAYER (PHP Core Server)"]
+        Router["Router / Page Controllers"]
+        RBAC["🛡️ RBAC Auth Engine (requireRole)"]
+        CRUD["Module Quản lý Hồ sơ & Danh mục"]
+        Proxy["🔌 PHP Proxy Agent (api_proxy.php)"]
+    end
+
+    subgraph Microservice["🐍 MICROSERVICE LAYER (Python Flask Server :5000)"]
+        FlaskAPI["RESTful API Server (app.py)"]
+        ExcelEngine["openpyxl Engine (Xuất Excel 35 cột)"]
+        PDFEngine["ReportLab Engine (Xuất 8 Mẫu PDF 2026)"]
+    end
+
+    subgraph DataLayer["🗄️ DATA ACCESS LAYER (Database)"]
+        PDO["PHP PDO Connection (Prepared Statements)"]
+        MySQL[("MySQL Database (ql_dangvien)")]
+    end
+
+    Client -->|HTTP Request / Session| WebServer
+    EdgeAI -->|Auto-fill / JSON Log| UI_User
+    WebServer -->|Database Query| PDO
+    PDO -->|Prepared SQL| MySQL
+    Proxy -->|REST API Request| FlaskAPI
+    FlaskAPI --> ExcelEngine
+    FlaskAPI --> PDFEngine
+    FlaskAPI -->|PyMySQL Connection| MySQL
+```
+
+#### a. Mô hình Phân tầng Chi tiết (3-Tier Layered Architecture):
+1. **Lớp Hiển thị (Presentation Layer):**
+   - Xây dựng bằng **Modular CSS System (BEM Standard)** tách biệt các bộ quy tắc (`variables.css`, `base.css`, `components.css`, `user.css`, `manager.css`, `admin.css`).
+   - Phong cách **Minimal Typography & Glassmorphism Dark Mode** loại bỏ biểu tượng rác, tập trung tối đa vào độ tương phản chữ và cấu trúc dữ liệu.
+2. **Lớp Nghiệp vụ & Ứng dụng (Business & Application Layer):**
+   - **RBAC Auth Helper (`User/auth.php`):** Kiểm soát phân quyền 3 cấp độ (User, Manager, Admin) bằng cơ chế kiểm tra Session & Role khép kín.
+   - **Microservice Python Export:** Xử lý các tác vụ tính toán nặng và sinh định dạng tệp chuẩn (.xlsx, .pdf) độc lập, không làm ảnh hưởng đến hiệu năng máy chủ Web PHP.
+#### b. Cơ chế & Thuật toán Edge AI Thẩm định Mẫu Phiếu (`AI_Module/document_inspector.js`):
+1. **Weighted Keyword Matrix Classification (Phân loại Mô hình Phiếu):**
+   - Đánh giá từ khóa loại phiếu (`typeKeywords`) trong văn bản OCR (+2 điểm) và tên file (+3 điểm).
+   - Xác định Mô hình Mẫu phiếu chính xác nhất trong 5 mô hình Đảng vụ (*Bản tự nhận xét, Giấy chứng nhận, Sơ yếu lý lịch, Phiếu đánh giá, Minh chứng*).
+2. **Multi-Key Substring Matching & Regex Traversal (Soi Trường Thiếu & Trích xuất):**
+   - Duyệt ma trận từ khóa mở rộng cho từng trường bắt buộc của Mẫu phiếu.
+   - Nếu **không tìm thấy từ khóa** ➔ Gán ngay vào `missingFields` (`[CẢNH BÁO THIẾU]`) và bật cảnh báo đỏ.
+   - Nếu **tìm thấy từ khóa** ➔ Dùng `extractValueSnippet()` trích xuất dữ liệu thực tế (`extractedValue`).
+3. **Công thức Tỷ lệ Phần trăm Đầy đủ (% Completeness Score):**
+   $$\text{ScorePercent} = \left( \frac{\text{Số trường phát hiện}}{\text{Tổng số trường bắt buộc của Mẫu phiếu}} \right) \times 100\%$$
+
+---
+
+### 2. Ma trận Phân quyền Hệ thống (RBAC Matrix)
+
+Hệ thống phân định 3 vai trò người dùng (Role-Based Access Control) với bảng ma trận quyền hạn chi tiết:
+
+| Nhóm Chức năng | Chi tiết Quyền hạn | 👤 User (Sinh viên) | 💼 Manager (Bí thư) | ⚙️ Admin (Quản trị) |
+| :--- | :--- | :---: | :---: | :---: |
+| **Xác thực & Tài khoản** | Đăng ký, Đăng nhập, Đổi mật khẩu cá nhân | ✅ | ✅ | ✅ |
+| **Dashboard Cá nhân** | Xem Profile Card, Timeline 5 bước kết nạp | ✅ | ✅ | ✅ |
+| | Xem tin tức thời sự 3 nguồn báo chính thống | ✅ | ✅ | ✅ |
+| **Hồ sơ Đăng ký** | Gửi đơn đăng ký quần chúng ưu tú mới | ✅ | ❌ | ❌ |
+| | Gửi đề xuất cập nhật thông tin cá nhân | ✅ | ❌ | ❌ |
+| | Phê duyệt / Từ chối đơn đăng ký & Gửi email | ❌ | ✅ | ✅ |
+| **Quản lý Hồ sơ** | Xem danh sách đối tượng chính thức | Chỉ xem bạn cùng Lớp | ✅ Toàn bộ | ✅ Toàn bộ |
+| | Thêm / Sửa / Xóa hồ sơ quần chúng | ❌ | ✅ | ✅ |
+| | **Sửa nhanh dạng Excel trực tiếp (Autosave)** | ❌ | ✅ | ✅ |
+| | **Xóa hàng loạt nhiều đối tượng (Bulk Delete)** | ❌ | ✅ | ✅ |
+| **AI & Minh chứng** | **Smart Auto-fill OCR CCCD & Crop Ảnh 3x4** | ✅ | ✅ | ✅ |
+| | **Edge AI quét 5 loại phiếu & Soi thông tin khuyết** | ✅ | ✅ | ✅ |
+| **Import / Export** | **Import dữ liệu Excel (Kèm AI Agent ánh xạ cột)** | ❌ | ✅ | ✅ |
+| | Xuất file Excel 35 cột (.xlsx) toàn bộ | ❌ | ✅ | ✅ |
+| | **Xuất 8 Mẫu phiếu PDF chuẩn 2026 (Có tô nổi)** | ❌ | ✅ | ✅ |
+| **Quản trị Hệ thống** | Quản lý danh mục Chi bộ & Đảng viên | ❌ | ✅ | ✅ |
+| | Quản lý tài khoản người dùng & Đặt lại mật khẩu | ❌ | ❌ | ✅ |
+| | Cấu hình hằng số hệ thống (Tên trường, Đảng ủy) | ❌ | ❌ | ✅ |
+
+---
+
+### 3. Quy trình Nghiệp vụ (Business Workflows)
 
 #### a. Quy trình Đăng ký & Phê duyệt Quần chúng mới
 
@@ -217,7 +305,8 @@ Màn hình đầy đủ quyền quản trị, bao gồm toàn bộ công cụ x�
 - **Excel Column Mapper Agent (`AI_Module/excel_column_agent.js`):** AI Agent Client-side phân loại tiêu đề cột Excel thông minh và mở Modal Tab cho phép người dùng chọn/ánh xạ chính xác tiêu đề cột ghi tắt vào CSDL trước khi Import.
 - **Tự động Setup 1-Click (`setup_newcomputer.bat`):** Script tự động hóa toàn bộ quy trình thiết lập dự án khi sao chép sang máy tính mới: Tự động khởi tạo thư mục `uploads`, tự động bật `extension=zip` trong `php.ini`, tự động nạp Database `ql_dangvien` vào MySQL và cài đặt/khởi chạy Python Microservice Server.
 - **Trích xuất văn bản OCR Minh chứng:** Sử dụng Tesseract.js & PDF.js chạy tại client để kiểm tra tính hợp lệ của file PDF/Ảnh minh chứng (**tối đa 10MB/file**).
-- **Rule Engine Kiểm tra:** Tự động đối soát từ khóa bắt buộc đối với 5 loại hồ sơ (Bản tự nhận xét, Giấy chứng nhận bồi dưỡng, Minh chứng hoạt động, Phiếu đánh giá, Sơ yếu lý lịch).
+- **Edge AI 5 Document Models Engine:** Phân loại tệp tải lên vào 5 Models chuẩn (`ban_tu_nhan_xet`, `giay_chung_nhan`, `ho_so_ca_nhan`, `phieu_danh_gia`, `minh_chung_hoat_dong`) và soi sâu từng trường thông tin bắt buộc trong phiếu (như *Số QĐ, Đơn vị cấp, Ngày sinh, Xếp loại, Chữ ký/Xác nhận Bí thư...*).
+- **Báo cáo Chi tiết Phiếu & Thông tin khuyết:** Đưa ra thông tin chính xác phiếu nào **chưa nộp hoàn toàn** và phiếu nào đã nộp nhưng **bị thiếu thông tin chi tiết bên trong**, kèm đề xuất khắc phục cụ thể.
 - **Lưu vết Hệ thống:** Tự động đẩy file thực tế về lưu tại `uploads/ho_so_minh_chung/` và lưu nhật ký đánh giá vào bảng MySQL `edge_ai_logs` qua API `api_save_ai_check.php`.
 
 **L. Xóa Hàng Loạt Nhiều Đối Tượng & Mẫu Excel Điền Chuẩn (`danh_sach.php`)**

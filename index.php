@@ -82,20 +82,20 @@ require_once __DIR__ . '/Giao_dien/header.php';
 <!-- Page Header -->
 <div class="page-header">
   <div class="page-header-left">
-    <div class="page-title"><span>⭐</span> Dashboard</div>
+    <div class="page-title">Dashboard</div>
     <div class="page-subtitle">Xin chào, <strong><?= e($user['ho_ten'] ?: $user['username']) ?></strong> (Vai trò: <span style="color:var(--gold);"><?= $vaiTro ?></span>)</div>
   </div>
   <?php if ($vaiTro !== 'Người dùng thường'): ?>
   <div style="display:flex;gap:10px;align-items:center;">
-    <a href="Quan_ly_doi_tuong/them.php" class="btn btn-primary">➕ Thêm đối tượng mới</a>
-    <a href="Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold">📤 Xuất Excel</a>
+    <a href="Quan_ly_doi_tuong/them.php" class="btn btn-primary">Thêm đối tượng mới</a>
+    <a href="Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold">Xuất Excel</a>
   </div>
   <?php else: ?>
   <div style="display:flex;gap:10px;align-items:center;">
     <?php if ($myProfile): ?>
-      <a href="Quan_ly_doi_tuong/cap_nhat_thong_tin.php" class="btn btn-gold">✏️ Yêu cầu cập nhật thông tin</a>
+      <a href="Quan_ly_doi_tuong/cap_nhat_thong_tin.php" class="btn btn-gold">Yêu cầu cập nhật thông tin</a>
     <?php else: ?>
-      <a href="Quan_ly_doi_tuong/nhap_thong_tin.php" class="btn btn-primary">✍️ Gửi yêu cầu đăng ký mới</a>
+      <a href="Quan_ly_doi_tuong/nhap_thong_tin.php" class="btn btn-primary">Gửi yêu cầu đăng ký mới</a>
     <?php endif; ?>
   </div>
   <?php endif; ?>
@@ -235,7 +235,7 @@ if ($newsSource === 'dangcongsan') {
 
 <div class="card fade-in" style="margin-bottom: 24px; border-left: 4px solid var(--gold);">
   <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-    <div class="card-title">📰 Tin tức Thời sự & Chính trị (<?= e($sourceName) ?>)</div>
+    <div class="card-title">Tin tức Thời sự & Chính trị (<?= e($sourceName) ?>)</div>
     
     <!-- Tab selector buttons for news sources -->
     <div style="display:flex; gap:6px;">
@@ -247,7 +247,7 @@ if ($newsSource === 'dangcongsan') {
   <div class="card-body">
     <?php if (!empty($rssError) && empty($newsItems)): ?>
       <div style="color:var(--text2); font-style:italic; font-size:13px; display:flex; align-items:center; gap:8px;">
-        ⚠️ Không thể tải tin tức trực tiếp từ nguồn này (Vui lòng kiểm tra kết nối mạng).
+        Không thể tải tin tức trực tiếp từ nguồn này (Vui lòng kiểm tra kết nối mạng).
       </div>
     <?php else: ?>
       <div class="dantri-news-grid">
@@ -256,13 +256,13 @@ if ($newsSource === 'dangcongsan') {
             <?php if ($news['thumbnail']): ?>
               <div class="news-thumb" style="background-image: url('<?= e($news['thumbnail']) ?>');"></div>
             <?php else: ?>
-              <div class="news-thumb" style="background:var(--bg3); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:24px;">📰</div>
+              <div class="news-thumb" style="background:var(--bg3); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:12px; font-weight:700;">TIN TỨC</div>
             <?php endif; ?>
             <div class="news-info">
               <h4 class="news-title"><?= e($news['title']) ?></h4>
               <p class="news-summary"><?= e($news['summary']) ?></p>
               <div class="news-meta">
-                <span>🕒 <?= date('d/m/Y H:i', strtotime($news['pubDate'])) ?></span>
+                <span><?= date('d/m/Y H:i', strtotime($news['pubDate'])) ?></span>
               </div>
             </div>
           </a>
@@ -476,7 +476,7 @@ if ($newsSource === 'dangcongsan') {
     <!-- Cột 1: Thông tin cá nhân -->
     <div class="card fade-in">
       <div class="card-header">
-        <div class="card-title"><span class="icon">👤</span> Hồ sơ Quần chúng chính thức</div>
+        <div class="card-title">Hồ sơ Quần chúng chính thức</div>
       </div>
       <div class="card-body">
         <div style="display:flex; gap:16px; align-items:center; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border);">
@@ -529,7 +529,7 @@ if ($newsSource === 'dangcongsan') {
     <!-- Cột 2: Tiến trình kết nạp Đảng -->
     <div class="card fade-in">
       <div class="card-header">
-        <div class="card-title"><span class="icon">📈</span> Tiến trình Kết nạp Đảng</div>
+        <div class="card-title">Tiến trình Kết nạp Đảng</div>
       </div>
       <div class="card-body" style="padding-top:20px;">
         <div class="timeline-container">
@@ -607,12 +607,11 @@ if ($newsSource === 'dangcongsan') {
   <!-- Bảng thành viên cùng lớp -->
   <div class="card fade-in">
     <div class="card-header">
-      <div class="card-title"><span class="icon">🏛️</span> Danh sách thành viên cùng Lớp (<strong><?= e($myProfile['lop'] ?: '—') ?></strong>)</div>
+      <div class="card-title">Danh sách thành viên cùng Lớp (<strong><?= e($myProfile['lop'] ?: '—') ?></strong>)</div>
     </div>
     <div class="card-body" style="padding:0;">
       <?php if (empty($chiBoMembers)): ?>
       <div class="empty-state" style="padding: 30px 20px;">
-        <div class="icon">📂</div>
         <h3>Không có thành viên nào khác cùng Lớp</h3>
         <p>Hệ thống chưa ghi nhận thành viên chính thức nào khác trong lớp hoặc chi bộ của bạn.</p>
       </div>
@@ -659,7 +658,7 @@ if ($newsSource === 'dangcongsan') {
   <!-- DASHBOARD CHO NGƯỜI DÙNG THƯỜNG CHƯA ĐƯỢC DUYỆT -->
   <div class="card fade-in" style="margin-bottom: 24px;">
     <div class="card-header">
-      <div class="card-title"><span class="icon">📋</span> Danh sách hồ sơ đăng ký của bạn</div>
+      <div class="card-title">Danh sách hồ sơ đăng ký của bạn</div>
     </div>
     <div class="card-body" style="padding:0;">
       <?php if (empty($myRequests)): ?>
@@ -758,7 +757,7 @@ if ($newsSource === 'dangcongsan') {
     <!-- Biểu đồ tròn -->
     <div class="card fade-in">
       <div class="card-header">
-        <div class="card-title"><span class="icon">📊</span> Theo trạng thái</div>
+        <div class="card-title">Theo trạng thái</div>
       </div>
       <div class="card-body">
         <div class="chart-container" style="height:220px;">
@@ -770,7 +769,7 @@ if ($newsSource === 'dangcongsan') {
     <!-- Biểu đồ tháng -->
     <div class="card fade-in">
       <div class="card-header">
-        <div class="card-title"><span class="icon">📈</span> Đối tượng theo tháng</div>
+        <div class="card-title">Đối tượng theo tháng</div>
       </div>
       <div class="card-body">
         <div class="chart-container" style="height:220px;">
@@ -783,16 +782,15 @@ if ($newsSource === 'dangcongsan') {
   <!-- Danh sách gần đây -->
   <div class="card fade-in">
     <div class="card-header">
-      <div class="card-title"><span class="icon">🕒</span> Đối tượng mới cập nhật</div>
+      <div class="card-title">Đối tượng mới cập nhật</div>
       <a href="Quan_ly_doi_tuong/danh_sach.php" class="btn btn-outline btn-sm">Xem tất cả →</a>
     </div>
     <div class="card-body" style="padding:0;">
       <?php if (empty($recent)): ?>
       <div class="empty-state">
-        <div class="icon">📂</div>
         <h3>Chưa có dữ liệu đối tượng</h3>
         <p>Thêm đối tượng đầu tiên để bắt đầu quản lý</p>
-        <a href="Quan_ly_doi_tuong/them.php" class="btn btn-primary" style="margin-top:16px;">➕ Thêm ngay</a>
+        <a href="Quan_ly_doi_tuong/them.php" class="btn btn-primary" style="margin-top:16px;">Thêm ngay</a>
       </div>
       <?php else: ?>
       <div class="table-wrapper">
@@ -827,8 +825,8 @@ if ($newsSource === 'dangcongsan') {
               <td><?= $row['ngay_ket_nap'] ? formatDate($row['ngay_ket_nap']) : '<span style="color:var(--text2)">—</span>' ?></td>
               <td>
                 <div style="display:flex;gap:6px;">
-                  <a href="Quan_ly_doi_tuong/chi_tiet.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Xem">👁️</a>
-                  <a href="Quan_ly_doi_tuong/sua.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Sửa">✏️</a>
+                  <a href="Quan_ly_doi_tuong/chi_tiet.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Xem">Xem</a>
+                  <a href="Quan_ly_doi_tuong/sua.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Sửa">Sửa</a>
                 </div>
               </td>
             </tr>
@@ -844,7 +842,7 @@ if ($newsSource === 'dangcongsan') {
   <?php if (!empty($byChibo)): ?>
   <div class="card fade-in" style="margin-top:20px;">
     <div class="card-header">
-      <div class="card-title"><span class="icon">🏛️</span> Thống kê theo Chi bộ</div>
+      <div class="card-title">Thống kê theo Chi bộ</div>
     </div>
     <div class="card-body">
       <?php

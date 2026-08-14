@@ -50,7 +50,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
           $cls = $s==='Đã kết nạp'?'green':($s==='Đang theo dõi'?'gold':($s==='Đã chuyển'?'blue':'gray'));
         ?>
         <span class="badge badge-<?= $cls ?>"><?= e($s) ?></span>
-        <?php if ($dt['lop']): ?><span style="color:var(--text2);font-size:13px;">📚 <?= e($dt['lop']) ?></span><?php endif; ?>
+        <?php if ($dt['lop']): ?><span style="color:var(--text2);font-size:13px;"><?= e($dt['lop']) ?></span><?php endif; ?>
         <?php if ($dt['ma_gvsv']): ?><code style="color:var(--gold);font-size:12px;"><?= e($dt['ma_gvsv']) ?></code><?php endif; ?>
       </div>
     </div>
@@ -59,29 +59,27 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <!-- Dropdown Xuất phiếu chuẩn PDF -->
     <div style="position:relative;display:inline-block;">
       <select id="selectExportForm" class="btn btn-gold" style="padding-right:25px;cursor:pointer;" onchange="exportFormPDF(<?= $id ?>)">
-        <option value="">🖨️ Xuất Mẫu Phiếu PDF (Mẫu 2026)...</option>
-        <option value="1-knd">📄 Mẫu 1-KNĐ: Đơn xin vào Đảng</option>
-        <option value="2-knd">📜 Mẫu 2-KNĐ: Lý lịch người vào Đảng (2026)</option>
-        <option value="3-knd">📄 Mẫu 3-KNĐ: Giấy giới thiệu người vào Đảng</option>
-        <option value="4-knd">📄 Mẫu 4-KNĐ: NQ giới thiệu Đoàn viên vào Đảng</option>
-        <option value="4a-knd">📄 Mẫu 4a-KNĐ: NQ giới thiệu ĐV Công đoàn vào Đảng</option>
-        <option value="5-knd">📄 Mẫu 5-KNĐ: Tổng hợp ý kiến nhận xét</option>
-        <option value="mau-i">📜 Mẫu I: Giấy chứng nhận lớp Nhận thức Đảng</option>
-        <option value="mau-ii">📜 Mẫu II: Giấy chứng nhận Cấp ủy cấp</option>
+        <option value="">Xuất Mẫu Phiếu PDF (Mẫu 2026)...</option>
+        <option value="1-knd">Mẫu 1-KNĐ: Đơn xin vào Đảng</option>
+        <option value="2-knd">Mẫu 2-KNĐ: Lý lịch người vào Đảng (2026)</option>
+        <option value="3-knd">Mẫu 3-KNĐ: Giấy giới thiệu người vào Đảng</option>
+        <option value="4-knd">Mẫu 4-KNĐ: NQ giới thiệu Đoàn viên vào Đảng</option>
+        <option value="4a-knd">Mẫu 4a-KNĐ: NQ giới thiệu ĐV Công đoàn vào Đảng</option>
+        <option value="5-knd">Mẫu 5-KNĐ: Tổng hợp ý kiến nhận xét</option>
+        <option value="mau-i">Mẫu I: Giấy chứng nhận lớp Nhận thức Đảng</option>
+        <option value="mau-ii">Mẫu II: Giấy chứng nhận Cấp ủy cấp</option>
       </select>
     </div>
-    <a href="sua.php?id=<?= $id ?>" class="btn btn-primary">✏️ Sửa</a>
-    <button onclick="confirmDelete()" class="btn btn-danger">🗑️ Xóa</button>
+    <a href="sua.php?id=<?= $id ?>" class="btn btn-primary">Sửa</a>
+    <button onclick="confirmDelete()" class="btn btn-danger">Xóa</button>
     <a href="danh_sach.php" class="btn btn-outline">← Danh sách</a>
   </div>
 </div>
 
-
-
 <!-- Progress Timeline -->
 <div class="card fade-in" style="margin-bottom:20px;">
   <div class="card-header">
-    <div class="card-title"><span class="icon">🗺️</span> Tiến trình kết nạp</div>
+    <div class="card-title">Tiến trình kết nạp</div>
   </div>
   <div class="card-body">
     <div class="steps">
@@ -101,7 +99,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
         <div class="step-line"></div>
       </div>
       <div class="step-item <?= stepDone($dt['ngay_ket_nap'])?'done':($s==='Đã kết nạp'?'active':'') ?>">
-        <div class="step-circle">⭐</div>
+        <div class="step-circle">4</div>
         <div class="step-label">Kết nạp Đảng</div>
         <div class="step-line"></div>
       </div>
@@ -115,9 +113,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
 <!-- Tabs -->
 <div class="tabs">
-  <button class="tab-btn active" onclick="showTab('thongtin',this)">📋 Thông tin</button>
-  <button class="tab-btn" onclick="showTab('quytrinh',this)">📅 Quy trình</button>
-  <button class="tab-btn" onclick="showTab('lichsu',this)">🕒 Lịch sử</button>
+  <button class="tab-btn active" onclick="showTab('thongtin',this)">Thông tin</button>
+  <button class="tab-btn" onclick="showTab('quytrinh',this)">Quy trình</button>
+  <button class="tab-btn" onclick="showTab('lichsu',this)">Lịch sử</button>
 </div>
 
 <!-- Tab: Thông tin -->
@@ -125,7 +123,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
 
     <div class="card">
-      <div class="card-header"><div class="card-title"><span class="icon">👤</span> Thông tin cá nhân</div></div>
+      <div class="card-header"><div class="card-title">Thông tin cá nhân</div></div>
       <div class="card-body">
         <div class="info-grid">
           <?php
@@ -152,7 +150,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title"><span class="icon">🏛️</span> Chi bộ & Tổ chức</div></div>
+      <div class="card-header"><div class="card-title">Chi bộ & Tổ chức</div></div>
       <div class="card-body">
         <div class="info-grid">
           <?php
@@ -189,7 +187,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
 
     <div class="card">
-      <div class="card-header"><div class="card-title"><span class="icon">📚</span> Lớp Bồi dưỡng</div></div>
+      <div class="card-header"><div class="card-title">Lớp Bồi dưỡng</div></div>
       <div class="card-body">
         <div class="info-grid">
           <?php
@@ -217,7 +215,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title"><span class="icon">⭐</span> Kết nạp & Chuyển SH</div></div>
+      <div class="card-header"><div class="card-title">Kết nạp & Chuyển SH</div></div>
       <div class="card-body">
         <div class="info-grid">
           <?php
@@ -246,11 +244,10 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Tab: Lịch sử -->
 <div class="tab-content" id="tab-lichsu">
   <div class="card">
-    <div class="card-header"><div class="card-title"><span class="icon">🕒</span> Lịch sử thao tác</div></div>
+    <div class="card-header"><div class="card-title">Lịch sử thao tác</div></div>
     <div class="card-body">
       <?php if (empty($history)): ?>
       <div class="empty-state" style="padding:30px;">
-        <div class="icon">📄</div>
         <p>Chưa có lịch sử</p>
       </div>
       <?php else: ?>
@@ -271,11 +268,11 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
-    <div class="modal-title">🗑️ Xác nhận xóa</div>
+    <div class="modal-title">Xác nhận xóa</div>
     <div class="modal-body">Bạn có chắc muốn xóa hồ sơ của <strong><?= e($dt['ho_ten']) ?></strong>? Hành động này <strong style="color:var(--danger)">không thể hoàn tác</strong>.</div>
     <div class="modal-actions">
       <button onclick="document.getElementById('deleteModal').classList.remove('open')" class="btn btn-outline">Hủy</button>
-      <a href="xoa.php?id=<?= $id ?>" class="btn btn-danger">🗑️ Xóa</a>
+      <a href="xoa.php?id=<?= $id ?>" class="btn btn-danger">Xóa</a>
     </div>
   </div>
 </div>
@@ -283,15 +280,15 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Missing Fields Warning Modal -->
 <div class="modal-overlay" id="missingFieldsModal">
   <div class="modal" style="max-width:500px;">
-    <div class="modal-title" style="color:var(--gold);"><span class="icon">⚠️</span> Thiếu trường thông tin bắt buộc</div>
+    <div class="modal-title" style="color:var(--gold);">Thiếu trường thông tin bắt buộc</div>
     <div class="modal-body">
       <p style="margin-bottom:12px;">Hồ sơ của <strong><?= e($dt['ho_ten']) ?></strong> chưa đủ dữ liệu để xuất biểu mẫu PDF này. Vui lòng bổ sung các thông tin còn thiếu dưới đây:</p>
       <div id="missingFieldsList" style="background:rgba(217,119,6,0.1);border-left:4px solid var(--gold);padding:12px;border-radius:6px;margin-bottom:15px;"></div>
-      <p style="font-size:12px;color:var(--text2);">Bấm nút <strong>"✏️ Điền thông tin ngay"</strong> để chuyển tới trang cập nhật hồ sơ.</p>
+      <p style="font-size:12px;color:var(--text2);">Bấm nút <strong>"Điền thông tin ngay"</strong> để chuyển tới trang cập nhật hồ sơ.</p>
     </div>
     <div class="modal-actions">
       <button onclick="document.getElementById('missingFieldsModal').classList.remove('open')" class="btn btn-outline">Để sau</button>
-      <a href="sua.php?id=<?= $id ?>" class="btn btn-primary">✏️ Điền thông tin ngay</a>
+      <a href="sua.php?id=<?= $id ?>" class="btn btn-primary">Điền thông tin ngay</a>
     </div>
   </div>
 </div>
@@ -316,7 +313,6 @@ function exportFormPDF(id) {
   fetch(url)
     .then(async res => {
       if (res.ok) {
-        // Successful download
         const blob = await res.blob();
         const downloadUrl = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -330,7 +326,7 @@ function exportFormPDF(id) {
         if (data.error === 'missing_fields') {
           var html = '<ul style="margin:0;padding-left:20px;color:var(--danger);font-weight:600;">';
           data.missing_fields.forEach(f => {
-            html += `<li>❌ ${f}</li>`;
+            html += `<li>${f}</li>`;
           });
           html += '</ul>';
           document.getElementById('missingFieldsList').innerHTML = html;

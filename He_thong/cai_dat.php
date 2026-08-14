@@ -45,7 +45,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <div class="page-header">
   <div class="page-header-left">
     <div class="breadcrumb"><a href="<?= BASE_URL ?>index.php">Dashboard</a><span class="sep">›</span><span class="current">Cài đặt</span></div>
-    <div class="page-title">⚙️ Cài đặt <span>Hệ thống</span></div>
+    <div class="page-title">Cài đặt <span>Hệ thống</span></div>
   </div>
 </div>
 
@@ -53,7 +53,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
   <!-- Settings Form -->
   <div class="card fade-in">
-    <div class="card-header"><div class="card-title"><span class="icon">⚙️</span> Thông tin hệ thống</div></div>
+    <div class="card-header"><div class="card-title">Thông tin hệ thống</div></div>
     <div class="card-body">
       <form method="post">
         <div class="form-group" style="margin-bottom:16px;">
@@ -74,7 +74,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
         </div>
 
         <div class="divider"></div>
-        <div class="form-section-title" style="margin:16px 0 12px;">🔐 Đổi mật khẩu (để trống nếu không đổi)</div>
+        <div class="form-section-title" style="margin:16px 0 12px;">Đổi mật khẩu (để trống nếu không đổi)</div>
         <div class="form-group" style="margin-bottom:14px;">
           <label class="form-label">Mật khẩu mới</label>
           <input type="password" name="new_pass" class="form-control" placeholder="Nhập mật khẩu mới...">
@@ -84,7 +84,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
           <input type="password" name="confirm_pass" class="form-control" placeholder="Nhập lại mật khẩu...">
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">💾 Lưu cài đặt</button>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Lưu cài đặt</button>
       </form>
     </div>
   </div>
@@ -93,14 +93,14 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <div style="display:flex;flex-direction:column;gap:20px;">
 
     <div class="card fade-in">
-      <div class="card-header"><div class="card-title"><span class="icon">🗄️</span> Thống kê Database</div></div>
+      <div class="card-header"><div class="card-title">Thống kê Database</div></div>
       <div class="card-body">
         <?php
         $dbStats = [
-          ['👥 Đối tượng',  $totalDT, 'red'],
-          ['🏛️ Chi bộ',     $totalCB, 'blue'],
-          ['👤 Đảng viên',  $totalDV, 'gold'],
-          ['🕒 Lịch sử',    $totalLS, 'green'],
+          ['Đối tượng',  $totalDT, 'red'],
+          ['Chi bộ',     $totalCB, 'blue'],
+          ['Đảng viên',  $totalDV, 'gold'],
+          ['Lịch sử',    $totalLS, 'green'],
         ];
         foreach ($dbStats as $s): ?>
         <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">
@@ -117,7 +117,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     </div>
 
     <div class="card fade-in">
-      <div class="card-header"><div class="card-title"><span class="icon">ℹ️</span> Thông tin hệ thống</div></div>
+      <div class="card-header"><div class="card-title">Thông tin hệ thống</div></div>
       <div class="card-body">
         <?php
         $sysInfo = [
@@ -137,11 +137,11 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     </div>
 
     <div class="card fade-in">
-      <div class="card-header"><div class="card-title"><span class="icon">🔧</span> Công cụ</div></div>
+      <div class="card-header"><div class="card-title">Công cụ</div></div>
       <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
-        <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold" style="justify-content:center;">📤 Xuất toàn bộ dữ liệu</a>
-        <a href="<?= BASE_URL ?>Thong_ke_bao_cao/import_excel.php" class="btn btn-outline" style="justify-content:center;">📥 Import Excel</a>
-        <a href="<?= BASE_URL ?>setup.php" class="btn btn-outline" style="justify-content:center;">🔄 Xem Setup DB</a>
+        <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold" style="justify-content:center;">Xuất toàn bộ dữ liệu</a>
+        <a href="<?= BASE_URL ?>Thong_ke_bao_cao/import_excel.php" class="btn btn-outline" style="justify-content:center;">Import Excel</a>
+        <a href="<?= BASE_URL ?>setup.php" class="btn btn-outline" style="justify-content:center;">Xem Setup DB</a>
       </div>
     </div>
   </div>

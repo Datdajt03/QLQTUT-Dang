@@ -93,13 +93,13 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     .status-warning { background: #78350f; color: #fde047; }
 
     .analysis-box {
-        font-family: monospace;
+        font-family: inherit;
         background: #0f172a;
         padding: 15px;
         border-radius: 8px;
         border: 1px solid var(--border);
-        white-space: pre-wrap;
-        line-height: 1.6;
+        white-space: normal;
+        line-height: 1.5;
         min-height: 250px;
     }
 
@@ -150,10 +150,10 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <a href="<?= BASE_URL ?>index.php">Dashboard</a><span class="sep">›</span>
       <span class="current">Edge AI Kiểm tra Hồ sơ</span>
     </div>
-    <div class="page-title">⚡ Edge AI <span>Quét & Kiểm Tra Hồ Sơ Tự Động</span></div>
+    <div class="page-title">Edge AI <span>Quét & Kiểm Tra Hồ Sơ Theo Mẫu Phiếu Tự Động</span></div>
   </div>
   <div style="display:flex;gap:10px;">
-    <a href="<?= BASE_URL ?>index.php" class="btn btn-outline">🏠 Quay lại Trang chủ</a>
+    <a href="<?= BASE_URL ?>index.php" class="btn btn-outline">Quay lại Trang chủ</a>
   </div>
 </div>
 
@@ -161,9 +161,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <div class="grid-layout">
         <!-- Panel Tải Lên Hồ Sơ -->
         <div class="card-ai">
-            <h3 style="margin-bottom:12px;color:var(--accent-color);">📁 Danh Mục Hồ Sơ Minh Chứng</h3>
+            <h3 style="margin-bottom:12px;color:var(--accent-color);">Danh Mục Hồ Sơ Minh Chứng</h3>
             <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
-                <p>📄 Kéo & thả tài liệu vào đây hoặc click để chọn</p>
+                <p>Kéo & thả tài liệu vào đây hoặc click để chọn</p>
                 <small style="color: var(--text-sub)">(Hỗ trợ PDF, PNG, JPG, WebP - Tối đa 10MB/file - Bản tự nhận xét, Certificate, Minh chứng...)</small>
                 <input type="file" id="fileInput" class="file-input" multiple accept="image/*,.pdf">
             </div>
@@ -174,21 +174,33 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
             <div class="file-list" id="fileList"></div>
 
-            <button class="btn-ai" id="btnAnalyze" onclick="startEdgeAnalysis()" disabled>⚡ Khởi Động AI Kiểm Tra Hồ Sơ</button>
+            <div style="margin-top:15px; padding:12px; background:rgba(15,23,42,0.6); border:1px solid var(--border); border-radius:8px;">
+                <div style="font-size:12px; font-weight:bold; color:var(--accent-color); margin-bottom:6px;">5 Mô Hình (Models) Phiếu/Hồ Sơ Được Edge AI Kiểm Tra:</div>
+                <div style="display:grid; grid-template-columns:1fr; gap:4px; font-size:11px; color:var(--text-sub);">
+                    <div><strong>1. Bản tự nhận xét / Tự kiểm điểm:</strong> Ưu/khuyết điểm, phương hướng, chữ ký</div>
+                    <div><strong>2. Giấy chứng nhận bồi dưỡng:</strong> Đơn vị cấp, xếp loại, số QĐ, ngày cấp</div>
+                    <div><strong>3. Sơ yếu lý lịch / CCCD / Thẻ SV:</strong> Họ tên, ngày sinh, quê quán, mã SV</div>
+                    <div><strong>4. Phiếu đánh giá chất lượng đoàn viên:</strong> Chi đoàn, xếp loại, xác nhận Bí thư</div>
+                    <div><strong>5. Minh chứng hoạt động phong trào:</strong> Tên hoạt động, đơn vị khen thưởng, ngày tháng</div>
+                </div>
+            </div>
+
+            <button class="btn-ai" id="btnAnalyze" onclick="startEdgeAnalysis()" disabled>Khởi Động AI Kiểm Tra Hồ Sơ</button>
         </div>
 
         <!-- Panel Kết Quả Phân Tích Edge AI -->
         <div class="card-ai">
-            <h3 style="margin-bottom:12px;color:var(--accent-color);">🤖 Kết Quả Phân Tích Edge AI</h3>
+            <h3 style="margin-bottom:12px;color:var(--accent-color);">Kết Quả Phân Tích Edge AI Theo Mẫu Phiếu</h3>
             <div class="analysis-box" id="analysisResult">
-👉 Vui lòng tải lên tài liệu và nhấn "Khởi Động AI Kiểm Tra Hồ Sơ"...
+Vui lòng tải lên tài liệu và nhấn "Khởi Động AI Kiểm Tra Hồ Sơ"...
             </div>
 
-            <button class="btn-ai" id="btnSave" style="background: var(--success); display: none;" onclick="saveCheckResults()">💾 Lưu Kết Quả Vào Hệ Thống</button>
+            <button class="btn-ai" id="btnSave" style="background: var(--success); display: none;" onclick="saveCheckResults()">Lưu Kết Quả Vào Hệ Thống</button>
         </div>
     </div>
 </div>
 
+<script src="<?= BASE_URL ?>AI_Module/document_inspector.js"></script>
 <script src="edge_ai_ocr.js"></script>
 
 <?php require_once dirname(__DIR__) . '/Giao_dien/footer.php'; ?>

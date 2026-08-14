@@ -1,46 +1,117 @@
 // Quan_ly_doi_tuong/edge_ai_ocr.js
+// Edge AI Engine: Kết nối với Module DocumentFieldInspector để Soi Thẩm Định Trường Thông Tin Thiếu
 
-// Danh mục hồ sơ cần kiểm tra
-const REQUIRED_DOCUMENTS = [
-    { key: 'ban_tu_nhan_xet', name: 'Bản tự nhận xét', keywords: ['bản tự nhận xét', 'nhận xét cá nhân', 'tự đánh giá', 'ưu điểm', 'khuyết điểm'] },
-    { key: 'giay_chung_nhan', name: 'Giấy chứng nhận', keywords: ['giấy chứng nhận', 'bồi dưỡng nhận thức', 'chứng nhận học tập', 'đã hoàn thành khóa học'] },
-    { key: 'minh_chung_hoat_dong', name: 'Minh chứng hoạt động', keywords: ['giấy khen', 'chứng nhận tham gia', 'hiến máu', 'mùa hè xanh', 'tình nguyện', 'hoạt động đoàn'] },
-    { key: 'phieu_danh_gia', name: 'Phiếu đánh giá', keywords: ['phiếu đánh giá', 'xếp loại đoàn viên', 'phân loại chất lượng'] },
-    { key: 'ho_so_ca_nhan', name: 'Hồ sơ cá nhân', keywords: ['sơ yếu lý lịch', 'căn cước công dân', 'thẻ sinh viên', 'nguyễn văn', 'mã sinh viên'] }
+// 5 Cấu trúc Models tiêu chuẩn cho Hồ sơ Kết nạp Đảng
+const DOCUMENT_MODELS = [
+    {
+        key: 'ban_tu_nhan_xet',
+        name: 'Bản tự nhận xét / Tự kiểm điểm cá nhân',
+        label: '[Bản tự nhận xét]',
+        typeKeywords: ['bản tự nhận xét', 'bản kiểm điểm', 'tự đánh giá', 'tự nhận xét', 'nhận xét cá nhân', 'bản tự kiểm điểm'],
+        requiredFields: [
+            { fieldKey: 'ho_ten', fieldName: 'Họ và tên người nhận xét', keywords: ['họ và tên', 'tôi tên là', 'họ tên'] },
+            { fieldKey: 'ngay_sinh', fieldName: 'Ngày tháng năm sinh', keywords: ['ngày sinh', 'sinh ngày'] },
+            { fieldKey: 'uu_diem', fieldName: 'Ưu điểm / Kết quả đạt được', keywords: ['ưu điểm', 'thành tích', 'kết quả công tác', 'ưu điểm nổi bật', 'phẩm chất chính trị'] },
+            { fieldKey: 'khuyet_diem', fieldName: 'Khuyết điểm / Hạn chế', keywords: ['khuyết điểm', 'hạn chế', 'tồn tại', 'nhược điểm'] },
+            { fieldKey: 'phuong_huong', fieldName: 'Phương hướng phấn đấu', keywords: ['phương hướng', 'hướng phấn đấu', 'giải pháp khắc phục', 'cam kết'] },
+            { fieldKey: 'ngay_thang_chu_ky', fieldName: 'Ngày tháng & Chữ ký xác nhận', keywords: ['ngày tháng năm', 'người tự nhận xét', 'kí tên', 'ký tên', 'chữ ký'] }
+        ]
+    },
+    {
+        key: 'giay_chung_nhan',
+        name: 'Giấy chứng nhận bồi dưỡng nhận thức về Đảng',
+        label: '[Giấy chứng nhận]',
+        typeKeywords: ['giấy chứng nhận', 'chứng nhận bồi dưỡng', 'bồi dưỡng nhận thức', 'lớp cảm tình đảng', 'nhận thức về đảng', 'chứng chỉ nhận thức'],
+        requiredFields: [
+            { fieldKey: 'ten_don_vi', fieldName: 'Đơn vị cấp (ĐH Tây Bắc / Trung tâm chính trị)', keywords: ['đại học tây bắc', 'trung tâm chính trị', 'đảng ủy', 'ban chấp hành'] },
+            { fieldKey: 'ho_ten', fieldName: 'Họ và tên học viên', keywords: ['họ và tên', 'chứng nhận đồng chí', 'trao cho', 'học viên'] },
+            { fieldKey: 'ngay_sinh', fieldName: 'Ngày sinh', keywords: ['sinh ngày', 'ngày sinh'] },
+            { fieldKey: 'xep_loai', fieldName: 'Kết quả xếp loại (Giỏi/Khá/TB)', keywords: ['xếp loại', 'loại giỏi', 'loại khá', 'loại xuất sắc', 'đạt loại', 'kết quả học tập'] },
+            { fieldKey: 'so_qd_cc', fieldName: 'Số quyết định / Số chứng nhận', keywords: ['số:', 'số quyết định', 'số cn', 'số sổ'] },
+            { fieldKey: 'ngay_cap', fieldName: 'Ngày tháng ký cấp chứng nhận', keywords: ['ngày cấp', 'ngày tháng năm', 'ký ngày'] }
+        ]
+    },
+    {
+        key: 'ho_so_ca_nhan',
+        name: 'Sơ yếu lý lịch / CCCD / Thẻ sinh viên',
+        label: '[Sơ yếu lý lịch]',
+        typeKeywords: ['sơ yếu lý lịch', 'lý lịch người xin vào đảng', 'căn cước công dân', 'thẻ sinh viên', 'thông tin cá nhân', 'lý lịch cá nhân'],
+        requiredFields: [
+            { fieldKey: 'ho_ten', fieldName: 'Họ và tên', keywords: ['họ và tên', 'họ tên'] },
+            { fieldKey: 'ngay_sinh', fieldName: 'Ngày tháng năm sinh', keywords: ['ngày sinh', 'sinh ngày'] },
+            { fieldKey: 'que_quan', fieldName: 'Quê quán / Nguyên quán', keywords: ['quê quán', 'nguyên quán', 'thường trú'] },
+            { fieldKey: 'ma_sv', fieldName: 'Mã sinh viên / Số CCCD', keywords: ['mã sinh viên', 'mssv', 'mã sv', 'số cccd', 'số cmnd'] },
+            { fieldKey: 'lop_don_vi', fieldName: 'Lớp sinh hoạt / Khoa', keywords: ['lớp', 'khoa', 'chi bộ', 'đơn vị'] }
+        ]
+    },
+    {
+        key: 'phieu_danh_gia',
+        name: 'Phiếu đánh giá chất lượng đoàn viên / Giấy giới thiệu',
+        label: '[Phiếu đánh giá]',
+        typeKeywords: ['phiếu đánh giá', 'xếp loại đoàn viên', 'phân loại chất lượng', 'giấy giới thiệu quần chúng', 'đoàn thanh niên', 'nhận xét của đoàn thanh niên'],
+        requiredFields: [
+            { fieldKey: 'ten_doan_vien', fieldName: 'Họ tên đoàn viên / Quần chúng', keywords: ['đoàn viên', 'họ và tên', 'quần chúng', 'tên tôi là'] },
+            { fieldKey: 'chi_doan', fieldName: 'Tên Chi đoàn / Liên chi đoàn', keywords: ['chi đoàn', 'đoàn cơ sở', 'liên chi đoàn'] },
+            { fieldKey: 'ket_qua_danh_gia', fieldName: 'Xếp loại đoàn viên (Xuất sắc/Tốt)', keywords: ['hoàn thành xuất sắc', 'hoàn thành tốt', 'đoàn viên ưu tú', 'xếp loại'] },
+            { fieldKey: 'nguoi_gioi_thieu', fieldName: 'Bí thư Chi đoàn / Ban chấp hành xác nhận', keywords: ['bí thư', 't/m ban chấp hành', 'ký tên', 'đại diện', 'xác nhận'] }
+        ]
+    },
+    {
+        key: 'minh_chung_hoat_dong',
+        name: 'Minh chứng hoạt động phong trào / Giấy khen',
+        label: '[Minh chứng phong trào]',
+        typeKeywords: ['giấy khen', 'bằng khen', 'chứng nhận tham gia', 'hiến máu', 'mùa hè xanh', 'tình nguyện', 'hoạt động phong trào', 'thành tích'],
+        requiredFields: [
+            { fieldKey: 'ten_hoat_dong', fieldName: 'Tên hoạt động / Phong trào tham gia', keywords: ['hiến máu', 'tình nguyện', 'mùa hè xanh', 'hoạt động', 'thành tích', 'đã tham gia'] },
+            { fieldKey: 'ho_ten_nguoi_nhan', fieldName: 'Họ và tên cá nhân nhận', keywords: ['khen thưởng', 'trao tặng', 'đồng chí', 'sinh viên', 'họ và tên'] },
+            { fieldKey: 'don_vi_khen_thuong', fieldName: 'Đơn vị khen thưởng / Chứng nhận', keywords: ['ban chấp hành', 'hội sinh viên', 'đoàn trường', 'giám đốc', 'hiệu trưởng'] },
+            { fieldKey: 'thoi_gian_cap', fieldName: 'Thời gian thực hiện / Cấp giấy', keywords: ['năm học', 'ngày tháng năm', 'tháng'] }
+        ]
+    }
 ];
 
 let uploadedFiles = [];
 let analysisOutputData = null;
 
-// Khởi tạo thư viện PDF.js Worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+// Khởi tạo Module Thẩm định chuyên dụng
+const inspectorEngine = (typeof DocumentFieldInspector !== 'undefined')
+    ? new DocumentFieldInspector(DOCUMENT_MODELS)
+    : null;
 
-// Xử lý sự kiện Kéo Thả File
+// Khởi tạo PDF.js Worker
+if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+}
+
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
 
-fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+if (fileInput) {
+    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+}
 
-dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.style.background = 'rgba(56, 189, 248, 0.2)';
-});
+if (dropZone) {
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.style.background = 'rgba(56, 189, 248, 0.2)';
+    });
 
-dropZone.addEventListener('dragleave', () => {
-    dropZone.style.background = 'rgba(56, 189, 248, 0.05)';
-});
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.style.background = 'rgba(56, 189, 248, 0.05)';
+    });
 
-dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.style.background = 'rgba(56, 189, 248, 0.05)';
-    handleFiles(e.dataTransfer.files);
-});
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.background = 'rgba(56, 189, 248, 0.05)';
+        handleFiles(e.dataTransfer.files);
+    });
+}
 
 function handleFiles(files) {
     const MAX_SIZE = 10 * 1024 * 1024; // 10MB
     for (let file of files) {
         if (file.size > MAX_SIZE) {
-            alert(`⚠️ File "${file.name}" vượt quá dung lượng cho phép (Tối đa 10MB).`);
+            alert(`Thông báo: Tệp "${file.name}" vượt quá dung lượng cho phép (Tối đa 10MB).`);
             continue;
         }
         if (!uploadedFiles.some(f => f.name === file.name)) {
@@ -49,18 +120,22 @@ function handleFiles(files) {
                 name: file.name,
                 size: file.size,
                 status: 'pending',
-                extractedText: ''
+                extractedText: '',
+                matchedModel: null,
+                inspectionResult: null
             });
         }
     }
     renderFileList();
-    document.getElementById('btnAnalyze').disabled = uploadedFiles.length === 0;
+    const btn = document.getElementById('btnAnalyze');
+    if (btn) btn.disabled = uploadedFiles.length === 0;
 }
 
 function renderFileList() {
     const list = document.getElementById('fileList');
+    if (!list) return;
     list.innerHTML = '';
-    uploadedFiles.forEach((item, index) => {
+    uploadedFiles.forEach((item) => {
         const div = document.createElement('div');
         div.className = 'file-item';
         let badgeClass = 'status-pending';
@@ -68,33 +143,42 @@ function renderFileList() {
 
         if (item.status === 'processing') {
             badgeClass = 'status-processing';
-            badgeText = '⚡ Edge AI đang đọc OCR...';
+            badgeText = 'Đang quét Edge AI...';
         } else if (item.status === 'success') {
             badgeClass = 'status-success';
-            badgeText = '✓ Đã trích xuất';
+            badgeText = item.matchedModel ? `Đã nhận diện: ${item.matchedModel.name}` : 'Đã quét OCR';
         }
 
         div.innerHTML = `
-            <span>📄 ${item.name}</span>
+            <span>[Tệp] ${item.name} ${item.matchedModel ? `<small style="color:var(--accent-color);">(${item.matchedModel.label})</small>` : ''}</span>
             <span class="status-badge ${badgeClass}">${badgeText}</span>
         `;
         list.appendChild(div);
     });
 }
 
-// Bắt đầu quá trình OCR & Phân tích bằng Edge AI
 async function startEdgeAnalysis() {
     const btnAnalyze = document.getElementById('btnAnalyze');
     const resultBox = document.getElementById('analysisResult');
     const progressContainer = document.getElementById('progressContainer');
     const progressBar = document.getElementById('progressBar');
 
-    btnAnalyze.disabled = true;
-    progressContainer.style.display = 'block';
-    resultBox.innerHTML = '⚡ Đang kích hoạt Edge AI Engine để OCR trực tiếp trên trình duyệt...\n';
+    if (btnAnalyze) btnAnalyze.disabled = true;
+    if (progressContainer) progressContainer.style.display = 'block';
+    if (resultBox) {
+        resultBox.innerHTML = '<div style="color:var(--accent-color);font-weight:bold;">Đang kích hoạt Module Thẩm định DocumentFieldInspector & Edge AI Engine...</div>';
+    }
 
     let completed = 0;
-    const worker = await Tesseract.createWorker('vie'); // Ngôn ngữ Tiếng Việt
+    let worker = null;
+
+    try {
+        if (typeof Tesseract !== 'undefined') {
+            worker = await Tesseract.createWorker('vie');
+        }
+    } catch (e) {
+        console.warn("Could not create Tesseract worker:", e);
+    }
 
     for (let i = 0; i < uploadedFiles.length; i++) {
         const item = uploadedFiles[i];
@@ -104,29 +188,34 @@ async function startEdgeAnalysis() {
         try {
             if (item.file.type === 'application/pdf') {
                 item.extractedText = await extractTextFromPDF(item.file);
-            } else {
+            } else if (worker) {
                 const ret = await worker.recognize(item.file);
-                item.extractedText = ret.data.text;
+                item.extractedText = ret.data.text || '';
+            } else {
+                item.extractedText = item.name;
             }
             item.status = 'success';
         } catch (err) {
-            console.error('OCR Error:', err);
-            item.extractedText = item.name.toLowerCase(); // Fallback to filename
+            console.error('OCR Error for file', item.name, err);
+            item.extractedText = item.name.toLowerCase();
             item.status = 'success';
         }
 
         completed++;
-        progressBar.style.width = `${(completed / uploadedFiles.length) * 100}%`;
+        if (progressBar) progressBar.style.width = `${(completed / uploadedFiles.length) * 100}%`;
         renderFileList();
     }
 
-    await worker.terminate();
+    if (worker) {
+        try {
+            await worker.terminate();
+        } catch(e){}
+    }
 
-    // Tiến hành Phân tích Rule Engine & Tổng hợp kết quả
-    runRuleEngineAnalysis();
+    // Chạy Module Thẩm định chuyên dụng kiểm tra trường thiếu
+    runEdgeModelAnalysis();
 }
 
-// Trích xuất văn bản từ file PDF client-side
 async function extractTextFromPDF(file) {
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -141,81 +230,162 @@ async function extractTextFromPDF(file) {
     return fullText;
 }
 
-// Phân tích Rule Engine kiểm tra checklist hồ sơ
-function runRuleEngineAnalysis() {
+// Báo cáo chi tiết các trường thông tin khuyết dựa trên Module DocumentFieldInspector
+function runEdgeModelAnalysis() {
     const resultBox = document.getElementById('analysisResult');
-    let allExtractedContent = uploadedFiles.map(f => f.extractedText.toLowerCase() + " " + f.name.toLowerCase()).join(' ');
 
-    let docCheck = {
-        ban_tu_nhan_xet: false,
-        giay_chung_nhan: false,
-        minh_chung_hoat_dong: false,
-        phieu_danh_gia: false,
-        ho_so_ca_nhan: false
-    };
+    if (!inspectorEngine) {
+        resultBox.innerHTML = '<div style="color:#ef4444;">Lỗi: Chưa nạp được Module DocumentFieldInspector.</div>';
+        return;
+    }
 
-    let missingDetails = [];
-    let suggestions = [];
+    // Thẩm định tổng thể các tệp theo 5 Models
+    const portfolioReport = inspectorEngine.inspectPortfolio(uploadedFiles);
+    const map = portfolioReport.modelStatusMap;
 
-    // Kiểm tra sự xuất hiện của các loại hồ sơ dựa vào keyword
-    REQUIRED_DOCUMENTS.forEach(doc => {
-        const found = doc.keywords.some(kw => allExtractedContent.includes(kw));
-        if (found) {
-            docCheck[doc.key] = true;
-        } else {
-            missingDetails.push(`⚠ Thiếu tài liệu hoặc minh chứng: "${doc.name}"`);
-            suggestions.push(`→ Bổ sung file ${doc.name}`);
+    let html = `
+        <div style="font-family: inherit; color: var(--text-main);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 15px;">
+                <h4 style="margin:0; color: var(--accent-color); font-size:16px;">KẾT QUẢ THẨM ĐỊNH TRƯỜNG THÔNG TIN THIẾU CỦA MODULE DOCUMENT INSPECTOR</h4>
+                <span class="status-badge ${portfolioReport.isFullyValid ? 'status-success' : 'status-warning'}">
+                    ${portfolioReport.isFullyValid ? 'HỒ SƠ ĐẦY ĐỦ 100%' : 'CẢNH BÁO: CẦN BỔ SUNG TRƯỜNG THIẾU'}
+                </span>
+            </div>
+
+            <!-- DANH SÁCH 5 MẪU PHIẾU VÀ CHI TIẾT TRƯỜNG CÓ/THIẾU -->
+            <div style="margin-bottom: 18px;">
+                <strong style="color:var(--text-main); font-size:14px;">Báo cáo Chi tiết Trường Thông tin theo từng Mẫu Phiếu:</strong>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 10px;">
+    `;
+
+    DOCUMENT_MODELS.forEach(m => {
+        const entry = map[m.key];
+        let color = '#ef4444';
+        let bg = 'rgba(239, 68, 68, 0.1)';
+        let statusBadge = '<span style="color:#ef4444; font-weight:bold;">Chưa nộp tệp phiếu này</span>';
+
+        if (entry.status === 'VALID') {
+            color = '#22c55e';
+            bg = 'rgba(34, 197, 94, 0.1)';
+            statusBadge = '<span style="color:#22c55e; font-weight:bold;">Đã nộp (Đầy đủ 100%)</span>';
+        } else if (entry.status === 'INCOMPLETE') {
+            color = '#f59e0b';
+            bg = 'rgba(245, 158, 11, 0.1)';
+            statusBadge = `<span style="color:#f59e0b; font-weight:bold;">CẢNH BÁO THIẾU ${entry.missingFields.length} TRƯỜNG THÔNG TIN</span>`;
+        }
+
+        html += `
+            <div style="background:${bg}; border:1px solid ${color}; border-radius:8px; padding:12px; font-size:12px;">
+                <div style="font-weight:bold; color:${color}; font-size:13px; margin-bottom:6px;">${m.name}</div>
+                <div style="margin-bottom:8px; color:var(--text-sub);">${statusBadge}</div>
+
+                <div style="border-top:1px dashed ${color}; padding-top:6px; margin-top:6px;">
+                    <div style="font-weight:bold; margin-bottom:4px; color:var(--text-main);">Danh sách Trường Thông tin:</div>
+                    <ul style="margin:0; padding-left:16px; color:var(--text-main);">
+        `;
+
+        // Liệt kê các trường ĐÃ CÓ
+        entry.foundFields.forEach(ff => {
+            html += `<li style="color:#22c55e; margin-bottom:3px;">
+                <strong>[ĐÃ CÓ]</strong> ${ff.fieldName}
+                ${ff.extractedValue ? `<div style="color:var(--text-sub); font-size:11px;">➜ Dữ liệu: <em>"${ff.extractedValue}"</em></div>` : ''}
+            </li>`;
+        });
+
+        // Liệt kê nổi bật các trường BỊ THIẾU (MÀU ĐỎ CẢNH BÁO)
+        entry.missingFields.forEach(mf => {
+            html += `<li style="color:#ef4444; font-weight:bold; margin-bottom:3px;">
+                <strong>[CẢNH BÁO THIẾU]</strong> ${mf.fieldName}
+            </li>`;
+        });
+
+        html += `
+                    </ul>
+                </div>
+            </div>
+        `;
+    });
+
+    html += `
+                </div>
+            </div>
+    `;
+
+    // CẢNH BÁO TỔNG HỢP CÁC TRƯỜNG BỊ THIẾU TRONG TOÀN BỘ TỆP
+    let allMissingAlerts = [];
+    DOCUMENT_MODELS.forEach(m => {
+        const entry = map[m.key];
+        if (entry.status === 'MISSING') {
+            allMissingAlerts.push(`Mẫu phiếu <strong>${m.name}</strong>: ❌ Chưa nộp tệp phiếu.`);
+        } else if (entry.status === 'INCOMPLETE') {
+            const missingNames = entry.missingFields.map(f => f.fieldName).join(', ');
+            allMissingAlerts.push(`Mẫu phiếu <strong>${m.name}</strong>: ⚠️ Thiếu các trường [<strong>${missingNames}</strong>].`);
         }
     });
 
-    // Kiểm tra trích xuất thông tin cá nhân cơ bản
-    let studentNameFound = allExtractedContent.match(/(họ và tên|họ tên)[:\s]+([a-zà-ỹ\s]+)/i);
-    let studentIdFound = allExtractedContent.match(/(mssv|mã sinh viên|mã số sv)[:\s]+([a-z0-9]+)/i);
-
-    let outputText = "🤖 **KẾT QUẢ KIỂM TRA HỒ SƠ (EDGE AI)**\n";
-    outputText += "────────────────────────────────────────\n\n";
-
-    outputText += (docCheck.ho_so_ca_nhan ? "✓ Thông tin cá nhân\n" : "⚠ Chưa xác nhận thông tin cá nhân\n");
-    outputText += (docCheck.giay_chung_nhan ? "✓ Quá trình học tập (Đã có Giấy chứng nhận)\n" : "⚠ Thiếu Giấy chứng nhận học tập\n");
-    outputText += (docCheck.phieu_danh_gia ? "✓ Hoạt động đoàn thể & Đánh giá\n" : "⚠ Thiếu Phiếu đánh giá đoàn viên\n");
-    outputText += (docCheck.minh_chung_hoat_dong ? "✓ Minh chứng hoạt động\n" : "⚠ Chưa phát hiện file Minh chứng hoạt động\n");
-
-    if (missingDetails.length > 0) {
-        outputText += "\n📌 **CÁC CHI TIẾT CẦN LƯU Ý:**\n";
-        missingDetails.forEach(m => outputText += `${m}\n`);
+    if (allMissingAlerts.length > 0) {
+        html += `
+            <div style="background: rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
+                <strong style="color: #fca5a5;">DANH SÁCH THÔNG TIN CẦN BỔ SUNG NGAY:</strong>
+                <ul style="margin: 6px 0 0 18px; padding: 0; color: #fca5a5; font-size: 13px;">
+                    ${allMissingAlerts.map(alert => `<li>${alert}</li>`).join('')}
+                </ul>
+            </div>
+        `;
     }
 
-    if (suggestions.length > 0) {
-        outputText += "\n💡 **ĐỀ XUẤT KHẮC PHỤC:**\n";
-        suggestions.forEach(s => outputText += `${s}\n`);
-    } else {
-        outputText += "\n🎉 **HỒ SƠ HOÀN TOÀN HỢP LỆ! BẠN CÓ THỂ NỘP BÀI.**\n";
-    }
+    // ĐỀ XUẤT HƯỚNG BỔ SUNG
+    html += `
+        <div style="background: rgba(56, 189, 248, 0.1); border-left: 4px solid var(--accent-color); padding: 12px; border-radius: 6px;">
+            <strong style="color: var(--accent-color);">HƯỚNG DẪN KHẮC PHỤC:</strong>
+            ${!portfolioReport.isFullyValid ? `
+                <div style="color: #bae6fd; font-size: 13px; margin-top: 4px;">Vui lòng điền bổ sung đầy đủ các trường bị cảnh báo đỏ trong các tệp trên trước khi lưu hồ sơ chính thức.</div>
+            ` : `
+                <div style="color: #86efac; font-size: 13px; margin-top: 4px;">Chúc mừng! Hồ sơ hoàn toàn đầy đủ 100% tất cả các trường thông tin chi tiết.</div>
+            `}
+        </div>
+    `;
 
-    resultBox.innerText = outputText;
+    html += `</div>`;
 
-    // Lưu data cấu trúc để gửi về API
+    resultBox.innerHTML = html;
+
+    // Chuẩn bị rawSummary cho DB
+    let rawSummaryText = `BÁO CÁO MODULE DOCUMENT FIELD INSPECTOR\n`;
+    rawSummaryText += `────────────────────────────────────────\n`;
+    DOCUMENT_MODELS.forEach(m => {
+        const entry = map[m.key];
+        if (entry.status === 'VALID') {
+            rawSummaryText += `[Thành công] ${m.name}: Đầy đủ 100%\n`;
+        } else if (entry.status === 'INCOMPLETE') {
+            const missingNames = entry.missingFields.map(f => f.fieldName).join(', ');
+            rawSummaryText += `[Cảnh báo Thiếu] ${m.name}: Khuyết [${missingNames}]\n`;
+        } else {
+            rawSummaryText += `[Thiếu tệp] ${m.name}: Chưa nộp tệp\n`;
+        }
+    });
+
     analysisOutputData = {
-        isComplete: missingDetails.length === 0,
-        checks: docCheck,
-        missing: missingDetails,
-        suggestions: suggestions,
-        rawSummary: outputText
+        isComplete: portfolioReport.isFullyValid,
+        missingModelCount: portfolioReport.missingModelCount,
+        incompleteModelCount: portfolioReport.incompleteModelCount,
+        rawSummary: rawSummaryText
     };
 
-    document.getElementById('btnSave').style.display = 'block';
-    document.getElementById('btnAnalyze').disabled = false;
+    const btnSave = document.getElementById('btnSave');
+    const btnAnalyze = document.getElementById('btnAnalyze');
+
+    if (btnSave) btnSave.style.display = 'block';
+    if (btnAnalyze) btnAnalyze.disabled = false;
 }
 
-// Lưu kết quả kiểm tra và Upload file thực tế vào Backend PHP
 async function saveCheckResults() {
     if (!analysisOutputData) return;
 
     const formData = new FormData();
     formData.append('analysisData', JSON.stringify(analysisOutputData));
 
-    // Đính kèm các file thực tế vào FormData
-    uploadedFiles.forEach((item, idx) => {
+    uploadedFiles.forEach((item) => {
         formData.append('files[]', item.file);
     });
 
@@ -226,12 +396,12 @@ async function saveCheckResults() {
         });
         const resData = await response.json();
         if (resData.success) {
-            alert('✅ ' + resData.message);
+            alert('Thông báo: ' + resData.message);
         } else {
-            alert('❌ Có lỗi xảy ra: ' + resData.message);
+            alert('Lỗi: ' + resData.message);
         }
     } catch (err) {
         console.error(err);
-        alert('❌ Lỗi gửi yêu cầu lưu hồ sơ lên Server PHP');
+        alert('Lỗi gửi yêu cầu lưu hồ sơ lên Server PHP');
     }
 }

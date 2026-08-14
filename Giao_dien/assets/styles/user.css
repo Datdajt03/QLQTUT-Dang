@@ -1,0 +1,66 @@
+/* ============================================================
+   user.css - Theme & UI Styles Tailored for Students / Normal Users
+   Emerald & Gold Student Theme
+   ============================================================ */
+
+body.role-user {
+  --red:              #10B981;
+  --red-dark:         #047857;
+  --red-light:        #34D399;
+  --border2:          rgba(16, 185, 129, 0.4);
+  --shadow-red:       0 8px 25px rgba(16, 185, 129, 0.35);
+  --shadow-glow:      0 0 35px rgba(16, 185, 129, 0.2);
+}
+
+/* Sidebar Logo Accent for Student */
+body.role-user .sidebar-logo {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(19, 27, 46, 0.95) 100%);
+  border-bottom: 2px solid rgba(16, 185, 129, 0.4);
+}
+body.role-user .sidebar-logo .logo-icon {
+  background: linear-gradient(135deg, #10B981 0%, #F59E0B 100%);
+}
+
+/* Header Top Accent Line for Student */
+body.role-user .header {
+  border-bottom: 2px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+}
+
+/* Active Nav Item for Student */
+body.role-user .nav-item.active {
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.2) 0%, rgba(255, 215, 0, 0.05) 100%);
+  border-left-color: #10B981;
+  color: #34D399;
+}
+body.role-user .nav-item:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-left-color: #10B981;
+}
+
+/* Page Header Student Welcome Banner */
+body.role-user .page-header {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(19, 27, 46, 0.6) 100%);
+  padding: 18px 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* User Badge Halo */
+body.role-user .user-badge {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+body.role-user .user-badge .avatar {
+  background: linear-gradient(135deg, #10B981, var(--gold));
+}
+
+/* Student Primary Button */
+body.role-user .btn-primary {
+  background: linear-gradient(135deg, #10B981 0%, #047857 100%);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+body.role-user .btn-primary:hover {
+  background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+}

@@ -1,0 +1,68 @@
+/* ============================================================
+   admin.css - Theme & UI Styles Tailored for Admin (Quản trị viên)
+   Royal Violet & Gold Admin Theme
+   ============================================================ */
+
+body.role-admin {
+  --red:              #8B5CF6;
+  --red-dark:         #5B21B6;
+  --red-light:        #A78BFA;
+  --border2:          rgba(139, 92, 246, 0.4);
+  --shadow-red:       0 8px 25px rgba(139, 92, 246, 0.4);
+  --shadow-glow:      0 0 35px rgba(139, 92, 246, 0.25);
+}
+
+/* Sidebar Logo Accent for Admin */
+body.role-admin .sidebar-logo {
+  background: linear-gradient(135deg, rgba(91, 33, 182, 0.45) 0%, rgba(19, 27, 46, 0.95) 100%);
+  border-bottom: 2px solid rgba(139, 92, 246, 0.5);
+}
+body.role-admin .sidebar-logo .logo-icon {
+  background: linear-gradient(135deg, #8B5CF6 0%, #FFD700 100%);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.5);
+}
+
+/* Header Top Accent Line for Admin */
+body.role-admin .header {
+  border-bottom: 2px solid rgba(139, 92, 246, 0.4);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.18);
+}
+
+/* Active Nav Item for Admin */
+body.role-admin .nav-item.active {
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.2) 0%, rgba(255, 215, 0, 0.05) 100%);
+  border-left-color: #8B5CF6;
+  color: #C084FC;
+}
+body.role-admin .nav-item:hover {
+  background: rgba(139, 92, 246, 0.12);
+  border-left-color: #8B5CF6;
+}
+
+/* Page Header Admin Banner */
+body.role-admin .page-header {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(19, 27, 46, 0.6) 100%);
+  padding: 18px 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+/* Admin User Badge */
+body.role-admin .user-badge {
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.25);
+}
+body.role-admin .user-badge .avatar {
+  background: linear-gradient(135deg, #8B5CF6, #F59E0B);
+}
+
+/* Admin Primary Button */
+body.role-admin .btn-primary {
+  background: linear-gradient(135deg, #8B5CF6 0%, #5B21B6 100%);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+body.role-admin .btn-primary:hover {
+  background: linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+}

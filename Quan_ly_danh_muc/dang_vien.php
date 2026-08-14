@@ -63,19 +63,19 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <div class="page-header">
   <div class="page-header-left">
     <div class="breadcrumb"><a href="<?= BASE_URL ?>index.php">Dashboard</a><span class="sep">›</span><span class="current">Quản lý Đảng viên</span></div>
-    <div class="page-title">👥 Quản lý <span>Đảng viên</span></div>
+    <div class="page-title">Quản lý <span>Đảng viên</span></div>
     <div class="page-subtitle">Danh sách đảng viên giúp đỡ & hướng dẫn quần chúng</div>
   </div>
 </div>
 
-<?php if ($errors): ?><div class="flash flash-danger">❌ <?= implode('<br>', array_map('e',$errors)) ?></div><?php endif; ?>
+<?php if ($errors): ?><div class="flash flash-danger"><?= implode('<br>', array_map('e',$errors)) ?></div><?php endif; ?>
 
 <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:20px;">
 
   <!-- Form -->
   <div class="card fade-in" style="align-self:start;">
     <div class="card-header">
-      <div class="card-title"><span class="icon"><?= $editRow ? '✏️' : '➕' ?></span> <?= $editRow ? 'Sửa thông tin' : 'Thêm đảng viên' ?></div>
+      <div class="card-title"><?= $editRow ? 'Sửa thông tin' : 'Thêm đảng viên' ?></div>
     </div>
     <div class="card-body">
       <form method="post">
@@ -117,7 +117,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
         <div style="display:flex;gap:10px;">
           <?php if ($editRow): ?><a href="dang_vien.php" class="btn btn-outline" style="flex:1;justify-content:center;">Hủy</a><?php endif; ?>
           <button type="submit" class="btn btn-primary" style="flex:1;justify-content:center;">
-            <?= $editRow ? '💾 Lưu' : '➕ Thêm' ?>
+            <?= $editRow ? 'Lưu' : 'Thêm' ?>
           </button>
         </div>
       </form>
@@ -127,7 +127,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <!-- List -->
   <div class="card fade-in">
     <div class="card-header">
-      <div class="card-title"><span class="icon">📋</span> Danh sách Đảng viên</div>
+      <div class="card-title">Danh sách Đảng viên</div>
       <span class="badge badge-red"><?= count($list) ?></span>
     </div>
     <div class="card-body" style="padding:0;">
@@ -145,11 +145,11 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
             <td><span class="badge badge-blue"><?= $dv['so_giup_do'] ?></span></td>
             <td>
               <div style="display:flex;gap:6px;">
-                <a href="?edit=<?= $dv['id'] ?>" class="btn btn-outline btn-sm">✏️</a>
+                <a href="?edit=<?= $dv['id'] ?>" class="btn btn-outline btn-sm">Sửa</a>
                 <form method="post" style="display:inline" onsubmit="return confirm('Xóa đảng viên này?')">
                   <input type="hidden" name="action" value="delete">
                   <input type="hidden" name="del_id" value="<?= $dv['id'] ?>">
-                  <button type="submit" class="btn btn-danger btn-sm">🗑️</button>
+                  <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                 </form>
               </div>
             </td>

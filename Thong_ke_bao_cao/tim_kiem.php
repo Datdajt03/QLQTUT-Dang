@@ -54,7 +54,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
 <!-- Search Form -->
 <div class="card fade-in" style="margin-bottom:20px;">
-  <div class="card-header"><div class="card-title"><span class="icon">🔍</span> Bộ lọc tìm kiếm</div></div>
+  <div class="card-header"><div class="card-title">Bộ lọc tìm kiếm</div></div>
   <div class="card-body">
     <form method="get">
       <div class="form-grid">
@@ -117,7 +117,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <?php if ($searched): ?>
 <div class="card fade-in">
   <div class="card-header">
-    <div class="card-title"><span class="icon">📊</span> Kết quả</div>
+    <div class="card-title">Kết quả</div>
     <div style="display:flex;align-items:center;gap:10px;">
       <span class="badge badge-gold"><?= count($results) ?> bản ghi</span>
       <?php if (!empty($results)): ?>

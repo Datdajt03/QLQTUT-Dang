@@ -1,0 +1,164 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage{tbu_report}
+
+% ==============================================================================
+% CẤU HÌNH THÔNG TIN BÁO CÁO
+% ==============================================================================
+\ministry{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
+\university{TRƯỜNG ĐẠI HỌC TÂY BẮC}
+\faculty{KHOA CÔNG NGHỆ THÔNG TIN}
+\reporttype{BÁO CÁO BÀI TẬP LỚN}
+\title{XÂY DỰNG HỆ THỐNG GỢI Ý SẢN PHẨM}
+\courseclass{K64 ĐẠI HỌC CNTT}
+\groupnumber{Nhóm 3}
+\advisor{TS. Phạm Quốc Thắng}
+\location{SƠN LA}
+\reportdate{THÁNG 05/2026}
+\logopath{tbu_logo.png}
+
+% Danh sách Sinh viên thực hiện (Hỗ trợ 2 cột tự động)
+\addstudent[NT]{\textbf{Hoàng Trung Hiếu}}
+\addstudent{Nguyễn Huy Hoàng}
+\addstudent{Hà Việt Cường}
+\addstudent{Tòng Thị Huyền Diệu}
+\addstudent{Điêu Chính Doanh}
+\addstudent{Lò Khánh Linh}
+\addstudent{Dên Sạ Mon Súc Pha Sắc}
+\addstudent{\textbf{Lò Mạnh Đạt}}
+\addstudent{Phạm Thị Thanh Hảo}
+\addstudent{Tòng Văn Hiến}
+\addstudent{Sổm Chăn Chăn Mạ Ni Khăm}
+\addstudent{Đăm Lắt Chay Vang Manh}
+\addstudent{Su Pha Thong Na Khon Súc}
+\addstudent{Tòng Lưu Anh Tú}
+
+\begin{document}
+
+% ==============================================================================
+% 1. TRANG BÌA NGOÀI VÀ TRANG BÌA PHỤ
+% ==============================================================================
+\makeoutercover
+\makeinnercover
+
+% ==============================================================================
+% 2. LỜI CẢM ƠN
+% ==============================================================================
+\begin{acknowledgements}
+Chúng em xin gửi lời cảm ơn chân thành và sâu sắc nhất đến các thầy cô giáo trong Khoa Công nghệ Thông tin - Trường Đại học Tây Bắc đã tận tình giảng dạy, hướng dẫn và tạo điều kiện thuận lợi cho nhóm chúng em trong suốt quá trình học tập và thực hiện bài tập lớn này.
+
+Đặc biệt, nhóm xin gửi lời cảm ơn sâu sắc đến thầy/cô giảng viên phụ trách môn học đã dành thời gian quý báu để định hướng, góp ý và tận tình chỉ bảo nhóm hoàn thành tốt báo cáo bài tập lớn này.
+
+Dù đã có nhiều cố gắng, song bài báo cáo khó tránh khỏi những thiếu sót. Nhóm kính mong nhận được sự góp ý chân thành từ quý thầy cô và các bạn để sản phẩm báo cáo được hoàn thiện hơn.
+\end{acknowledgements}
+
+% ==============================================================================
+% 3. MỤC LỤC VÀ DANH MỤC (HÌNH ÁNH, BẢNG BIỂU, TỪ VIẾT TẮT)
+% ==============================================================================
+\makecontentlists
+
+\begin{abbreviations}
+  AI & Artificial Intelligence (Trí tuệ nhân tạo) \\ \hline
+  CNTT & Công nghệ Thông tin \\ \hline
+  CSDL & Cơ sở dữ liệu \\ \hline
+  ML & Machine Learning (Học máy) \\ \hline
+  TBU & Tây Bắc University (Trường Đại học Tây Bắc) \\
+\end{abbreviations}
+
+% ==============================================================================
+% 4. NỘI DUNG CHÍNH CỦA BÁO CÁO
+% ==============================================================================
+
+\unchapter{MỞ ĐẦU}
+
+\unsection{1.1}{Tổng quan về hệ thống đề xuất}
+Trình bày nghiên cứu, tìm hiểu tổng quan về hệ thống đề xuất. Tại Việt Nam, trên thế giới đã nghiên cứu và có những sản phẩm nào tương tự. Đánh giá chất lượng các sản phẩm đang có hoặc đã biết.
+
+\unsection{1.2}{Mục đích nghiên cứu}
+Nêu mục đích nghiên cứu của đề tài bài tập lớn, giải quyết bài toán thực tế nào và đem lại giá trị ra sao cho người dùng.
+
+\unsection{1.3}{Đối tượng và phạm vi nghiên cứu}
+Nêu đối tượng và phạm vi nghiên cứu của bài tập.
+
+\unsection{1.4}{Phương pháp nghiên cứu}
+Nêu các phương pháp nghiên cứu đã được sử dụng như: thu thập dữ liệu, phân tích mô hình học máy, khảo sát thực tế...
+
+\unsection{1.5}{Tổ chức thực hiện}
+Trình bày cách thức tổ chức nghiên cứu và \textbf{phân công nhiệm vụ} chi tiết cho từng thành viên. Chú ý nêu rõ \textbf{kết quả từng thành viên đã thực hiện được}.
+
+% ------------------------------------------------------------------------------
+\chapter{CƠ SỞ LÝ THUYẾT}
+
+\section{Mục 1.1}
+Trình bày tổng quan phần lý thuyết liên quan đến đề tài \cite{ref1}.
+
+\section{Mục 1.2}
+Nội dung chi tiết về các khái niệm cơ bản và thuật toán liên quan.
+
+\section{Mục 1.3}
+Phân tích sâu hơn các kỹ thuật áp dụng trong hệ thống \cite{ref2}.
+
+\subsection{Mục 1.3.1}
+Chi tiết về mô hình lý thuyết được lựa chọn.
+
+% ------------------------------------------------------------------------------
+\chapter{PHÂN TÍCH THIẾT KẾ HỆ THỐNG}
+
+\section{Mục 2.1}
+Mô tả kiến trúc tổng quan của hệ thống bài tập lớn.
+
+\subsection{Mục 2.1.1}
+Sơ đồ kiến trúc và luồng dữ liệu của ứng dụng.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{sample_img.png}
+  \caption{Hình ảnh mẫu sơ đồ hệ thống}
+  \label{fig:sample}
+\end{figure}
+
+Như được thể hiện trên Hình \ref{fig:sample}, hệ thống gồm các thành phần cơ bản xử lý từ đầu vào đến kết quả trả về.
+
+\subsection{Mục 2.1.2}
+Phân tích thiết kế Cơ sở dữ liệu và các thành phần giao tiếp API.
+
+% ------------------------------------------------------------------------------
+\chapter{XÂY DỰNG VÀ KIỂM THỬ HỆ THỐNG}
+
+\section{Mục 3.1}
+Quá trình cài đặt và thực nghiệm hệ thống.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Bảng mẫu đánh giá kết quả thực nghiệm}
+  \label{tab:sample}
+  \begin{tabular}{|c|l|c|c|}
+    \hline
+    \textbf{STT} & \textbf{Tên tiêu chí} & \textbf{Đơn vị} & \textbf{Kết quả} \\ \hline
+    1 & Độ chính xác (Accuracy) & \% & 94.5 \% \\ \hline
+    2 & Thời gian phản hồi & giây & 0.12 s \\ \hline
+    3 & Dung lượng bộ nhớ & MB & 45 MB \\ \hline
+  \end{tabular}
+\end{table}
+
+Bảng \ref{tab:sample} tổng hợp kết quả đo đạc các chỉ số hiệu năng của hệ thống.
+
+\section{Mục 3.2}
+Đánh giá mức độ hoàn thiện và khả năng đáp ứng yêu cầu bài toán.
+
+% ==============================================================================
+% 5. KẾT LUẬN VÀ KIẾN NGHIỊ
+% ==============================================================================
+\unchapter{KẾT LUẬN VÀ KIẾN NGHIỊ}
+Nêu kết luận cơ bản về những công việc đã thực hiện và hướng nghiên cứu cải tiến hệ thống đề xuất trong tương lai.
+
+% ==============================================================================
+% 6. TÀI LIỆU THAM KHẢO
+% ==============================================================================
+\cleardoublepage
+\addcontentsline{toc}{chapter}{TÀI LIỆU THAM KHẢO}
+\begin{thebibliography}{99}
+  \bibitem{ref1} Nguyễn Văn A (2025), \textit{Nghiên cứu và phát triển hệ thống gợi ý}, NXB Đại học Tây Bắc, Sơn La.
+  \bibitem{ref2} Smith J., Johnson M. (2024), \textit{Machine Learning Systems Design}, ACM Press.
+\end{thebibliography}
+
+\end{document}

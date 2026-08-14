@@ -10,12 +10,12 @@
 
 **Nhóm thực hiện:** `[02]`
 
-| STT | Họ và Tên              |  MSSV  | Phân công                    |
-| :-: | :--------------------- | :----: | :--------------------------- |
-|  1  | **LÒ MẠNH ĐẠT**        | MSSV 1 | Backend PHP, Database        |
-|  2  | **NGUYỄN HUY HOÀNG**   | MSSV 2 | Frontend Python API, Edge AI |
-|  3  | **TÒNG LƯU ANH TÚ**    | MSSV 3 | Báo cáo CSS/JS, UI/UX        |
-|  4  | **PHẠM THỊ THANH HẢO** | MSSV 3 | Python API, Báo cáo          |
+| STT | Họ và Tên              |  MSSV  | Phân công                      |
+| :-: | :--------------------- | :----: | :----------------------------- |
+|  1  | **LÒ MẠNH ĐẠT**        | MSSV 1 | Backend PHP, Database          |
+|  2  | **NGUYỄN HUY HOÀNG**   | MSSV 2 | Frontend Python API            |
+|  3  | **TÒNG LƯU ANH TÚ**    | MSSV 3 | Báo cáo CSS/JS, UI/UX, Edge AI |
+|  4  | **PHẠM THỊ THANH HẢO** | MSSV 4 | Python API, Báo cáo            |
 
 ---
 
@@ -43,10 +43,35 @@ This system — **Management of Outstanding Candidates for Communist Party Admis
 
 ## 🎨 Giao diện & Trải nghiệm Người dùng (UX/UI)
 
-- **Hệ màu Đảng bộ:** Đỏ cờ chủ đạo (`#C8102E`), Vàng kim điểm nhấn (`#FFD700`) trên nền Dark Mode hiện đại, dịu mắt và vô cùng sang trọng.
-- **Responsive Design:** Tối ưu hiển thị mượt mà trên mọi thiết bị (Desktop, Laptop, Máy tính bảng, Điện thoại di động).
-- **Collapsible Sidebar:** Danh mục tiện ích được thiết kế dạng Accordion thông minh, tự động thu gọn để tối ưu diện tích làm việc và chỉ mở rộng khi cần thiết. Thụt hẳn vào gọn gàng khi thu nhỏ thanh bên trên máy tính.
-- **Avatar Upload:** Hỗ trợ tải lên ảnh chân dung sắc nét, có tính năng xem trước (preview) thời gian thực và tự động tạo thư mục lưu trữ bảo mật cao.
+- **Chuẩn Thiết kế Tối giản (Icon-Free Minimal Typography):** Loại bỏ 100% các icon/emoji trang trí rác để tạo giao diện hành chính công chuyên nghiệp, tập trung hoàn toàn vào độ tương phản font chữ (Inter/Roboto), thứ bậc phân cấp chữ (Typography Hierarchy) và khoảng cách bố cục chuẩn mực.
+- **Hệ màu Đảng bộ & Theme theo Vai trò:** Đỏ cờ chủ đạo (`#C8102E`), Vàng kim điểm nhấn (`#FFD700`) trên nền Dark Mode Glassmorphism sang trọng. Tự động kích hoạt Dynamic Theme theo từng vai trò (`role-user`: Emerald, `role-manager`: Crimson, `role-admin`: Violet).
+- **Responsive Design 100%:** Tối ưu hiển thị mượt mà trên mọi thiết bị (Desktop, Laptop, Máy tính bảng, Điện thoại di động).
+- **Kiến trúc CSS Module hóa (Modular CSS System):** Tách thành 6 file độc lập trong `Giao_dien/assets/styles/` (`variables.css`, `base.css`, `components.css`, `user.css`, `manager.css`, `admin.css`), giúp dễ bảo trì và mở rộng.
+- **Avatar Upload & Smart Crop 3x4:** Hỗ trợ tải lên ảnh chân dung sắc nét, tự động cắt ảnh theo chuẩn 3x4 (300x400) bằng HTML5 Canvas và tạo thư mục lưu trữ bảo mật `uploads/avatars/`.
+
+---
+
+## 📐 Phân tích & Thiết kế Hệ thống (System Analysis & Design)
+
+### 1. Mô hình Kiến trúc Tổng thể (Architecture Model)
+Hệ thống được thiết kế theo **Kiến trúc Phân tầng Lai (Layered & Microservice-Lite Architecture)** kết hợp giữa Web Core, Microservice độc lập và Client-side AI:
+- **Presentation Layer (Lớp Giao diện):** Xây dựng theo **Modular CSS System (BEM Standard)** với 3 Theme giao diện phân theo vai trò người dùng (User, Manager, Admin), áp dụng thiết kế tối giản Minimal Typography & Glassmorphism.
+- **Business & Application Layer (Lớp Nghiệp vụ):** 
+  - **Core CRUD & Auth:** Lập trình theo chuẩn **RBAC (Role-Based Access Control)** kiểm soát quyền truy cập 3 cấp độ (User / Manager / Admin).
+  - **Microservice Export Engine:** Dịch vụ xử lý tài liệu chạy độc lập bằng Python Flask kết nối với PHP qua **Proxy Pattern (`api_proxy.php`)**.
+  - **Client-side Edge AI Engine:** Xử lý OCR và phân loại tài liệu bằng Tesseract.js / PDF.js ngay tại trình duyệt client.
+- **Data Access Layer (Lớp Cơ sở Dữ liệu):** Sử dụng PDO Driver kết nối MySQL hỗ trợ Prepared Statements đảm bảo an toàn thông tin chống SQL Injection.
+
+### 2. Các Sơ đồ Phân tích & Nghiệp vụ (System Diagrams)
+- **Sơ đồ Phân quyền (RBAC Matrix):** Phân định 3 vai trò (Sinh viên / Bí thư Chi bộ / Admin) với ma trận quyền hạn chi tiết.
+- **Sơ đồ Luồng Tiến trình (5-Step Progress Milestone):** Quản lý tiến trình kết nạp Đảng qua 5 giai đoạn chính chủ đạo.
+- **Sơ đồ Tuần tự & Hoạt động (Sequence & Activity Diagrams):** Xem chi tiết tại tài liệu phân tích kỹ thuật chuyên sâu [chitiet.md](chitiet.md).
+
+### 3. Đối chiếu Tiêu chí Chuẩn hóa Bài tập lớn (BTL Standard Audit)
+- ✅ **Người dùng & Bảo mật:** Đăng ký, đăng nhập, mã hóa mật khẩu `password_hash()`, phân quyền RBAC 3 lớp.
+- ✅ **Kỹ thuật & CSDL:** PHP PDO + MySQL, Upload file/avatar/minh chứng, phân trang, lọc đa tiêu chí, tìm kiếm thời gian thực.
+- ✅ **Giao diện & UX/UI:** Responsive 100%, Minimal Typography, Dark Mode Glassmorphism, Bảng chỉnh sửa trực tiếp kiểu Excel.
+- ✅ **Tính năng Nâng cao (Cộng điểm):** Microservice Python xuất 8 mẫu PDF 2026 chuẩn thể thức, Edge AI OCR tự động điền form & phân loại 5 loại phiếu.
 
 ---
 
@@ -87,13 +112,20 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 - **Bản tin đầu trang**: Tích hợp thanh chọn tin tức trực tuyến với 3 nguồn báo chính thống: _Báo Dân trí_, _Báo Nhân Dân_, và _Báo điện tử Đảng Cộng sản Việt Nam_ ngay tại đầu trang chủ Dashboard (`index.php`) cho mọi tài khoản.
 - **Cơ chế hoạt động**: Sử dụng parser RSS động của PHP kết hợp dự phòng luồng tin từ Báo điện tử Chính phủ hoặc dữ liệu dự phòng cục bộ khi trang Báo Đảng Cộng sản chặn cURL (Cookie wall). Có thiết lập timeout 3 giây để đảm bảo tải trang cực kỳ nhanh chóng.
 
-### 6. Edge AI Module (`AI_Module`): Smart Auto-Fill & Smart Avatar Crop [NEW]
+### 6. Edge AI Module (`AI_Module`): Smart Auto-Fill, 5 Document Models Classifier & Smart Avatar Crop [NEW]
 
 - **Trợ lý OCR Tự Động Điền Hồ Sơ (Smart Auto-Fill)**: Cho phép sinh viên tải lên **ảnh chụp CCCD (Mặt trước & Mặt sau) + Thẻ sinh viên** (hoặc Giấy nhận thức về Đảng). Engine Edge AI (`AI_Module/edge_ai_autofill.js`) dùng Tesseract.js trích xuất trực tiếp _Họ tên, Ngày sinh, Mã SV, Giới tính, Quê quán, Dân tộc, Lớp_ và **tự động điền (Auto-fill)** vào form đăng ký `nhap_thong_tin.php`, tiết kiệm 90% thời gian gõ thủ công.
+- **Model Phân Loại 5 Loại Phiếu & Soi Thông Tin Chi Tiết Trong Phiếu (`edge_ai_ocr.js`)**: Edge AI tích hợp mô hình phân loại tệp và soi thông tin chi tiết từng trường thông tin trong 5 loại phiếu/hồ sơ bắt buộc:
+  1. 📝 **Bản tự nhận xét / Tự kiểm điểm:** Soi chi tiết *Họ tên, Ngày sinh, Ưu điểm, Khuyết điểm, Phương hướng phấn đấu, Ngày tháng & Chữ ký*.
+  2. 📜 **Giấy chứng nhận bồi dưỡng nhận thức về Đảng:** Soi chi tiết *Đơn vị cấp (ĐH Tây Bắc/Trung tâm chính trị), Họ tên học viên, Ngày sinh, Kết quả xếp loại, Số QĐ/Số chứng nhận, Ngày cấp*.
+  3. 👤 **Sơ yếu lý lịch / CCCD / Thẻ SV:** Soi chi tiết *Họ tên, Ngày sinh, Quê quán/Nguyên quán, Mã SV/CCCD, Lớp/Khoa*.
+  4. 📊 **Phiếu đánh giá chất lượng đoàn viên:** Soi chi tiết *Họ tên đoàn viên, Tên Chi đoàn, Xếp loại đoàn viên, Xác nhận Bí thư Chi đoàn*.
+  5. 🏅 **Minh chứng hoạt động phong trào / Giấy khen:** Soi chi tiết *Tên hoạt động, Họ tên người nhận, Đơn vị khen thưởng, Thời gian*.
+- **Phát hiện chính xác phiếu thiếu & thông tin thiếu trong phiếu**: Thay vì thông báo chung chung, Edge AI chỉ rõ chính xác phiếu nào còn **thiếu hoàn toàn** (chưa nộp) và tệp phiếu nào đã nộp nhưng **bị khuyết thông tin gì ở bên trong phiếu**, đưa ra bảng tổng hợp trực quan và lời khuyên khắc phục từng mục.
+- **Sửa lỗi xác thực $currentUser trong Header**: Sửa lỗi tham chiếu biến `$user` thành `$currentUser` tại `Giao_dien/header.php` line 82, giúp chuyển trang Edge AI mượt mà 100% không bắn warning.
 - **Kiểm tra & Tự động Cắt Ảnh Chân dung (Smart Avatar Validation & Crop 3x4)**: Tự động nhận diện khuôn mặt và dùng HTML5 Canvas cắt ảnh chân dung về đúng tỷ lệ ảnh thẻ chuẩn 3x4 (300x400) sắc nét trước khi tải lên máy chủ.
 - **Agent Phân loại & Ánh xạ Tên Cột Excel (`AI_Module/excel_column_agent.js`)**: Khi tải lên file Excel/CSV tại `Thong_ke_bao_cao/import_excel.php`, AI Agent tự động phát hiện các tiêu đề cột ghi tắt/sai lệch (như `Qli`, `QL`, `Quản lý`, `Mã SV`...) và bật Modal hiển thị bảng chọn cột bên trái để ánh xạ chuẩn xác vào các trường CSDL trước khi lưu.
-- **Thẩm định Hồ sơ Minh chứng (Client-Side AI)**: OCR kiểm tra tính đầy đủ của file PDF/Image minh chứng (dưới 10MB/file), lưu file vào `uploads/ho_so_minh_chung/` và lưu log phân tích vào MySQL `edge_ai_logs`.
-- **Sơ đồ Luồng Hoạt Động**: Xem chi tiết sơ đồ Activity & Sequence Diagram của Edge AI tại 👉 **[chitiet.md (Mục 4c &amp; 5c)](chitiet.md#4c-quy-trình-smart-auto-fill-cccd--cắt-ảnh-thẻ-3x4-ai_module)**.
+- **Sơ đồ Luồng Hoạt Động**: Xem chi tiết sơ đồ Activity & Sequence Diagram của Edge AI tại 👉 **[chitiet.md (Mục 4c & 5c)](chitiet.md#4c-quy-trình-smart-auto-fill-cccd--cắt-ảnh-thẻ-3x4-ai_module)**.
 
 ### 7. Xuất 8 Mẫu Phiếu Kết Nạp Đảng Ra PDF Chuẩn 2026 & Trích Xuất Dữ Liệu Cần Thiết [NEW]
 
@@ -116,6 +148,17 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 - **Nút Xóa Hàng Loạt Đối Tượng**: Trang `Quan_ly_doi_tuong/danh_sach.php` tích hợp cột Checkbox chọn từng người và ô **"Select All"** ở đầu bảng. Khi chọn một hoặc nhiều đối tượng, nút **`🗑️ Xóa đối tượng đã chọn (N)`** lập tức xuất hiện ở góc trên.
 - **Xác Nhận Modal An Toàn**: Bấm xóa hàng loạt sẽ hiển thị cửa sổ Modal xác nhận số lượng đối tượng cần xóa để ngăn ngừa thao tác nhầm lẫn.
 - **Mẫu Excel Điền Chuẩn Kèm ID Cột (`/api/export/template`)**: Cung cấp tính năng tải mẫu Excel chuẩn gồm Tiêu đề & Mã ID trường dữ liệu (`[ID: ho_ten]`, `[ID: ma_gvsv]`,...) giúp các Lớp điền đúng 100%, không lo bị lệch cột khi Import.
+
+### 9. Edge AI Engine: Thuật toán Phân loại Mô hình & Soi Trường Thiếu (`AI_Module/document_inspector.js`) [NEW]
+
+- **Thuật toán Phân loại Mô hình (Weighted Keyword Matrix Classification)**:
+  - Tệp PDF/Ảnh OCR được đối soát ma trận từ khóa loại phiếu (`typeKeywords`) (+2 điểm) và mã/tên loại phiếu trong tên file (+3 điểm).
+  - Gán tệp chính xác vào 1 trong 5 Mẫu phiếu tiêu chuẩn (*Bản tự nhận xét, Giấy chứng nhận, Sơ yếu lý lịch, Phiếu đánh giá, Minh chứng phong trào*).
+- **Thuật toán Soi Trường Thiếu (Multi-Key Substring Matching & Regex Traversal)**:
+  - Lớp `DocumentFieldInspector` duyệt ma trận từ khóa mở rộng của từng trường thông tin bắt buộc trong Mẫu phiếu đó.
+  - Trường **không phát hiện từ khóa** ➔ Gán nhãn `missingFields` và phát cảnh báo đỏ **`[CẢNH BÁO THIẾU]`** trực tiếp trên Dashboard.
+  - Trường **phát hiện từ khóa** ➔ Gán nhãn `foundFields` và áp dụng biểu thức chính quy Regex `extractValueSnippet()` trích xuất đoạn dữ liệu thực tế.
+- **Báo cáo Tỷ lệ Phần trăm Đầy đủ**: Tính toán công thức $\text{ScorePercent} = (\text{Số trường phát hiện} / \text{Tổng số trường bắt buộc}) \times 100\%$ và ghi nhật ký đánh giá vào bảng MySQL `edge_ai_logs`.
 
 ---
 
