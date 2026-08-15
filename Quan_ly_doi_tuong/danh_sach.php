@@ -50,21 +50,21 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <span class="sep">›</span>
       <span class="current">Danh sách đối tượng</span>
     </div>
-    <div class="page-title">📋 Danh sách <span>Đối tượng</span></div>
+    <div class="page-title"><i class="bi bi-person-lines-fill"></i> Danh sách <span>Đối tượng</span></div>
     <div class="page-subtitle">Tổng cộng <?= number_format($total) ?> đối tượng</div>
   </div>
   <div style="display:flex;gap:10px;">
     <button type="button" id="btnBatchDelete" class="btn btn-danger" style="display:none;" onclick="confirmBatchDelete()">
-      🗑️ Xóa đối tượng đã chọn (<span id="selectedCount">0</span>)
+      <i class="bi bi-trash3-fill"></i> Xóa đối tượng đã chọn (<span id="selectedCount">0</span>)
     </button>
-    <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/them.php" class="btn btn-primary">➕ Thêm mới</a>
-    <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php?<?= http_build_query(['search'=>$search,'trang_thai'=>$trangThai,'lop'=>$lop]) ?>" class="btn btn-gold">📤 Xuất Excel</a>
+    <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/them.php" class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Thêm mới</a>
+    <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php?<?= http_build_query(['search'=>$search,'trang_thai'=>$trangThai,'lop'=>$lop]) ?>" class="btn btn-gold"><i class="bi bi-file-earmark-arrow-down-fill"></i> Xuất Excel</a>
   </div>
 </div>
 
 <!-- Filter -->
 <form method="get" class="filter-bar">
-  <input type="text" name="search" class="form-control filter-search" placeholder="🔍 Tìm theo tên, mã, SĐT, lớp..." value="<?= e($search) ?>">
+  <input type="text" name="search" class="form-control filter-search" placeholder="Tìm theo tên, mã, SĐT, lớp..." value="<?= e($search) ?>">
   <select name="trang_thai" class="form-control">
     <option value="">Tất cả trạng thái</option>
     <option value="Đang theo dõi" <?= $trangThai==='Đang theo dõi'?'selected':'' ?>>Đang theo dõi</option>
@@ -78,8 +78,8 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <option value="<?= e($l) ?>" <?= $lop===$l?'selected':'' ?>><?= e($l) ?></option>
     <?php endforeach; ?>
   </select>
-  <button type="submit" class="btn btn-primary">Lọc</button>
-  <a href="danh_sach.php" class="btn btn-outline">Reset</a>
+  <button type="submit" class="btn btn-primary"><i class="bi bi-funnel-fill"></i> Lọc</button>
+  <a href="danh_sach.php" class="btn btn-outline"><i class="bi bi-arrow-counterclockwise"></i> Reset</a>
 </form>
 
 <!-- Table -->
@@ -88,7 +88,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <div class="card-body" style="padding:0;">
     <?php if (empty($rows)): ?>
     <div class="empty-state">
-      <div class="icon">📂</div>
+      <div class="icon"><i class="bi bi-folder2-open" style="font-size:36px;"></i></div>
       <h3>Không tìm thấy kết quả</h3>
       <p>Thử thay đổi bộ lọc hoặc thêm đối tượng mới</p>
     </div>
@@ -154,9 +154,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
             ?></td>
             <td>
               <div style="display:flex;gap:5px;justify-content:center;">
-                <a href="chi_tiet.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Xem chi tiết">👁️</a>
-                <a href="sua.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Sửa">✏️</a>
-                <button onclick="confirmDelete(<?= $row['id'] ?>, '<?= addslashes(e($row['ho_ten'])) ?>')" class="btn btn-danger btn-sm" title="Xóa">🗑️</button>
+                <a href="chi_tiet.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Xem chi tiết"><i class="bi bi-eye"></i></a>
+                <a href="sua.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Sửa"><i class="bi bi-pencil"></i></a>
+                <button type="button" onclick="confirmDelete(<?= $row['id'] ?>, '<?= addslashes(e($row['ho_ten'])) ?>')" class="btn btn-danger btn-sm" title="Xóa"><i class="bi bi-trash"></i></button>
               </div>
             </td>
           </tr>
@@ -190,14 +190,14 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
-    <div class="modal-title">🗑️ Xác nhận xóa</div>
+    <div class="modal-title"><i class="bi bi-exclamation-triangle-fill" style="color:var(--danger);margin-right:6px;"></i> Xác nhận xóa</div>
     <div class="modal-body">
       Bạn có chắc muốn xóa <span id="deleteModalContent">đối tượng <strong id="deleteName"></strong></span>?
       <br>Hành động này <strong style="color:var(--danger)">không thể hoàn tác</strong>.
     </div>
     <div class="modal-actions">
       <button type="button" onclick="closeModal()" class="btn btn-outline">Hủy</button>
-      <button type="button" id="confirmDeleteSubmitBtn" onclick="executeDelete()" class="btn btn-danger">🗑️ Xác nhận xóa</button>
+      <button type="button" id="confirmDeleteSubmitBtn" onclick="executeDelete()" class="btn btn-danger"><i class="bi bi-trash-fill"></i> Xác nhận xóa</button>
     </div>
   </div>
 </div>

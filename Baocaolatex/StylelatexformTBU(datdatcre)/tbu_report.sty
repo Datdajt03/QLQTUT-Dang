@@ -1,3 +1,5 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX program = pdflatex
 % ==============================================================================
 % tbu_report.sty - LaTeX Style Package cho Báo cáo / Khóa luận Trường ĐH Tây Bắc (TBU)
 % Tác giả: TBU LaTeX Form (datdatcre)
@@ -8,13 +10,16 @@
 \ProvidesPackage{tbu_report}[2026/08/12 TBU Report Style Package]
 
 % --- Các gói phụ thuộc cơ bản ---
+\RequirePackage{cmap}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T5]{fontenc}
 \RequirePackage[utf8]{vietnam}
-\RequirePackage{times}            % Phông chữ Times New Roman chuẩn
 \RequirePackage[a4paper, top=20mm, bottom=20mm, left=30mm, right=15mm, footskip=0pt]{geometry}
+\RequirePackage{amsmath,amssymb}
 \RequirePackage{setspace}         % Giãn dòng
 \RequirePackage{graphicx}         % Chèn hình ảnh
 \RequirePackage{tikz}             % Vẽ khung bìa
-\usetikzlibrary{calc}
+\usetikzlibrary{calc, positioning, fit, backgrounds, shapes.geometric}
 \RequirePackage{titlesec}         % Định dạng tiêu đề chương/mục
 \RequirePackage{caption}          % Định dạng chú thích hình/bảng
 \RequirePackage{fancyhdr}         % Định dạng trang header/footer
@@ -23,13 +28,34 @@
 \RequirePackage{longtable}        % Bảng nhiều trang
 \RequirePackage{booktabs}         % Đường kẻ bảng chuyên nghiệp
 \RequirePackage{enumitem}         % Danh sách liệt kê
-\RequirePackage{indentfirst}      % Thụt đầu dòng đoạn văn đầu tiên
+%\RequirePackage{indentfirst}      % Thụt đầu dòng đoạn văn đầu tiên
 \RequirePackage[hidelinks, unicode, pdfencoding=auto]{hyperref} % Liên kết PDF
 
 % --- Cấu hình giãn dòng và khoảng cách đoạn ---
 \setstretch{1.3}                 % Giãn dòng 1.3 chuẩn báo cáo
-\setlength{\parindent}{1.0cm}     % Thụt đầu dòng 1cm
-\setlength{\parskip}{3pt}         % Khoảng cách giữa các đoạn văn 3pt
+\setlength{\parindent}{0pt}       % Không thụt đầu dòng (0pt)
+\setlength{\parskip}{4pt}         % Khoảng cách giữa các đoạn văn 4pt
+
+% Chống dòng mồ côi / mồ côi mục sau Bảng và ngắt trang xấu
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=10000
+\displaywidowpenalty=10000
+
+% Cấu hình Float (Bảng và Hình) tránh nhảy ngắt trang bất hợp lý
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+
+% --- Cấu hình phân cấp danh sách (Itemize & Enumerate) ---
+\setlist[enumerate,1]{label=\arabic*., leftmargin=*, align=left}
+\setlist[enumerate,2]{label=\alph*), leftmargin=*, align=left}
+\setlist[itemize,1]{label=--, leftmargin=*, align=left}
+\setlist[itemize,2]{label=+, leftmargin=*, align=left}
 
 % --- Cấu hình chú thích Hình ảnh và Bảng biểu ---
 \captionsetup[figure]{name={Hình}, labelsep=colon, labelfont=bf, font=small, justification=centering}
@@ -50,52 +76,68 @@
 
 % --- Cấu hình Định dạng Tiêu đề Đồng bộ 12pt (Titlesec) ---
 \titleformat{\chapter}[block]
-  {\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries\raggedright}
-  {\ifnum\c@secnumdepth >\m@ne CHƯƠNG \thechapter:\quad\fi}
-  {0pt}
-  {\fontsize{12pt}{14pt}\selectfont\bfseries}
+{\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries\raggedright}
+{\ifnum\c@secnumdepth >\m@ne CHƯƠNG \thechapter:\quad\fi}
+{0pt}
+{\fontsize{12pt}{14pt}\selectfont\bfseries}
 
 \titlespacing*{\chapter}{0pt}{-24pt}{2pt}
 
 \titleformat{\section}[block]
-  {\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries}
-  {\thesection.}
-  {0.5em}
-  {}
+{\normalfont\fontsize{12pt}{15.6pt}\selectfont\bfseries}
+{\thesection.}
+{0.5em}
+{}
 
-\titlespacing*{\section}{0pt}{4pt}{2pt}
+\titlespacing*{\section}{0pt}{8pt plus 2pt minus 2pt}{4pt plus 1pt minus 1pt}
 
 \titleformat{\subsection}[block]
-  {\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries}
-  {\thesubsection.}
-  {0.5em}
-  {}
+{\normalfont\fontsize{12pt}{15.6pt}\selectfont\bfseries}
+{\thesubsection.}
+{0.5em}
+{}
 
-\titlespacing*{\subsection}{0pt}{3pt}{2pt}
+\titlespacing*{\subsection}{0pt}{6pt plus 2pt minus 2pt}{3pt plus 1pt minus 1pt}
 
 \titleformat{\subsubsection}[block]
-  {\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries\itshape}
-  {\thesubsubsection.}
-  {0.5em}
-  {}
+{\normalfont\fontsize{12pt}{15.6pt}\selectfont\bfseries\itshape}
+{\thesubsubsection.}
+{0.5em}
+{}
 
-\titlespacing*{\subsubsection}{0pt}{2pt}{1pt}
+\titlespacing*{\subsubsection}{0pt}{5pt plus 2pt minus 1pt}{2pt plus 1pt minus 1pt}
 
-% --- Định dạng phông chữ 12pt và căn trái cho Mục lục (tocloft) ---
+% --- Định dạng phông chữ 12pt và căn trái cho Mục lục, Danh mục hình, Danh mục bảng (tocloft) ---
 \setlength{\cftbeforetoctitleskip}{0pt}
 \setlength{\cftaftertoctitleskip}{2pt}
+\setlength{\cftbeforeloftitleskip}{0pt}
+\setlength{\cftafterloftitleskip}{2pt}
+\setlength{\cftbeforelottitleskip}{0pt}
+\setlength{\cftafterlottitleskip}{2pt}
+
 \setlength{\cftbeforechapskip}{2pt}
 \setlength{\cftbeforesecskip}{0pt}
 \setlength{\cftbeforesubsecskip}{0pt}
 
 \renewcommand{\cfttoctitlefont}{\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries}
+\renewcommand{\cftloftitlefont}{\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries}
+\renewcommand{\cftlottitlefont}{\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries}
+
 \renewcommand{\cftaftertoctitle}{}
+\renewcommand{\cftafterloftitle}{}
+\renewcommand{\cftafterlottitle}{}
+
 \renewcommand{\cftchapfont}{\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries}
 \renewcommand{\cftchappagefont}{\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries}
 \renewcommand{\cftsecfont}{\normalfont\fontsize{12pt}{14pt}\selectfont}
 \renewcommand{\cftsecpagefont}{\normalfont\fontsize{12pt}{14pt}\selectfont}
 \renewcommand{\cftsubsecfont}{\normalfont\fontsize{12pt}{14pt}\selectfont}
 \renewcommand{\cftsubsecpagefont}{\normalfont\fontsize{12pt}{14pt}\selectfont}
+
+\renewcommand{\cftfigfont}{\normalfont\fontsize{12pt}{14pt}\selectfont}
+\renewcommand{\cftfigpagefont}{\normalfont\fontsize{12pt}{14pt}\selectfont}
+\renewcommand{\cfttabfont}{\normalfont\fontsize{12pt}{14pt}\selectfont}
+\renewcommand{\cfttabpagefont}{\normalfont\fontsize{12pt}{14pt}\selectfont}
 
 % --- Khai báo biến thông tin Báo cáo ---
 \newcommand{\tbu@ministry}{BỘ GIÁO DỤC VÀ ĐÀO TẠO}
@@ -187,15 +229,15 @@
 \newcommand{\drawcoverborder}{%
   \begin{tikzpicture}[remember picture, overlay]
     % Khung ngoài
-    \draw[line width=1.5pt] 
-      ($(current page.north west) + (2.5cm,-1.5cm)$) 
-      rectangle 
-      ($(current page.south east) + (-1.0cm,1.5cm)$);
+    \draw[line width=1.5pt]
+    ($(current page.north west) + (2.5cm,-1.5cm)$)
+    rectangle
+    ($(current page.south east) + (-1.0cm,1.5cm)$);
     % Khung trong
-    \draw[line width=0.5pt] 
-      ($(current page.north west) + (2.6cm,-1.6cm)$) 
-      rectangle 
-      ($(current page.south east) + (-1.1cm,1.6cm)$);
+    \draw[line width=0.5pt]
+    ($(current page.north west) + (2.6cm,-1.6cm)$)
+    rectangle
+    ($(current page.south east) + (-1.1cm,1.6cm)$);
   \end{tikzpicture}%
 }
 
@@ -204,24 +246,24 @@
   \begin{titlepage}
     \drawcoverborder
     \centering
-    \setstretch{1.2}
-    
+    \setstretch{1.3}
+
     % Bộ & Trường
     {\fontsize{14pt}{16pt}\selectfont \tbu@ministry \par}
     \vspace{4pt}
     {\fontsize{14pt}{16pt}\selectfont \textbf{\tbu@university} \par}
-    
+
     \vspace{1.0cm}
-    
+
     % Logo trường
     \IfFileExists{\tbu@logo}{%
       \includegraphics[width=3.5cm, height=3.5cm, keepaspectratio]{\tbu@logo}\par
     }{%
       \vspace{3.5cm}
     }
-    
+
     \vspace{1.2cm}
-    
+
     % Loại báo cáo & Tên báo cáo
     {\fontsize{14pt}{16pt}\selectfont \textbf{\tbu@reporttype} \par}
     \vspace{0.8cm}
@@ -230,17 +272,17 @@
       \vspace{0.3cm}
       {\fontsize{14pt}{18pt}\selectfont \textit{\tbu@subtitle} \par}
     \fi
-    
+
     \vspace{1.2cm}
-    
+
     % Nhóm / Lớp
     {\fontsize{14pt}{18pt}\selectfont \textbf{\tbu@groupnumber\ - \tbu@courseclass} \par}
-    
+
     \vfill
-    
+
     % Địa điểm & Thời gian
     {\fontsize{14pt}{16pt}\selectfont \textbf{\tbu@location, \tbu@reportdate} \par}
-    
+
   \end{titlepage}
   \cleardoublepage
 }
@@ -249,65 +291,65 @@
 \newcommand{\makeinnercover}{%
   \begin{titlepage}
     \drawcoverborder
-    \setstretch{1.2}
-    
+    \setstretch{1.3}
+
     \begin{center}
       % Bộ & Trường
       {\fontsize{14pt}{16pt}\selectfont \tbu@ministry \par}
       \vspace{4pt}
       {\fontsize{14pt}{16pt}\selectfont \textbf{\tbu@university} \par}
-      
+
       \vspace{0.8cm}
-      
+
       % Logo trường
       \IfFileExists{\tbu@logo}{%
         \includegraphics[width=2.8cm, height=2.8cm, keepaspectratio]{\tbu@logo}\par
       }{%
         \vspace{2.8cm}
       }
-      
+
       \vspace{0.8cm}
-      
+
       % Loại báo cáo & Tên báo cáo
       {\fontsize{14pt}{16pt}\selectfont \textbf{\tbu@reporttype} \par}
       \vspace{0.5cm}
       {\fontsize{18pt}{22pt}\selectfont \textbf{\tbu@title} \par}
     \end{center}
-    
+
     \vspace{0.8cm}
-    
-    \raggedright
-    \hspace*{0.6cm}%
-    \begin{minipage}{0.9\textwidth}
-      \setstretch{1.3}
-      {\fontsize{13pt}{16pt}\selectfont
-        \begin{tabular}{@{} l l @{}}
-          \textbf{Giảng viên hướng dẫn:} & \tbu@advisor \\[4pt]
-          \textbf{Thực hiện:}            & \tbu@groupnumber \\
-        \end{tabular}
-      }\par
-      
-      \vspace{0.5cm}
-      {\fontsize{13pt}{16pt}\selectfont \textbf{Sinh viên thực hiện:}\par}
-      \vspace{0.3cm}
-      {\fontsize{12pt}{15pt}\selectfont
-        \ifnum\value{studentcount}>0
-          \renderstudents
-        \else
-          \begin{tabular}{ll}
-            \tbu@memberlist
+
+    \begin{center}
+      \begin{minipage}{0.65\textwidth}
+        \setstretch{1.3}
+        {\fontsize{13pt}{16pt}\selectfont
+          \begin{tabular}{@{} l l @{}}
+            \textbf{Giảng viên hướng dẫn:} & \tbu@advisor     \\[4pt]
+            \textbf{Thực hiện:}            & \tbu@groupnumber \\
           \end{tabular}
-        \fi
-      }
-    \end{minipage}
-    
+        }\par
+
+        \vspace{0.5cm}
+        {\fontsize{13pt}{16pt}\selectfont \textbf{Sinh viên thực hiện:}\par}
+        \vspace{0.3cm}
+        {\fontsize{12pt}{15pt}\selectfont
+          \ifnum\value{studentcount}>0
+            \renderstudents
+          \else
+            \begin{tabular}{ll}
+              \tbu@memberlist
+            \end{tabular}
+          \fi
+        }
+      \end{minipage}
+    \end{center}
+
     \vfill
-    
+
     \begin{center}
       % Địa điểm & Thời gian
       {\fontsize{14pt}{16pt}\selectfont \textbf{\tbu@location, \tbu@reportdate} \par}
     \end{center}
-    
+
   \end{titlepage}
   \cleardoublepage
 }
@@ -330,12 +372,13 @@
   \chapter*{DANH MỤC TỪ VIẾT TẮT}
   \setstretch{1.3}
   \fontsize{12pt}{15pt}\selectfont
+  \addtocounter{table}{-1}%
   \begin{longtable}{@{} c l @{}}
-    \hline
-    \textbf{Chữ viết tắt} & \textbf{Ý nghĩa} \\ \hline
-    \endhead
+  \hline
+  \textbf{Chữ viết tắt} & \textbf{Ý nghĩa} \\ \hline
+  \endhead
 }{
-    \hline
+  \hline
   \end{longtable}
   \cleardoublepage
 }

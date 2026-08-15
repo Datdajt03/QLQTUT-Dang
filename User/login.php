@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Đăng nhập hệ thống – <?= SITE_NAME ?></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>Giao_dien/assets/style.css">
   <style>
     body {
@@ -114,46 +115,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     .role-selection {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-top: 8px;
+      margin-top: 6px;
     }
     .role-box {
-      border: 1px solid #ced4da;
+      border: 1.5px solid #e0e0e0;
       border-radius: 8px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      padding: 10px 4px;
+      text-align: center;
       cursor: pointer;
-      background: #f8f9fa;
       transition: all 0.2s;
+      background: #fafafa;
     }
     .role-box:hover {
-      background: #e9ecef;
-      border-color: #adb5bd;
-    }
-    .role-box input[type="radio"] {
-      margin: 0;
-      accent-color: #C8102E;
-    }
-    .role-box span {
-      font-size: 13px;
-      font-weight: 500;
-      color: #495057;
+      border-color: #C8102E;
+      background: #fff5f5;
     }
     .role-box.active {
       border-color: #C8102E;
-      background: rgba(200, 16, 46, 0.05);
-    }
-    .role-box.active span {
+      background: #fff0f2;
       color: #C8102E;
+      font-weight: 600;
+    }
+    .role-box input[type="radio"] {
+      display: none;
+    }
+    .role-box span {
+      font-size: 12px;
+      display: block;
+      line-height: 1.3;
     }
     .links {
       text-align: center;
       margin-top: 20px;
       font-size: 13px;
-      color: #6c757d;
+      color: #666;
     }
     .links a {
       color: #C8102E;
@@ -169,9 +166,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="auth-container">
   <div class="auth-header">
-    <div style="font-size: 36px; margin-bottom: 8px;">⭐</div>
     <h2>ĐĂNG NHẬP HỆ THỐNG</h2>
-    <p>Hệ thống quản lý quần chúng ưu tú phục vụ kết nạp Đảng</p>
+    <p><?= SITE_NAME ?></p>
   </div>
 
   <div class="auth-body">
@@ -180,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $flash = getFlash();
     if ($flash): ?>
       <div class="flash flash-<?= e($flash['type']) ?>" style="margin-bottom: 20px;">
-        <?= $flash['type'] === 'success' ? '✅' : '❌' ?> <?= e($flash['msg']) ?>
+        <i class="bi <?= $flash['type'] === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill' ?>" style="margin-right:6px;"></i> <?= e($flash['msg']) ?>
       </div>
     <?php endif; ?>
 
@@ -206,25 +202,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <div class="form-group" style="margin-bottom: 24px;">
-        <label class="form-label">Chọn vai trò đăng nhập (Mặc định: Người dùng thường)</label>
+        <label class="form-label">Chọn vai trò đăng nhập</label>
         <div class="role-selection">
           <label class="role-box active" id="role-user">
             <input type="radio" name="vai_tro" value="Người dùng thường" checked onclick="selectRole('user')">
-            <span>Người dùng thường (Mặc định)</span>
+            <i class="bi bi-person"></i>
+            <span>Người dùng</span>
           </label>
           <label class="role-box" id="role-manager">
             <input type="radio" name="vai_tro" value="Quản lý" onclick="selectRole('manager')">
+            <i class="bi bi-briefcase"></i>
             <span>Quản lý</span>
           </label>
           <label class="role-box" id="role-admin">
             <input type="radio" name="vai_tro" value="Admin" onclick="selectRole('admin')">
-            <span>Admin (Quản trị viên)</span>
+            <i class="bi bi-shield-lock"></i>
+            <span>Admin</span>
           </label>
         </div>
       </div>
 
       <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 12px; font-size: 15px;">
-        🔑 Đăng nhập
+        <i class="bi bi-box-arrow-in-right" style="margin-right:6px;"></i> Đăng nhập
       </button>
     </form>
 

@@ -1,0 +1,348 @@
+==================== 1-s2.0-S2667345223000196-main.pdf ====================
+DOIs: ['10.1016/j.iotcps.2023.02.004']
+URLs: ['http://www.etsi.org/news-events/news', 'https://doi.org/10.1016/j.iotcps.2023.02.004']
+--- FIRST PAGE SNIPPET ---
+   Edge AI: A survey
+   Raghubir Singh a, Sukhpal Singh Gill b,*
+   a Department of Computer Science, University of Bath, Bath, United Kingdom
+   b School of Electronic Engineering and Computer Science, Queen Mary University of London, London, United Kingdom
+   A R T I C L E I N F O
+   Keywords:
+   Edge AI
+   Edge computing
+   Artiﬁcial intelligence
+   Fog computing
+   Machine learning
+   Cloud computing
+   A B S T R A C T
+   Artiﬁcial Intelligence (AI) at the edge is the utilization of AI in real-world devices. Edge AI refers to the practice of
+   doing AI computations near the users at the network's edge, instead of centralised location like a cloud service
+   provider's data centre. With the latest innovations in AI efﬁciency, the proliferation of Internet of Things (IoT)
+   devices, and the rise of edge computing, the potential of edge AI has now been unlocked. This study provides a
+   thorough analysis of AI approaches and capabilities as they pertain to edge computing, or Edge AI. Further, a
+   detailed survey of edge computing and its paradigms including transition to Edge AI is presented to explore the
+   background of each variant proposed for implementing Edge Computing. Furthermore, we discussed the Edge AI
+   approach to deploying AI algorithms and models on edge devices, which are typically resource-constrained de-
+   vices located at the edge of the network. We also presented the technology used in various modern IoT appli-
+   cations, including autonomous vehicles, smart homes, industrial automation, healthcare, and surveillance.
+   Moreover, the discussion of leveraging machine learning algorithms optimized for resource-constrained envi-
+   ronments is presented. Finally, important open challenges and potential research directions in the ﬁeld of edge
+   computing and edge AI have been identiﬁed and investigated. We hope that this article will serve as a common
+   goal for a future blueprint that will unite important stakeholders and facilitates to accelerate development in the
+   ﬁeld of Edge AI.
+   1. Introduction
+   As IT developed after 2000, Cloud Computing was established as a
+   novel computing infrastructure for the Internet based on highly
+   resourced data centres. Interest in and adoption of cloud computing
+   services has increased to the extent that global cloud IP trafﬁc will ac-
+   count for more than 90% of total data centre trafﬁc by 2020 [1]. The
+   main advantages of the cloud computing paradigm remain “unlimited”
+
+
+==================== 227-238.pdf ====================
+DOIs: []
+URLs: []
+--- FIRST PAGE SNIPPET ---
+   East Asian Journal of Multidisciplinary Research (EAJMR)
+   Vol. 1, No.2, 2022: 227-238
+   227
+   ISSN-E: 2828-1519
+   Development Chairman RW Election Application Web Using
+   CODEIGNITER, PHP and MySQL Framework
+   Dwi Kartinah
+   Faculty of Computer Science, Gunadarma University
+   ABSTRACT
+   E-Voting is the use of computer technology for the implementation of voting.
+   One choice of computer technology used for the implementation of e-voting is to
+   use a client-server architecture. So the use of an all-computer-based-system is
+   expected to replace the manual voting process. The goal to be achieved from
+   making this e-voting application is to be able to assist committee officers in
+   calculating the number of voters and calculating election results quickly and
+   accurately. This application is made using the PHP programming language
+   which is expected to overcome problems related to selection. In making this
+   website, the stages carried out are, preparing the required data, designing the
+   website, designing input and output, followed by the implementation stage of
+   making program coding, the last stage is the trial stage on localhost. Planned
+   trials that set up the application to run properly.
+   Keywords: PHP, MySQL, E-Voting, Website
+
+
+==================== 2407.04053v2.pdf ====================
+DOIs: []
+URLs: []
+--- FIRST PAGE SNIPPET ---
+   ACCEPTED PREPRINT VERSION FOR PUBLICATION IN SPRINGER CLUSTER COMPUTING, 2024
+   1
+   Edge AI: A Taxonomy, Systematic Review and
+   Future Directions
+   Sukhpal Singh Gill, Muhammed Golec, Jianmin Hu, Minxian Xu, Junhui Du,
+   Huaming Wu, Guneet Kaur Walia, Subramaniam Subramanian Murugesan, Babar Ali,
+   Mohit Kumar, Kejiang Ye, Prabal Verma, Surendra Kumar, Felix Cuadrado, Steve Uhlig
+   Abstract—Edge Artificial Intelligence (AI) incorporates a net-
+   work of interconnected systems and devices that receive, cache,
+   process, and analyze data in close communication with the
+   location where the data is captured with AI technology. Recent
+   advancements in AI efficiency, the widespread use of Internet
+   of Things (IoT) devices, and the emergence of edge computing
+   have unlocked the enormous scope of Edge AI. Edge AI aims to
+   optimize data processing efficiency and velocity while ensuring
+   data confidentiality and integrity. Despite being a relatively
+   new field of research from 2014 to the present, it has shown
+   significant and rapid development over the last five years. This
+   article presents a systematic literature review for Edge AI to
+   discuss the existing research, recent advancements, and future
+   research directions. We created a collaborative edge AI learning
+   system for cloud and edge computing analysis, including an in-
+   depth study of the architectures that facilitate this mechanism.
+   The taxonomy for Edge AI facilitates the classification and
+   configuration of Edge AI systems while examining its potential
+   influence across many fields through compassing infrastructure,
+   cloud computing, fog computing, services, use cases, ML and
+   deep learning, and resource management. This study highlights
+   the significance of Edge AI in processing real-time data at the
+   edge of the network. Additionally, it emphasizes the research
+   challenges encountered by Edge AI systems, including constraints
+   on resources, vulnerabilities to security threats, and problems
+   with scalability. Finally, this study highlights the potential future
+   research directions that aim to address the current limitations of
+   Edge AI by providing innovative solutions.
+
+
+==================== 2505.24019v1.pdf ====================
+DOIs: []
+URLs: []
+--- FIRST PAGE SNIPPET ---
+   arXiv:2505.24019v1  [cs.CR]  29 May 2025
+   LLM Agents Should Employ Security Principles
+   Kaiyuan Zhang, Zian Su, Pin-Yu Chen†, Elisa Bertino, Xiangyu Zhang, Ninghui Li
+   Purdue University, †IBM Research
+   {zhan4057, su284, bertino, xyzhang, ninghui}@purdue.edu, †pin-yu.chen@ibm.com
+   Large Language Model (LLM) agents show considerable promise for automating complex tasks using contextual
+   reasoning; however, interactions involving multiple agents and the system’s susceptibility to prompt injection
+   and other forms of context manipulation introduce new vulnerabilities related to privacy leakage and system
+   exploitation. This position paper argues that the well-established design principles in information
+   security, which are commonly referred to as security principles, should be employed when deploying
+   LLM agents at scale. Design principles such as defense-in-depth, least privilege, complete mediation, and
+   psychological acceptability have helped guide the design of mechanisms for securing information systems over
+   the last five decades, and we argue that their explicit and conscientious adoption will help secure agentic
+   systems. To illustrate this approach, we introduce AgentSandbox, a conceptual framework embedding these
+   security principles to provide safeguards throughout an agent’s life-cycle. We evaluate with state-of-the-art
+   LLMs along three dimensions: benign utility, attack utility, and attack success rate. AgentSandbox maintains
+   high utility for its intended functions under both benign and adversarial evaluations while substantially
+   mitigating privacy risks. By embedding secure design principles as foundational elements within emerging
+   LLM agent protocols, we aim to promote trustworthy agent ecosystems aligned with user privacy expectations
+   and evolving regulatory requirements.
+   1. Introduction
+   Large language models (LLMs) have demonstrated remarkable capabilities in natural language processing and genera-
+   tion [46, 47, 13, 40, 57]. In the meantime, LLM agents, equipped with planning, reasoning, and acting abilities, are
+   increasingly deployed in real-world applications where they communicate with humans and other agents via natural
+   language. Early demonstrations such as ChatArena [63], WebArena [79], and OSWorld [64] reveal that LLM agents
+   can decompose tasks and share knowledge effectively.
+   Recent studies [9, 77, 58, 74] reveal critical vulnerabilities in LLM agents. The inherent complexities of LLM
+   reasoning and the documented failure of current security measures create opportunities for adversaries to exploit
+   unforeseen weaknesses. For instance, attackers can poison an agent’s memory or knowledge base [15] or introduce
+   malicious tools [19]. This is further evidenced by findings that even advanced LLMs fail prompt injection defenses
+   approximately 85% of the time [74], while other mitigation techniques also offer limited protection [27, 3], including
+   paraphrasing [27], access restriction [9, 1], tool filtering [62], data delimiters [25], prompt injection detection [44], and
+   perplexity based detection [3]. Furthermore, LLM agents are susceptible to carefully crafted contextual manipulations
+   that induce the disclosure of sensitive information beyond authorized boundaries [9, 58], a risk heightened when
+   agents operate with overly broad access to data. Attackers can also silently steer agent reasoning towards unauthorized
+
+
+==================== 3827611.pdf ====================
+DOIs: ['10.1145/3827611']
+URLs: ['https://doi.org/10.1145/3827611']
+--- FIRST PAGE SNIPPET ---
+   Edge AI on Constrained Devices: A Survey of Deployment,
+   Optimization, and Lifecycle Management
+   MIRIANA PASSAROTTO, RISE Research Institutes of Sweden AB, Stockholm, Sweden and Uppsala Univer-
+   sity, Uppsala, Sweden
+   FEHMI BEN ABDESSLEM, RISE Research Institutes of Sweden AB, Stockholm, Sweden
+   JOAKIM ERIKSSON, RISE Research Institutes of Sweden AB, Stockholm, Sweden
+   THIEMO VOIGT, Uppsala University, Uppsala, Sweden and RISE Research Institutes of Sweden AB, Stockholm,
+   Sweden
+   Edge Artiicial Intelligence (AI) allows machine learning models to run directly on resource-constrained IoT and edge
+   devices instead of relying only on cloud resources. This shift reduces latency and improves privacy but introduces strict
+   constraints on memory, energy, and connectivity across heterogeneous sensor nodes. Deploying AI on constrained devices
+   also requires addressing fragmented toolchains and inconsistent evaluation practices. This survey provides a structured review
+   of deployment methods for edge AI, including model compilation, intermediate representations, hardware-aware optimization,
+   scheduling strategies, and connectivity-aware execution. Post-deployment aspects are also examined, including lifecycle
+   management, secure over-the-air updates, and benchmarking frameworks that combine latency, accuracy, and energy. Use
+   cases in healthcare, smart cities, autonomous systems, manufacturing, and agriculture illustrate practical applications. Across
+   these areas, common challenges in portability, reproducibility, adaptivity, and security are identiied, along with emerging
+   directions such as dynamic orchestration across heterogeneous devices and modular update mechanisms. By combining
+   perspectives from compiler design, system optimization, and lifecycle management, this survey highlights how deployment
+   pipelines are evolving into key enablers for reliable and scalable intelligence at the network edge.
+   CCS Concepts: · General and reference →Surveys and overviews; · Computing methodologies →Artiicial intelli-
+   gence; · Software and its engineering →Embedded software; · Hardware →Sensor devices and platforms.
+   Additional Key Words and Phrases: Edge AI, TinyML, On-device Inference, Constrained Devices, Toolchains, Lifecycle
+   Management
+   1
+   Introduction
+   Artiicial Intelligence (AI) is no longer conined to centralized cloud infrastructures. Increasingly, AI capabilities
+   are shifting toward the edge of the network, the physical locations where data is generated. This transition,
+   commonly referred to as edge AI, is transforming the way intelligent systems operate by enabling low-latency
+   processing, enhancing data privacy, and reducing bandwidth requirements. Edge AI is being adopted across
+   various domains, including industrial automation, healthcare, smart cities, and autonomous systems [39, 226, 286].
+   At the hardware level, this transformation covers a diverse spectrum of IoT platforms. These range from
+   ultra-constrained microcontrollers (MCUs) to system-on-chip (SoC) devices and single-board computers (SBCs)
+   Authors’ Contact Information: Miriana Passarotto, RISE Research Institutes of Sweden AB, Stockholm, Sweden and Uppsala University,
+   Uppsala, Sweden; e-mail: miriana.passarotto@ri.se; Fehmi Ben Abdesslem, RISE Research Institutes of Sweden AB, Stockholm, Sweden; e-mail:
+
+
+==================== 4-I.2..pdf ====================
+DOIs: ['10.46793/TIE24.027M']
+URLs: ['http://localhost:8082/tie/indexcb.php']
+--- FIRST PAGE SNIPPET ---
+   10th International Scientific Conference
+   Technics,
+   Informatics,and
+   Education – TIE 2024
+   20-22 September 2024
+   Session: Computer Sciences and Information Technology
+   Professional paper
+   DOI: 10.46793/TIE24.027M
+   Creating a PHP User Interface for Manipulating
+   MySQL Databases
+   Marija Mojsilović1*
+   [0009-0004-6818-2450], Goran Miodragović1
+   [0009-0009-4794-8898],
+   Selver Pepić1
+   [0000-0002-7168-1881] and Muzafer Saračević2
+   [0000-0003-2577-7927]
+   1 Academy of Professional Studies Sumadija, College in Trstenik, Trstenik, Serbia
+   2 University of Novi Pazar, Department of Computer Sciences, Novi Pazar, Serbia
+   * mmojsilovic@asss.edu.rs
+   Abstract: In today's digital environment, accessing and manipulating data are crucial aspects of various
+   web applications. This paper explores the process of creating a PHP user interface for efficient manipulation
+   of MySQL databases. Accessing databases through web applications requires careful planning and
+   implementation to ensure security, performance, and practicality. Using PHP as the server-side language
+   and MySQL as the database, we delve into methods for creating an interactive user interface that allows
+   users to read, write, update, and delete data in the database. The focus of the paper is on the application
+   of basic PHP functionalities and techniques such as forms, queries, and error handling to enable a user
+   interface that is intuitive to use and reliable in operation. Through implementation examples and
+   performance evaluation, the key aspects of the process of creating a PHP user interface for manipulating
+   MySQL databases are highlighted, providing guidance for optimization and improving efficiency in
+   developing similar systems. This paper contributes to understanding techniques and practices for creating
+   secure and functional web applications that communicate with databases, with a special focus on PHP and
+   MySQL technologies
+   Keywords: PHP; MySQL; Web application; User interface
+   1.
+   INTRODUCTION
+
+
+==================== JURNALPEMROGRAMANWEB..pdf ====================
+DOIs: ['10.38035/jsmd.v2i2']
+URLs: ['https://creativecommons.org/licenses/by/4.0/', 'https://doi.org/10.38035/jsmd.v2i2', 'https://research.e-siber.org/JSMD']
+--- FIRST PAGE SNIPPET ---
+   https://research.e-siber.org/JSMD                                                                                          Vol. 2, No.2, Juli 2024
+   68 | p a g e
+   DOI: https://doi.org/10.38035/jsmd.v2i2
+   Received: 23 Mei 2024, Revised: 01 Juni 2024, Publish: 08 Juli 2024
+   https://creativecommons.org/licenses/by/4.0/
+   Pengenalan Pemrograman Web: Pembuatan Aplikasi Web
+   Sederhana Dengan PHP dan MYSQL
+   Fried Sinlae1, Ilham Maulana2, Febri Setiyansyah3, Muhammad Ihsan4
+   1Universitas Bhayangkara Jakarta Raya, Bekasi, Indonesia, email: fried.sinlae@dsn.ubharajaya.ac.id
+   2Universitas Bhayangkara Jakarta Raya, Bekasi, Indonesia, email: Ilhammaulana2552@gmail.com
+   3Universitas Bhayangkara Jakarta Raya, Bekasi, Indonesia, email: setiyansahf@gmail.com
+   4Universitas Bhayangkara Jakarta Raya, Bekasi, Indonesia, email: ihsandoang05@gmail.com
+   Coresponding Author: fried.sinlae@dsn.ubharajaya.ac.id1
+   Abstract: With the rapid development of information technology, websites are also
+   experiencing significant development.  Website programming is a very important subject in
+   today's digital era. The development of the world of websites today provides real-time access
+   to information, making websites very effective for meeting the needs of users in various
+   sectors. In addition, the grouping of web types is more directed based on the style, nature or
+   function and programming language used. in this journal, we will learn how to create web
+   applications using PHP and MySQL. The discussion starts with the basic concepts of web
+   programming, including definitions, types of web programming languages, and web
+   architecture. Next, we will learn how to create databases, tables, and SQL queries using
+   MySQL. The core of this journal is a guide to creating dynamic web applications using PHP
+   and MySQL. Thus, this journal is expected to be a valuable reference for beginners who want
+   to explore the world of web programming by utilizing PHP and MySQL.
+   Keyword: Web programming, PHP, MySQL, Web application
+   Abstrak: Perkembangan teknologi informasi yang begitu pesat,website juga mengalami
+
+
+==================== Web-Based_Information_Systems_Developing_a_Design_.pdf ====================
+DOIs: ['10.1088/1757-899X/879/1/012015']
+URLs: []
+--- FIRST PAGE SNIPPET ---
+   IOP Conference Series: Materials Science and Engineering
+   PAPER • OPEN ACCESS
+   Web-Based Information Systems: Developing a Design Theory
+   To cite this article: I B S Nusa and F M Faisal 2020 IOP Conf. Ser.: Mater. Sci. Eng. 879 012015
+   View the article online for updates and enhancements.
+   This content was downloaded from IP address 89.185.76.65 on 07/08/2020 at 18:06
+
+
+==================== Web_Based_Information_System_Design_in_Elementary_.pdf ====================
+DOIs: ['10.56313/jictas.v1i2.163']
+URLs: ['https://e-jurnal.rokania.ac.id/index.php/jictas/']
+--- FIRST PAGE SNIPPET ---
+   Journal of ICT Aplication and System (JICTAS)
+   Volume 1 Number 2, Desember 2022, pp. 62 ~68
+   ISSN: 2830-098X, DOI: 10.56313/jictas.v1i2.163
+         62
+   Journal homepage: https://e-jurnal.rokania.ac.id/index.php/jictas/
+   Web Based Information System Design in Elementary Schools
+   Erliyen Nofrianda1, Detri Amelia Chandra2, Andri febriansyah3, Anik Supriani4
+   Program Studi Pendidikan Teknologi Informasi – STKIP Rokania 1,2,3,4
+   Article Info
+   ABSTRACT (10 PT)
+   Article history:
+   Received July 26, 2022
+   Revised Agustus 06, 2022
+   Accepted November 13, 2022
+   This article aims to design and implement a Web-Based Information System
+   in Elementary Schools. The method used in this research is to use the system
+   development method with the Waterfall model. The type of data in this study
+   is to use qualitative data. Web-Based Information System in Elementary
+   School is designed using the UML (Unified Modeling Language)
+   development method which consists of Use Case Diagrams, Activity
+   Diagrams, Sequence Diagrams and Class Diagrams. Database design using
+   MySQL and system interface. The software used in the design and
+   implementation of the system uses XAMPP as a web server, PHP and MySQL
+   as a database. Web-Based Information System in elementary schools includes,
+   login page, home page, profile page, student page, gallery, agenda page,
+
+
+==================== s11704-024-40231-1.pdf ====================
+DOIs: ['10.1007/s11704-024-40231-1']
+URLs: ['https://doi.org/10.1007/s11704-024-40231-1']
+--- FIRST PAGE SNIPPET ---
+   A survey on large language model based autonomous agents
+   Lei WANG, Chen MA*, Xueyang FENG*, Zeyu ZHANG, Hao YANG, Jingsen ZHANG,
+   Zhiyuan CHEN, Jiakai TANG, Xu CHEN (✉), Yankai LIN (✉),
+   Wayne Xin ZHAO, Zhewei WEI, Jirong WEN
+   Gaoling School of Artificial Intelligence, Renmin University of China, Beijing 100872, China
+   The Author(s) 2024. This article is published with open access at link.springer.com and journal.hep.com.cn
+   Abstract    Autonomous  agents  have  long  been  a  research
+   focus in academic and industry communities. Previous research
+   often focuses on training agents with limited knowledge within
+   isolated  environments,  which  diverges  significantly  from
+   human  learning  processes,  and  makes  the  agents  hard  to
+   achieve human-like decisions. Recently, through the acquisition
+   of  vast  amounts  of  Web  knowledge,  large  language  models
+   (LLMs)  have  shown  potential  in  human-level  intelligence,
+   leading  to  a  surge  in  research  on  LLM-based  autonomous
+   agents.  In  this  paper,  we  present  a  comprehensive  survey  of
+   these  studies,  delivering  a  systematic  review  of  LLM-based
+   autonomous agents from a holistic perspective. We first discuss
+   the construction of LLM-based autonomous agents, proposing a
+   unified  framework  that  encompasses  much  of  previous  work.
+   Then,  we  present  a  overview  of  the  diverse  applications  of
+   LLM-based  autonomous  agents  in  social  science,  natural
+   science, and engineering. Finally, we delve into the evaluation
+   strategies commonly used for LLM-based autonomous agents.
+   Based  on  the  previous  studies,  we  also  present  several
+   challenges and future directions in this field.
+   Keywords    autonomous  agent, large  language  model,
+   human-level intelligence
+   1    Introduction
+   “An autonomous agent is a system situated within and a part
+   of an environment that senses that environment and acts on it,
+   over time, in pursuit of its own agenda and so as to effect what
+   it senses in the future.”
+   Franklin and Graesser (1997)
+

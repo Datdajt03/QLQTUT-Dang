@@ -245,27 +245,27 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <span class="sep">›</span>
       <span class="current">Phê duyệt hồ sơ</span>
     </div>
-    <div class="page-title">🔔 Duyệt Hồ sơ <span>Đăng ký trực tuyến</span></div>
+    <div class="page-title"><i class="bi bi-bell-fill" style="margin-right:6px;"></i> Duyệt Hồ sơ <span>Đăng ký trực tuyến</span></div>
     <div class="page-subtitle">Quản lý, thẩm định thông tin sinh viên tự khai báo và đồng bộ vào hệ thống.</div>
   </div>
   <div style="display:flex;gap:10px;">
-    <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/nhap_thong_tin.php" target="_blank" class="btn btn-gold">🔗 Mở link đăng ký công khai</a>
+    <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/nhap_thong_tin.php" target="_blank" class="btn btn-gold"><i class="bi bi-link-45deg"></i> Mở link đăng ký công khai</a>
   </div>
 </div>
 
 <!-- Tabs selector -->
 <div class="tabs">
   <a href="?tab=pending&search=<?= e($searchFilter) ?>" class="tab-btn <?= $tabFilter==='pending'?'active':'' ?>">
-    📥 Chờ duyệt (<?= $pendingCount ?>)
+    <i class="bi bi-inbox-fill"></i> Chờ duyệt (<?= $pendingCount ?>)
   </a>
   <a href="?tab=update&search=<?= e($searchFilter) ?>" class="tab-btn <?= $tabFilter==='update'?'active':'' ?>">
-    ✏️ Đề xuất cập nhật (<?= $updateCount ?>)
+    <i class="bi bi-pencil-square"></i> Đề xuất cập nhật (<?= $updateCount ?>)
   </a>
   <a href="?tab=approved&search=<?= e($searchFilter) ?>" class="tab-btn <?= $tabFilter==='approved'?'active':'' ?>">
-    ✅ Đã duyệt (<?= $approvedCount ?>)
+    <i class="bi bi-check-circle-fill" style="color:var(--success);"></i> Đã duyệt (<?= $approvedCount ?>)
   </a>
   <a href="?tab=rejected&search=<?= e($searchFilter) ?>" class="tab-btn <?= $tabFilter==='rejected'?'active':'' ?>">
-    ❌ Đã từ chối (<?= $rejectedCount ?>)
+    <i class="bi bi-x-circle-fill" style="color:var(--danger);"></i> Đã từ chối (<?= $rejectedCount ?>)
   </a>
 </div>
 
@@ -273,9 +273,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <form method="get" class="filter-bar">
   <input type="hidden" name="tab" value="<?= e($tabFilter) ?>">
   <input type="text" name="search" class="form-control filter-search" 
-         placeholder="🔍 Tìm theo họ tên, mã sinh viên, lớp..." value="<?= e($searchFilter) ?>">
-  <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-  <a href="?tab=<?= e($tabFilter) ?>" class="btn btn-outline">Reset</a>
+         placeholder="Tìm theo họ tên, mã sinh viên, lớp..." value="<?= e($searchFilter) ?>">
+  <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Tìm kiếm</button>
+  <a href="?tab=<?= e($tabFilter) ?>" class="btn btn-outline"><i class="bi bi-arrow-counterclockwise"></i> Reset</a>
 </form>
 
 <!-- Table -->
@@ -283,7 +283,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <div class="card-body" style="padding:0;">
     <?php if (empty($rows)): ?>
       <div class="empty-state">
-        <div class="icon">📂</div>
+        <div class="icon"><i class="bi bi-folder2-open" style="font-size:36px;"></i></div>
         <h3>Không có hồ sơ nào</h3>
         <p>Danh sách hồ sơ thuộc trạng thái này hiện tại đang trống.</p>
       </div>
@@ -348,9 +348,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
                         <input type="hidden" name="id" value="<?= $row['id'] ?>">
                         <input type="hidden" name="action" value="approve_update">
                         <input type="hidden" name="redirect_tab" value="update">
-                        <button type="submit" class="btn btn-primary btn-sm">✅ Duyệt</button>
+                        <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-check-lg"></i> Duyệt</button>
                       </form>
-                      <button class="btn btn-outline btn-sm" onclick="openRejectUpdateModal(<?= $row['id'] ?>)">❌ Từ chối</button>
+                      <button class="btn btn-outline btn-sm" onclick="openRejectUpdateModal(<?= $row['id'] ?>)"><i class="bi bi-x-lg"></i> Từ chối</button>
                     </div>
                   </td>
                 </tr>
@@ -386,7 +386,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
                   <td style="text-align:center;font-size:12px;color:var(--text2);"><?= date('H:i d/m/Y', strtotime($row['created_at'])) ?></td>
                   <td>
                     <div style="display:flex;gap:5px;justify-content:center;">
-                      <button class="btn btn-outline btn-sm" onclick="openDetailsModal(<?= htmlspecialchars(json_encode($row)) ?>)">👁️ Xem chi tiết</button>
+                      <button class="btn btn-outline btn-sm" onclick="openDetailsModal(<?= htmlspecialchars(json_encode($row)) ?>)"><i class="bi bi-eye"></i> Xem chi tiết</button>
                     </div>
                   </td>
                 </tr>
@@ -402,7 +402,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Details & Approval Modal -->
 <div class="modal-overlay" id="detailsModal">
   <div class="modal" style="max-width: 600px; width: 95%;">
-    <div class="modal-title">📋 Chi tiết hồ sơ đăng ký</div>
+    <div class="modal-title"><i class="bi bi-file-earmark-person" style="margin-right:6px;"></i> Chi tiết hồ sơ đăng ký</div>
     <div class="modal-body" style="max-height: 450px; overflow-y: auto; padding-right: 5px;">
       
       <div style="display:grid;grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:20px;">
@@ -474,7 +474,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
           </div>
           <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
             <button type="button" class="btn btn-outline" onclick="cancelReject()">Hủy bỏ</button>
-            <button type="submit" class="btn btn-danger">❌ Xác nhận Từ chối & Gửi mail</button>
+            <button type="submit" class="btn btn-danger"><i class="bi bi-x-circle-fill"></i> Xác nhận Từ chối & Gửi mail</button>
           </div>
         </form>
       </div>
@@ -484,11 +484,11 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <!-- Action buttons for PENDING tab -->
     <div class="modal-actions" id="modalActionsPending">
       <button onclick="closeModal()" class="btn btn-outline">Đóng</button>
-      <button onclick="showRejectBox()" class="btn btn-danger">❌ Từ chối</button>
+      <button onclick="showRejectBox()" class="btn btn-danger"><i class="bi bi-x-lg"></i> Từ chối</button>
       <form method="post" style="margin:0;">
         <input type="hidden" name="action" value="approve">
         <input type="hidden" name="id" id="approve_id">
-        <button type="submit" class="btn btn-success">✅ Duyệt & Đồng bộ</button>
+        <button type="submit" class="btn btn-success"><i class="bi bi-check-lg"></i> Duyệt & Đồng bộ</button>
       </form>
     </div>
 
@@ -502,7 +502,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Reject Update Modal -->
 <div class="modal-overlay" id="rejectUpdateModal">
   <div class="modal" style="max-width: 500px; width: 95%;">
-    <div class="modal-title" style="color:var(--danger);font-weight:700;">❌ Từ chối yêu cầu cập nhật</div>
+    <div class="modal-title" style="color:var(--danger);font-weight:700;"><i class="bi bi-x-circle-fill" style="margin-right:6px;"></i> Từ chối yêu cầu cập nhật</div>
     <div class="modal-body" style="padding-top:10px;">
       <form method="post" action="duyet_dang_ky.php">
         <input type="hidden" name="action" value="reject_update">

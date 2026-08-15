@@ -112,17 +112,12 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 - **Bản tin đầu trang**: Tích hợp thanh chọn tin tức trực tuyến với 3 nguồn báo chính thống: _Báo Dân trí_, _Báo Nhân Dân_, và _Báo điện tử Đảng Cộng sản Việt Nam_ ngay tại đầu trang chủ Dashboard (`index.php`) cho mọi tài khoản.
 - **Cơ chế hoạt động**: Sử dụng parser RSS động của PHP kết hợp dự phòng luồng tin từ Báo điện tử Chính phủ hoặc dữ liệu dự phòng cục bộ khi trang Báo Đảng Cộng sản chặn cURL (Cookie wall). Có thiết lập timeout 3 giây để đảm bảo tải trang cực kỳ nhanh chóng.
 
-### 6. Edge AI Module (`AI_Module`): Smart Auto-Fill, 5 Document Models Classifier & Smart Avatar Crop [NEW]
+### 6. Edge AI Module (`AI_Module`): Smart Auto-Fill, Pre-processing Pipeline & Smart Avatar Crop [NEW]
 
 - **Trợ lý OCR Tự Động Điền Hồ Sơ (Smart Auto-Fill)**: Cho phép sinh viên tải lên **ảnh chụp CCCD (Mặt trước & Mặt sau) + Thẻ sinh viên** (hoặc Giấy nhận thức về Đảng). Engine Edge AI (`AI_Module/edge_ai_autofill.js`) dùng Tesseract.js trích xuất trực tiếp _Họ tên, Ngày sinh, Mã SV, Giới tính, Quê quán, Dân tộc, Lớp_ và **tự động điền (Auto-fill)** vào form đăng ký `nhap_thong_tin.php`, tiết kiệm 90% thời gian gõ thủ công.
-- **Model Phân Loại 5 Loại Phiếu & Soi Thông Tin Chi Tiết Trong Phiếu (`edge_ai_ocr.js`)**: Edge AI tích hợp mô hình phân loại tệp và soi thông tin chi tiết từng trường thông tin trong 5 loại phiếu/hồ sơ bắt buộc:
-  1. 📝 **Bản tự nhận xét / Tự kiểm điểm:** Soi chi tiết *Họ tên, Ngày sinh, Ưu điểm, Khuyết điểm, Phương hướng phấn đấu, Ngày tháng & Chữ ký*.
-  2. 📜 **Giấy chứng nhận bồi dưỡng nhận thức về Đảng:** Soi chi tiết *Đơn vị cấp (ĐH Tây Bắc/Trung tâm chính trị), Họ tên học viên, Ngày sinh, Kết quả xếp loại, Số QĐ/Số chứng nhận, Ngày cấp*.
-  3. 👤 **Sơ yếu lý lịch / CCCD / Thẻ SV:** Soi chi tiết *Họ tên, Ngày sinh, Quê quán/Nguyên quán, Mã SV/CCCD, Lớp/Khoa*.
-  4. 📊 **Phiếu đánh giá chất lượng đoàn viên:** Soi chi tiết *Họ tên đoàn viên, Tên Chi đoàn, Xếp loại đoàn viên, Xác nhận Bí thư Chi đoàn*.
-  5. 🏅 **Minh chứng hoạt động phong trào / Giấy khen:** Soi chi tiết *Tên hoạt động, Họ tên người nhận, Đơn vị khen thưởng, Thời gian*.
-- **Phát hiện chính xác phiếu thiếu & thông tin thiếu trong phiếu**: Thay vì thông báo chung chung, Edge AI chỉ rõ chính xác phiếu nào còn **thiếu hoàn toàn** (chưa nộp) và tệp phiếu nào đã nộp nhưng **bị khuyết thông tin gì ở bên trong phiếu**, đưa ra bảng tổng hợp trực quan và lời khuyên khắc phục từng mục.
-- **Sửa lỗi xác thực $currentUser trong Header**: Sửa lỗi tham chiếu biến `$user` thành `$currentUser` tại `Giao_dien/header.php` line 82, giúp chuyển trang Edge AI mượt mà 100% không bắn warning.
+- **Tiền Xử Lý Ảnh Client-Side Bằng Canvas (`AI_Module/edge_image_processor.js`) [NEW]**:
+  - Tích hợp pipeline tiền xử lý ảnh hoàn toàn trên trình duyệt: Chuyển xám (Grayscale), Cân bằng sáng & Tăng tương phản tự động (Auto-Contrast), Nhị phân hóa thích ứng (Adaptive Thresholding/Binarization), Tăng độ nét (Sharpen Kernel Convolution), Khử nhiễu (Noise Reduction) và Ước tính xoay góc nghiêng (Deskew).
+  - Tăng độ chính xác nhận dạng ký tự tiếng Việt của Tesseract.js lên 20 - 35% đối với các ảnh chụp tài liệu bằng điện thoại hoặc chất lượng ánh sáng yếu.
 - **Kiểm tra & Tự động Cắt Ảnh Chân dung (Smart Avatar Validation & Crop 3x4)**: Tự động nhận diện khuôn mặt và dùng HTML5 Canvas cắt ảnh chân dung về đúng tỷ lệ ảnh thẻ chuẩn 3x4 (300x400) sắc nét trước khi tải lên máy chủ.
 - **Agent Phân loại & Ánh xạ Tên Cột Excel (`AI_Module/excel_column_agent.js`)**: Khi tải lên file Excel/CSV tại `Thong_ke_bao_cao/import_excel.php`, AI Agent tự động phát hiện các tiêu đề cột ghi tắt/sai lệch (như `Qli`, `QL`, `Quản lý`, `Mã SV`...) và bật Modal hiển thị bảng chọn cột bên trái để ánh xạ chuẩn xác vào các trường CSDL trước khi lưu.
 - **Sơ đồ Luồng Hoạt Động**: Xem chi tiết sơ đồ Activity & Sequence Diagram của Edge AI tại 👉 **[chitiet.md (Mục 4c & 5c)](chitiet.md#4c-quy-trình-smart-auto-fill-cccd--cắt-ảnh-thẻ-3x4-ai_module)**.
@@ -149,13 +144,22 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 - **Xác Nhận Modal An Toàn**: Bấm xóa hàng loạt sẽ hiển thị cửa sổ Modal xác nhận số lượng đối tượng cần xóa để ngăn ngừa thao tác nhầm lẫn.
 - **Mẫu Excel Điền Chuẩn Kèm ID Cột (`/api/export/template`)**: Cung cấp tính năng tải mẫu Excel chuẩn gồm Tiêu đề & Mã ID trường dữ liệu (`[ID: ho_ten]`, `[ID: ma_gvsv]`,...) giúp các Lớp điền đúng 100%, không lo bị lệch cột khi Import.
 
-### 9. Multi-Agent Suite: AI Inspector & Gap Diagnostic Agent (`AI_Module/document_inspector.js`) [NEW]
+### 9. Cooperating Multi-Agent Suite & Result Export Agent (`AI_Module`) [NEW]
 
 - **Khả năng Phối hợp Multi-Agent Đa Nhiệm (Cooperating AI Agent Suite)**:
-  - Hệ thống tích hợp các Agent phối hợp: **Semantic Document Synopsis Agent**, **Dynamic Form Field Extractor Agent**, **Gap Diagnostic & AI Verdict Agent** và **Executive Synthesis Agent**.
-- **Tự Động Ra Kết Luận Nhận Xét (AI Agent Verdict & Action Advice)**:
-  - AI không chỉ đếm ô trống mà tự động tổng hợp đoạn **Nhận xét Đánh giá Thông minh (`agentVerdict`)** giải thích lý do tệp khuyết thông tin và xuất khối **Hướng dẫn khắc phục (`actionAdvice`)** cụ thể cho từng tệp.
+  - Hệ thống tích hợp 4 AI Agent chuyên trách phối hợp nhịp nhàng:
+    1. **Semantic Document Synopsis Agent**: Đọc hiểu ngữ nghĩa văn bản OCR, nhận biết mẫu biểu và trích xuất tiêu đề / mục đích văn bản.
+    2. **Dynamic Form Field Extractor Agent**: Bóc tách ma trận nhãn trường với 10+ mẫu hồ sơ chuẩn Đảng vụ, khớp từ khóa mềm dẻo và trích xuất dữ liệu thực tế bằng Regex Traversal.
+    3. **Gap Diagnostic & AI Verdict Agent**: Tự động chẩn đoán thông tin khuyết, đưa ra **Nhận xét Đánh giá Thông minh (`agentVerdict`)** và khối **Hướng dẫn khắc phục (`actionAdvice`)** cho từng tệp.
+    4. **Executive Synthesis Agent**: Tổng hợp toàn bộ hồ sơ, dựng bảng **AI Agent Synthesis Dashboard** và lưu nhật ký đánh giá `rawSummary` vào CSDL MySQL `edge_ai_logs`.
+- **Agent Xuất Kết Quả Đa Định Dạng (`AI_Module/result_export_agent.js`) [NEW]**:
+  - Hỗ trợ xuất báo cáo thẩm định AI tức thì tại Client: **Xuất JSON (toàn bộ / từng file)**, **Xuất bảng CSV**, **Sao chép kết quả vào Clipboard** và sinh tóm tắt báo cáo nhanh chóng.
 - **Bảng AI Agent Synthesis Dashboard**: Dựng bảng tổng hợp kết luận tự động toàn hệ thống ở đầu giao diện kiểm tra.
+
+### 10. Live Camera Scanner & Explainable AI (XAI) Confidence Overlay [BK SUMMER SCHOOL 2026]
+
+- **Live WebRTC Camera Scanner (`live_camera_scanner.js`)**: Quét trực tiếp tài liệu và CCCD qua Camera thời gian thực, đo độ nét qua phương sai Laplace (Laplacian Variance Focus Meter), căn chỉnh khung ngắm Laser HUD và tự động kích hoạt chụp khi đủ nét.
+- **Explainable Edge AI Heatmap Overlay (`xai_confidence_overlay.js`)**: Trực quan hóa mức độ tin cậy của mạng nơ-ron Tesseract OCR trên từng token từ ngữ (Xanh $\ge 85\%$, Vàng $60-84\%$, Đỏ $<60\%$), hỗ trợ hover tra cứu độ tin cậy và vùng bounding box trên ảnh gốc.
 
 ---
 
@@ -376,19 +380,33 @@ web1/
 │   ├── header.php                 ← Thanh công cụ đầu trang & Sidebar phân quyền
 │   ├── footer.php                 ← Bản quyền chân trang & Xử lý hiệu ứng JS
 │   ├── assets/
-│   │   └── style.css              ← Hệ thống CSS stylesheet Dark Mode (Đỏ-Vàng)
+│   │   ├── style.css              ← CSS Master file import các module bên dưới
+│   │   └── styles/                ← [NEW] Hệ thống CSS Module hóa (Minimal Typography)
+│   │       ├── variables.css      ← Biến màu sắc, tokens, glassmorphism
+│   │       ├── base.css           ← Layout, typography, sidebar, scrollbar
+│   │       ├── components.css     ← Nút, bảng, form, modal, badge, timeline
+│   │       ├── user.css           ← Giao diện người dùng Sinh viên (Emerald)
+│   │       ├── manager.css        ← Giao diện Bí thư Chi bộ (Crimson)
+│   │       └── admin.css          ← Giao diện Quản trị viên (Violet)
 │   └── pic/                       ← Ảnh và logo giao diện
+├── AI_Module/                     ← [NEW] Hệ thống Trợ lý Client-Side AI Engine
+│   ├── edge_ai_autofill.js        ← Trợ lý OCR tự động điền form CCCD/Thẻ SV & Cắt ảnh 3x4 Canvas
+│   ├── edge_image_processor.js    ← Canvas Pre-processing Pipeline (Grayscale, Contrast, Threshold, Deskew)
+│   ├── excel_column_agent.js      ← AI Agent ánh xạ tiêu đề cột Excel/CSV thông minh
+│   ├── document_inspector.js      ← Multi-Agent Suite soi 10+ mẫu hồ sơ Đảng & ra AI Verdict
+│   ├── result_export_agent.js     ← Agent xuất kết quả thẩm định AI (JSON, CSV, Clipboard)
+│   └── readme_ai.md               ← Tài liệu kỹ thuật chi tiết AI Module
 ├── Quan_ly_doi_tuong/             ← Module nghiệp vụ hồ sơ
-│   ├── danh_sach.php              ← Danh sách đối tượng, bộ lọc đa năng & phân trang
-│   ├── them.php                   ← Form thêm mới đối tượng
+│   ├── danh_sach.php              ← Danh sách đối tượng, bộ lọc đa năng, phân trang & Xóa hàng loạt
+│   ├── them.php                   ← Form thêm mới đối tượng (35 trường)
 │   ├── chi_tiet.php               ← Trang chi tiết hồ sơ, Timeline 5 bước & Menu Xuất Mẫu 2026
 │   ├── sua.php                    ← Form chỉnh sửa thông tin & Avatar
-│   ├── xoa.php                    ← Xử lý xóa đối tượng
+│   ├── xoa.php                    ← Xử lý xóa đơn lẻ hoặc xóa hàng loạt (Bulk Delete)
 │   ├── sua_nhanh.php              ← Bảng Excel chỉnh sửa thông tin trực tiếp, tự động lưu
 │   ├── api_sua_nhanh.php          ← API xử lý lưu dữ liệu sửa nhanh qua AJAX
-│   ├── duyet_dang_ky.php          ← Giao diện phê duyệt/từ chối hồ sơ đăng ký trực tuyến
+│   ├── duyet_dang_ky.php          ← Giao diện phê duyệt/từ chối hồ sơ đăng ký trực tuyến & Cập nhật
 │   ├── edge_ai_check.php          ← [NEW] Giao diện Edge AI OCR quét kiểm tra hồ sơ minh chứng
-│   ├── edge_ai_ocr.js             ← [NEW] Engine OCR Tesseract.js & PDF.js xử lý client-side
+│   ├── edge_ai_ocr.js             ← [NEW] Engine OCR Tesseract.js & PDF.js tích hợp AI Inspector
 │   ├── api_save_ai_check.php      ← [NEW] API tiếp nhận file minh chứng (max 10MB) & lưu nhật ký AI
 │   ├── api_proxy.php              ← File trung gian PHP Proxy kết nối Python Server
 │   ├── cap_nhat_thong_tin.php     ← Form đề xuất cập nhật thông tin cá nhân dành cho quần chúng/sinh viên
@@ -400,8 +418,8 @@ web1/
 ├── Thong_ke_bao_cao/              ← Module thống kê, nhập xuất excel
 │   ├── thong_ke.php               ← Trang báo cáo chi tiết với 4 loại biểu đồ Chart.js
 │   ├── tim_kiem.php               ← Tìm kiếm nâng cao kết hợp nhiều trường dữ liệu
-│   ├── xuat_excel.php             ← Trình thuật sĩ xuất Excel cao cấp (3 loại xuất)
-│   └── import_excel.php           ← Trang nhập dữ liệu từ file Excel/CSV kéo thả
+│   ├── xuat_excel.php             ← Trình thuật sĩ xuất Excel cao cấp (3 loại xuất) & 8 Mẫu PDF 2026
+│   └── import_excel.php           ← Trang nhập dữ liệu từ file Excel/CSV kéo thả (kèm AI Column Agent)
 ├── He_thong/                      ← Module Quản trị hệ thống nâng cao
 │   └── cai_dat.php                ← Quản lý cài đặt thông tin trường học & mật khẩu chung
 └── User/                          ← [NEW] Module Đăng nhập, đăng ký và phân quyền

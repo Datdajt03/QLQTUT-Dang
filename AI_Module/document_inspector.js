@@ -147,30 +147,39 @@ class AIDocumentInspectorAgent {
 
         // 1. Trường hợp tệp thuộc Mô hình Bắt buộc của Đảng vụ
         if (model) {
-            const foundFields = [];
-            const missingFields = [];
+            const foundFields = [];     // Keyword tìm thấy + có giá trị
+            const missingFields = [];   // Keyword tìm thấy nhưng giá trị trống
+            // Keyword không tìm thấy → bỏ qua (không báo thiếu)
 
             model.requiredFields.forEach(field => {
-                const found = field.keywords.some(kw => textLower.includes(kw.toLowerCase()));
-                const valSnippet = found ? this.extractValueSnippet(extractedText, field.keywords) : null;
+                const keywordDetected = field.keywords.some(kw => textLower.includes(kw.toLowerCase()));
+                const valSnippet = keywordDetected ? this.extractValueSnippet(extractedText, field.keywords) : null;
 
-                const item = {
-                    fieldKey: field.fieldKey,
-                    fieldName: field.fieldName,
-                    found: (found && valSnippet !== null),
-                    extractedValue: valSnippet
-                };
-
-                if (item.found) {
-                    foundFields.push(item);
-                } else {
-                    missingFields.push(item);
+                if (keywordDetected && valSnippet !== null) {
+                    // Agent phát hiện trường trên phiếu VÀ có dữ liệu
+                    foundFields.push({
+                        fieldKey: field.fieldKey,
+                        fieldName: field.fieldName,
+                        found: true,
+                        extractedValue: valSnippet,
+                        detectedOnForm: true
+                    });
+                } else if (keywordDetected && valSnippet === null) {
+                    // Agent phát hiện trường trên phiếu NHƯNG ô trống / chưa điền
+                    missingFields.push({
+                        fieldKey: field.fieldKey,
+                        fieldName: field.fieldName,
+                        found: false,
+                        extractedValue: null,
+                        detectedOnForm: true
+                    });
                 }
+                // Nếu keyword không xuất hiện → trường này không có trên phiếu → bỏ qua
             });
 
-            const total = model.requiredFields.length;
+            const detectedCount = foundFields.length + missingFields.length;
             const foundCount = foundFields.length;
-            const scorePercent = total > 0 ? Math.round((foundCount / total) * 100) : 0;
+            const scorePercent = detectedCount > 0 ? Math.round((foundCount / detectedCount) * 100) : 100;
             let status = missingFields.length === 0 ? 'VALID' : 'INCOMPLETE';
 
             // AI Agent Reasoning: Đưa ra Kết luận Nhận xét & Khuyến nghị tự động
@@ -178,11 +187,11 @@ class AIDocumentInspectorAgent {
             let actionAdvice = '';
 
             if (status === 'VALID') {
-                agentVerdict = `AI Inspector Agent Kết luận: Tệp "${fileName}" khớp chuẩn Mẫu "${model.name}". Đã trích xuất thành công đầy đủ ${foundCount}/${total} trường thông tin (${scorePercent}%).`;
-                actionAdvice = `Tệp hợp lệ 100%. Đã sẵn sàng gửi duyệt chính thức.`;
+                agentVerdict = `AI Inspector Agent Kết luận: Tệp "${fileName}" khớp chuẩn Mẫu "${model.name}". Đã quét và xác nhận ${foundCount} trường thông tin đầy đủ (${scorePercent}%).`;
+                actionAdvice = `Tệp hợp lệ. Đã sẵn sàng gửi duyệt chính thức.`;
             } else {
-                agentVerdict = `AI Inspector Agent Cảnh báo: Tệp "${fileName}" thuộc Mẫu "${model.name}" nhưng bị THIẾU ${missingFields.length}/${total} trường thông tin bắt buộc.`;
-                actionAdvice = `Vui lòng điền bổ sung các trường còn thiếu: [${missingFields.map(f => f.fieldName).join(', ')}].`;
+                agentVerdict = `AI Inspector Agent Cảnh báo: Tệp "${fileName}" thuộc Mẫu "${model.name}" — phát hiện ${missingFields.length} ô thông tin còn trống.`;
+                actionAdvice = `Vui lòng điền bổ sung: [${missingFields.map(f => f.fieldName).join(', ')}].`;
             }
 
             return {
@@ -191,7 +200,7 @@ class AIDocumentInspectorAgent {
                 isRecognized: true,
                 foundFields: foundFields,
                 missingFields: missingFields,
-                totalFields: total,
+                totalFields: detectedCount,
                 foundCount: foundCount,
                 scorePercent: scorePercent,
                 status: status,
@@ -292,22 +301,34 @@ class AIDocumentInspectorAgent {
         this.models.forEach(m => {
             const entry = modelStatusMap[m.key];
             if (entry.uploadedFiles.length === 0) {
+                // Chưa nộp phiếu → chỉ đánh dấu MISSING, không liệt kê trường
                 entry.status = 'MISSING';
                 missingModelCount++;
-                entry.missingFields = m.requiredFields.map(f => ({ fieldKey: f.fieldKey, fieldName: f.fieldName }));
+                entry.missingFields = [];
+                entry.foundFields = [];
             } else {
-                let mergedFoundMap = {};
-                let mergedSnippetMap = {};
+                // Merge kết quả từ tất cả inspections với 3 trạng thái:
+                // 'found' = có keyword + có giá trị
+                // 'empty' = có keyword + trống giá trị  
+                // 'not_detected' = không tìm thấy keyword
+                let fieldStateMap = {};
+                let fieldSnippetMap = {};
 
                 m.requiredFields.forEach(f => {
-                    mergedFoundMap[f.fieldKey] = false;
-                    mergedSnippetMap[f.fieldKey] = null;
+                    fieldStateMap[f.fieldKey] = 'not_detected';
+                    fieldSnippetMap[f.fieldKey] = null;
                 });
 
                 entry.inspections.forEach(insp => {
                     insp.foundFields.forEach(ff => {
-                        mergedFoundMap[ff.fieldKey] = true;
-                        if (ff.extractedValue) mergedSnippetMap[ff.fieldKey] = ff.extractedValue;
+                        fieldStateMap[ff.fieldKey] = 'found';
+                        if (ff.extractedValue) fieldSnippetMap[ff.fieldKey] = ff.extractedValue;
+                    });
+                    insp.missingFields.forEach(mf => {
+                        // Chỉ đánh dấu 'empty' nếu chưa được 'found' ở inspection khác
+                        if (fieldStateMap[mf.fieldKey] !== 'found') {
+                            fieldStateMap[mf.fieldKey] = 'empty';
+                        }
                     });
                 });
 
@@ -315,18 +336,20 @@ class AIDocumentInspectorAgent {
                 const missingList = [];
 
                 m.requiredFields.forEach(f => {
-                    if (mergedFoundMap[f.fieldKey]) {
+                    if (fieldStateMap[f.fieldKey] === 'found') {
                         foundList.push({
                             fieldKey: f.fieldKey,
                             fieldName: f.fieldName,
-                            extractedValue: mergedSnippetMap[f.fieldKey]
+                            extractedValue: fieldSnippetMap[f.fieldKey]
                         });
-                    } else {
+                    } else if (fieldStateMap[f.fieldKey] === 'empty') {
+                        // Chỉ báo thiếu khi keyword CÓ trên phiếu nhưng giá trị trống
                         missingList.push({
                             fieldKey: f.fieldKey,
                             fieldName: f.fieldName
                         });
                     }
+                    // 'not_detected' → bỏ qua, không báo thiếu
                 });
 
                 entry.foundFields = foundList;

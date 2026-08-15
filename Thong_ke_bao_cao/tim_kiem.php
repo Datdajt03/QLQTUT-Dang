@@ -48,7 +48,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <div class="page-header">
   <div class="page-header-left">
     <div class="breadcrumb"><a href="<?= BASE_URL ?>index.php">Dashboard</a><span class="sep">›</span><span class="current">Tìm kiếm nâng cao</span></div>
-    <div class="page-title">🔍 Tìm kiếm <span>Nâng cao</span></div>
+    <div class="page-title"><i class="bi bi-search" style="margin-right:6px;"></i> Tìm kiếm <span>Nâng cao</span></div>
   </div>
 </div>
 
@@ -102,12 +102,12 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
         </div>
         <div class="form-group">
           <label class="form-label">Ngày kết nạp – Đến</label>
-          <input type="date" name="kn_to" class="form-control" value="<?= e($q_to_kn) ?>">
+          <input type="date" name="kn_to" class="form-control" value="<?= e($q_to_ns) ?>">
         </div>
       </div>
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;">
-        <a href="tim_kiem.php" class="btn btn-outline">Reset</a>
-        <button type="submit" class="btn btn-primary btn-lg">🔍 Tìm kiếm</button>
+        <a href="tim_kiem.php" class="btn btn-outline"><i class="bi bi-arrow-counterclockwise"></i> Reset</a>
+        <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-search"></i> Tìm kiếm</button>
       </div>
     </form>
   </div>
@@ -121,13 +121,13 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <div style="display:flex;align-items:center;gap:10px;">
       <span class="badge badge-gold"><?= count($results) ?> bản ghi</span>
       <?php if (!empty($results)): ?>
-      <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php?<?= http_build_query(array_filter(['search'=>$q_ten,'trang_thai'=>$q_tt])) ?>" class="btn btn-gold btn-sm">📤 Xuất</a>
+      <a href="<?= BASE_URL ?>Thong_ke_bao_cao/xuat_excel.php?<?= http_build_query(array_filter(['search'=>$q_ten,'trang_thai'=>$q_tt])) ?>" class="btn btn-gold btn-sm"><i class="bi bi-file-earmark-arrow-down-fill"></i> Xuất</a>
       <?php endif; ?>
     </div>
   </div>
   <div class="card-body" style="padding:0;">
     <?php if (empty($results)): ?>
-    <div class="empty-state"><div class="icon">🔍</div><h3>Không tìm thấy kết quả</h3><p>Thử điều chỉnh bộ lọc tìm kiếm</p></div>
+    <div class="empty-state"><div class="icon"><i class="bi bi-search" style="font-size:36px;"></i></div><h3>Không tìm thấy kết quả</h3><p>Thử điều chỉnh bộ lọc tìm kiếm</p></div>
     <?php else: ?>
     <div class="table-wrapper">
       <table class="data-table">
@@ -148,8 +148,8 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
             <td><span class="badge badge-<?= $cls ?>"><?= e($s) ?></span></td>
             <td>
               <div style="display:flex;gap:5px;">
-                <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/chi_tiet.php?id=<?= $r['id'] ?>" class="btn btn-outline btn-sm">👁️</a>
-                <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/sua.php?id=<?= $r['id'] ?>" class="btn btn-outline btn-sm">✏️</a>
+                <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/chi_tiet.php?id=<?= $r['id'] ?>" class="btn btn-outline btn-sm" title="Chi tiết"><i class="bi bi-eye"></i></a>
+                <a href="<?= BASE_URL ?>Quan_ly_doi_tuong/sua.php?id=<?= $r['id'] ?>" class="btn btn-outline btn-sm" title="Sửa"><i class="bi bi-pencil"></i></a>
               </div>
             </td>
           </tr>

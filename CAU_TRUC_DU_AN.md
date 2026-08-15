@@ -15,7 +15,9 @@
   - **Frontend UI/UX:** HTML5 + Vanilla CSS Modular System + JavaScript ES6
   - **Trí tuệ nhân tạo Client-side (Edge AI Engine):**
     - **OCR & Field Inspection:** `Tesseract.js` + `pdf.js` chạy trực tiếp tại Trình duyệt
-    - **Edge AI Models:** 5 Model phân loại phiếu và kiểm tra thông tin chi tiết từng tệp (`edge_ai_ocr.js`)
+    - **Canvas Pre-processing Pipeline:** `AI_Module/edge_image_processor.js` (Grayscale, Contrast, Adaptive Threshold, Sharpen, Deskew)
+    - **Multi-Agent Document Inspector:** `AI_Module/document_inspector.js` (Registry 10+ Mẫu biểu Đảng vụ, Dynamic Field Extractor, Gap Diagnostic, AI Verdict, Executive Synthesis)
+    - **Result Export Agent:** `AI_Module/result_export_agent.js` (Xuất JSON, CSV, Clipboard, Text Summary)
     - **Auto-Fill CCCD/Thẻ SV & Smart Avatar Crop 3x4:** `AI_Module/edge_ai_autofill.js`
     - **AI Agent Ánh Xạ Cột Excel:** `AI_Module/excel_column_agent.js`
 
@@ -64,7 +66,7 @@ web1/
 │   ├── thanh_vien_chi_bo.php          ← Trang xem danh sách bạn cùng Lớp/Chi bộ đã được duyệt
 │   ├── chi_tiet.php                   ← Xem hồ sơ chi tiết 1 đối tượng & In ấn
 │   ├── edge_ai_check.php              ← Trang kiểm tra Hồ sơ minh chứng bằng Edge AI OCR Client-side
-│   ├── edge_ai_ocr.js                 ← AI Engine: 5 Models phân loại tệp phiếu & Soi thông tin chi tiết từng trường
+│   ├── edge_ai_ocr.js                 ← AI Controller: Kết nối Tesseract, Canvas Preprocessor, Document Inspector & Export Agent
 │   └── api_save_ai_check.php          ← API tiếp nhận tệp tải lên và lưu nhật ký đánh giá vào edge_ai_logs
 │
 ├── Thong_ke_bao_cao/                  ← Báo cáo Thống kê & Xuất/Nhập Dữ liệu
@@ -76,15 +78,19 @@ web1/
 │
 ├── Quan_ly_danh_muc/                  ← Danh mục Hệ thống
 │   ├── chi_bo.php                     ← Quản lý danh mục Chi bộ Đảng (CRUD)
-│   └── dang_vien.php               ← Quản lý danh mục Đảng viên hướng dẫn/giúp đỡ (CRUD)
+│   └── dang_vien.php                  ← Quản lý danh mục Đảng viên hướng dẫn/giúp đỡ (CRUD)
 │
 ├── He_thong/                          ← Quản trị Hệ thống
 │   └── cai_dat.php                    ← Cài đặt Tên trường, Đảng bộ, Địa chỉ & Quản lý tài khoản Admin
 │
 ├── AI_Module/                         ← Các Module AI bổ trợ Client-side
 │   ├── edge_ai_autofill.js            ← OCR nhận diện CCCD/Thẻ SV & Cắt ảnh chân dung 3x4 tự động
+│   ├── edge_image_processor.js        ← Canvas Pre-processing Pipeline tối ưu ảnh OCR
+│   ├── live_camera_scanner.js         ← WebRTC Live Document Camera Scanner & Laplacian Focus Estimator
+│   ├── xai_confidence_overlay.js      ← Explainable Edge AI (XAI) Token Confidence Heatmap & Bounding Box
 │   ├── excel_column_agent.js          ← Client-side Agent phân tích & ánh xạ tiêu đề cột Excel thông minh
-│   ├── document_inspector.js          ← Module chuyên dụng soi & cảnh báo các trường thông tin bị thiếu trong phiếu
+│   ├── document_inspector.js          ← Multi-Agent Suite soi 10+ mẫu hồ sơ Đảng & ra AI Verdict
+│   ├── result_export_agent.js         ← Agent xuất kết quả kiểm tra AI (JSON, CSV, Clipboard)
 │   └── readme_ai.md                   ← Hướng dẫn chi tiết các tính năng AI
 │
 ├── python_api/                        ← Python Microservice Server
@@ -133,24 +139,32 @@ web1/
 
 ---
 
-## V. ĐẶC TẢ MÔ HÌNH EDGE AI KIỂM TRA HỒ SƠ (`edge_ai_ocr.js` & `document_inspector.js`)
+## V. ĐẶC TẢ MÔ HÌNH EDGE AI KIỂM TRA HỒ SƠ (`AI_Module`)
 
-Edge AI Engine chạy hoàn toàn client-side (không làm nặng Server), tích hợp **5 Document Models** tiêu chuẩn cho bộ hồ sơ phát triển Đảng:
+Edge AI Engine chạy hoàn toàn client-side (không làm nặng Server), tích hợp **Form Registry với hơn 10 Mẫu biểu Đảng vụ tiêu chuẩn**:
 
-| STT | Tên Model Phiếu/Hồ sơ | Mã Model | Các Trường Thông Tin Chi Tiết Soi Bắt Buộc |
+| STT | Tên Mẫu Biểu / Hồ sơ | Mã Model | Các Trường Thông Tin Chi Tiết Soi Bắt Buộc |
 | :--- | :--- | :--- | :--- |
-| **1** | **Bản tự nhận xét / Tự kiểm điểm** | `ban_tu_nhan_xet` | Họ tên, Ngày sinh, Ưu điểm/Thành tích, Khuyết điểm/Hạn chế, Phương hướng phấn đấu, Ngày tháng & Chữ ký |
-| **2** | **Giấy chứng nhận bồi dưỡng nhận thức về Đảng** | `giay_chung_nhan` | Đơn vị cấp (ĐH Tây Bắc / Trung tâm chính trị), Họ tên học viên, Ngày sinh, Xếp loại, Số QĐ/Số chứng nhận, Ngày cấp |
-| **3** | **Sơ yếu lý lịch / CCCD / Thẻ SV** | `ho_so_ca_nhan` | Họ tên, Ngày sinh, Quê quán/Nguyên quán, Mã SV/Số CCCD, Lớp/Khoa sinh hoạt |
-| **4** | **Phiếu đánh giá chất lượng đoàn viên** | `phieu_danh_gia` | Họ tên đoàn viên, Tên Chi đoàn, Kết quả xếp loại đoàn viên, Xác nhận/Chữ ký Bí thư Chi đoàn |
-| **5** | **Minh chứng hoạt động phong trào / Giấy khen** | `minh_chung_hoat_dong` | Tên hoạt động (Hiến máu, Tình nguyện...), Họ tên người nhận, Đơn vị khen thưởng, Thời gian thực hiện |
+| **1** | **Đơn xin vào Đảng (Mẫu 1-KNĐ)** | `mau_1_knd` | Họ tên, Ngày sinh, Quê quán/Nơi cư trú, Trình độ học vấn, Nguyện vọng vào Đảng, Ngày viết & Chữ ký |
+| **2** | **Lý lịch người vào Đảng (Mẫu 2-KNĐ)** | `mau_2_knd` | Họ tên khai sinh, Bí danh, Ngày sinh, Nơi sinh, Quê quán, Nơi thường trú, Dân tộc, Tôn giáo, Thành phần gia đình, Trình độ văn hóa, Nghề nghiệp, Cam đoan & Chữ ký |
+| **3** | **Giấy giới thiệu người vào Đảng (Mẫu 3-KNĐ)** | `mau_3_knd` | Họ tên Đảng viên giới thiệu, Chức vụ/Chi bộ, Họ tên người được giới thiệu, Ngày sinh, Nhận xét phẩm chất đạo đức, Ý kiến giới thiệu, Ngày tháng & Chữ ký |
+| **4** | **Nghị quyết giới thiệu Đoàn viên vào Đảng (Mẫu 4-KNĐ)** | `mau_4_knd` | Tên BCH Đoàn cơ sở, Họ tên đoàn viên, Ngày sinh, Ưu điểm/Thành tích, Kết quả biểu quyết tín nhiệm, Ngày ký Bí thư Đoàn |
+| **5** | **Nghị quyết Công đoàn giới thiệu vào Đảng (Mẫu 4a-KNĐ)** | `mau_4a_knd` | Tên BCH Công đoàn, Họ tên công đoàn viên, Quá trình công tác, Kết quả lấy ý kiến/biểu quyết, Chữ ký Chủ tịch CĐ |
+| **6** | **Tổng hợp ý kiến nhận xét đoàn thể & cư trú (Mẫu 5-KNĐ)** | `mau_5_knd` | Họ tên người vào Đảng, Ý kiến tổ chức đoàn thể, Ý kiến cấp ủy/chi ủy nơi cư trú, Kết luận chi ủy, Chữ ký đại diện |
+| **7** | **Giấy chứng nhận bồi dưỡng nhận thức Đảng I/II** | `giay_chung_nhan` | Đơn vị cấp (ĐH Tây Bắc / Trung tâm chính trị), Họ tên học viên, Ngày sinh, Kết quả xếp loại, Số QĐ/Số chứng nhận, Ngày cấp |
+| **8** | **Bản tự nhận xét / Tự kiểm điểm** | `ban_tu_nhan_xet` | Họ tên, Ngày sinh, Ưu điểm/Thành tích, Khuyết điểm/Hạn chế, Phương hướng phấn đấu, Ngày tháng & Chữ ký |
+| **9** | **Sơ yếu lý lịch / CCCD / Thẻ SV** | `ho_so_ca_nhan` | Họ tên, Ngày sinh, Quê quán/Nguyên quán, Mã SV/Số CCCD, Lớp/Khoa sinh hoạt |
+| **10** | **Phiếu đánh giá chất lượng đoàn viên** | `phieu_danh_gia` | Họ tên đoàn viên, Tên Chi đoàn, Kết quả xếp loại đoàn viên, Xác nhận Bí thư Chi đoàn |
+| **11** | **Minh chứng hoạt động phong trào / Giấy khen** | `minh_chung_hoat_dong` | Tên hoạt động (Hiến máu, Tình nguyện...), Họ tên người nhận, Đơn vị khen thưởng, Thời gian |
 
-### Quy trình Phối hợp Multi-Agent Suite (`AIDocumentInspectorAgent`):
-1. **OCR Trích xuất Client-side:** Tệp PDF/Ảnh tải lên được trích xuất văn bản bằng `pdf.js` / `Tesseract.js`.
-2. **Semantic Document Synopsis Agent:** Tự động đọc và nhận diện Tiêu đề văn bản/Mẫu phiếu.
-3. **Dynamic Form Field Extractor Agent:** Bóc tách ma trận nhãn trường `[Nhãn_Trường]: [Dữ_liệu / Ô_trống]`.
-4. **Gap Diagnostic & AI Verdict Agent:** Tự động đưa ra kết luận đánh giá thông minh (`agentVerdict`) kèm lời khuyên khắc phục (`actionAdvice`).
-5. **Executive Synthesis Agent:** Hiển thị **AI Agent Synthesis Dashboard** tổng hợp cấp cao và lưu nhật ký vào MySQL `edge_ai_logs` qua `api_save_ai_check.php`.
+### Pipeline Xử Lý và Phối Hợp Multi-Agent:
+1. **Tiền Xử Lý Ảnh Canvas (`EdgeImageProcessor`):** Tự động chuyển Grayscale, Auto-Contrast, Adaptive Thresholding, Sharpening, Deskew để tối ưu độ tương phản cho OCR.
+2. **OCR Trích Xuất Văn Bản:** Sử dụng `pdf.js` cho PDF và `Tesseract.js` cho ảnh chụp ngay trên Web Worker client.
+3. **Semantic Document Synopsis Agent:** Phân tích ngữ nghĩa văn bản, nhận diện mẫu biểu và bóc tách tiêu đề/mục đích tệp.
+4. **Dynamic Form Field Extractor Agent:** Khớp từ khóa trường mềm dẻo theo ma trận và trích xuất dữ liệu thực tế bằng Regex Snippet Extraction.
+5. **Gap Diagnostic & AI Verdict Agent:** Chẩn đoán trường khuyết, sinh nhận xét thông minh (`agentVerdict`) và khuyến nghị khắc phục (`actionAdvice`).
+6. **Executive Synthesis Agent:** Tổng hợp toàn bộ hồ sơ, dựng bảng **AI Agent Synthesis Dashboard** và lưu nhật ký đánh giá `rawSummary` vào MySQL `edge_ai_logs`.
+7. **Result Export Agent (`ResultExportAgent`):** Xuất báo cáo thẩm định ra JSON, CSV, Clipboard hoặc tóm tắt tức thì.
 
 ---
 

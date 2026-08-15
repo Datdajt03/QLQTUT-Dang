@@ -10,25 +10,61 @@ async function processEdgeAIAutoFill(files, onProgress, onSuccess, onError) {
     return;
   }
 
-  if (onProgress) onProgress("🤖 Edge AI đang nạp Tesseract OCR Engine...");
+  if (onProgress) onProgress("Edge AI đang nạp Tesseract OCR Engine (WASM)...");
 
   try {
     let combinedText = "";
+    let allWords = [];
+    let lastProcessedImage = null;
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      if (onProgress) onProgress(`🤖 Edge AI đang đọc tệp ${i + 1}/${files.length}: ${file.name}...`);
+      if (onProgress) onProgress(`Edge AI đang đọc tệp ${i + 1}/${files.length}: ${file.name}...`);
 
-      const text = await runTesseractOCR(file);
-      combinedText += "\n" + text;
+      // Tiền xử lý ảnh Canvas nếu có
+      let targetFile = file;
+      if (typeof EdgeImageProcessor !== 'undefined') {
+        try {
+          const procBlob = await EdgeImageProcessor.preprocess(file);
+          targetFile = new File([procBlob], file.name, { type: 'image/png' });
+        } catch (e) {
+          console.warn("Preprocess failed, using raw:", e);
+        }
+      }
+      lastProcessedImage = targetFile;
+
+      const ocrRes = await runTesseractOCR(targetFile);
+      combinedText += "\n" + (ocrRes.text || '');
+      if (ocrRes.words) {
+        allWords = allWords.concat(ocrRes.words);
+      }
     }
 
-    if (onProgress) onProgress("⚡ AI đang phân tích dữ liệu văn bản bóc tách...");
+    if (onProgress) onProgress("AI đang phân tích dữ liệu bóc tách trường thông tin...");
 
-    // Bóc tách thông tin từ văn bản OCR
+    // Kiểm tra tính hợp lệ của nội dung văn bản bóc tách
+    const cleanChars = combinedText.replace(/[^a-zA-Z0-9À-ỹ]/g, '').trim();
     const extractedData = parseCardOCRText(combinedText);
     
-    if (onSuccess) onSuccess(extractedData, combinedText);
+    // Kiểm tra xem ảnh có chứa nội dung tài liệu hợp lệ không
+    const hasRecognizedField = Boolean(
+      extractedData.ho_ten ||
+      extractedData.ma_gvsv ||
+      extractedData.ngay_sinh ||
+      extractedData.que_quan ||
+      extractedData.dan_toc ||
+      extractedData.lop ||
+      extractedData.chi_bo_cong_nhan
+    );
+
+    if (cleanChars.length < 10 && !hasRecognizedField) {
+      if (onError) {
+        onError("⚠️ Ảnh chụp không có nội dung văn bản hoặc không nhận dạng được tài liệu hợp lệ! Vui lòng hướng camera chụp rõ nét CCCD, Thẻ Sinh Viên hoặc Đơn xin vào Đảng.");
+      }
+      return;
+    }
+
+    if (onSuccess) onSuccess(extractedData, combinedText, { words: allWords, image: lastProcessedImage });
 
   } catch (err) {
     console.error("Edge AI AutoFill Error:", err);
@@ -55,8 +91,11 @@ function runTesseractOCR(file) {
 function doOCR(file, resolve, reject) {
   Tesseract.recognize(file, 'vie', {
     logger: m => console.log(m)
-  }).then(({ data: { text } }) => {
-    resolve(text || '');
+  }).then(({ data }) => {
+    resolve({
+      text: data.text || '',
+      words: data.words || []
+    });
   }).catch(reject);
 }
 

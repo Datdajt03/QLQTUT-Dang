@@ -82,20 +82,20 @@ require_once __DIR__ . '/Giao_dien/header.php';
 <!-- Page Header -->
 <div class="page-header">
   <div class="page-header-left">
-    <div class="page-title">Dashboard</div>
+    <div class="page-title"><i class="bi bi-speedometer2" style="margin-right:8px;"></i> Dashboard</div>
     <div class="page-subtitle">Xin chào, <strong><?= e($user['ho_ten'] ?: $user['username']) ?></strong> (Vai trò: <span style="color:var(--gold);"><?= $vaiTro ?></span>)</div>
   </div>
   <?php if ($vaiTro !== 'Người dùng thường'): ?>
   <div style="display:flex;gap:10px;align-items:center;">
-    <a href="Quan_ly_doi_tuong/them.php" class="btn btn-primary">Thêm đối tượng mới</a>
-    <a href="Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold">Xuất Excel</a>
+    <a href="Quan_ly_doi_tuong/them.php" class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Thêm đối tượng mới</a>
+    <a href="Thong_ke_bao_cao/xuat_excel.php" class="btn btn-gold"><i class="bi bi-file-earmark-arrow-down-fill"></i> Xuất Excel</a>
   </div>
   <?php else: ?>
   <div style="display:flex;gap:10px;align-items:center;">
     <?php if ($myProfile): ?>
-      <a href="Quan_ly_doi_tuong/cap_nhat_thong_tin.php" class="btn btn-gold">Yêu cầu cập nhật thông tin</a>
+      <a href="Quan_ly_doi_tuong/cap_nhat_thong_tin.php" class="btn btn-gold"><i class="bi bi-pencil-square"></i> Yêu cầu cập nhật thông tin</a>
     <?php else: ?>
-      <a href="Quan_ly_doi_tuong/nhap_thong_tin.php" class="btn btn-primary">Gửi yêu cầu đăng ký mới</a>
+      <a href="Quan_ly_doi_tuong/nhap_thong_tin.php" class="btn btn-primary"><i class="bi bi-send-fill"></i> Gửi yêu cầu đăng ký mới</a>
     <?php endif; ?>
   </div>
   <?php endif; ?>
@@ -103,7 +103,7 @@ require_once __DIR__ . '/Giao_dien/header.php';
 
 <?php if (isset($dbError)): ?>
 <div class="flash flash-danger">
-  ❌ Lỗi kết nối DB: <?= e($dbError) ?> –
+  <i class="bi bi-exclamation-triangle-fill" style="margin-right:6px;"></i> Lỗi kết nối DB: <?= e($dbError) ?> –
   <a href="Cau_hinh/setup.php" style="color:inherit;font-weight:700;">Chạy Setup để tạo database</a>
 </div>
 <?php endif; ?>
@@ -663,10 +663,10 @@ if ($newsSource === 'dangcongsan') {
     <div class="card-body" style="padding:0;">
       <?php if (empty($myRequests)): ?>
       <div class="empty-state" style="padding: 40px 20px;">
-        <div class="icon" style="font-size:48px;">📂</div>
+        <div class="icon"><i class="bi bi-folder2-open" style="font-size:48px;color:var(--text2);"></i></div>
         <h3>Bạn chưa gửi hồ sơ đăng ký nào</h3>
         <p>Gửi hồ sơ đăng ký của bạn ngay để Ban chi bộ xem xét phê duyệt kết nạp Đảng.</p>
-        <a href="Quan_ly_doi_tuong/nhap_thong_tin.php" class="btn btn-primary" style="margin-top:16px;">✍️ Gửi hồ sơ đăng ký ngay</a>
+        <a href="Quan_ly_doi_tuong/nhap_thong_tin.php" class="btn btn-primary" style="margin-top:16px;"><i class="bi bi-pencil-fill"></i> Gửi hồ sơ đăng ký ngay</a>
       </div>
       <?php else: ?>
       <div class="table-wrapper">
@@ -697,11 +697,11 @@ if ($newsSource === 'dangcongsan') {
               ?></td>
               <td>
                 <?php if ($row['trang_thai'] === 'Đã từ chối'): ?>
-                  <span style="color:var(--red);font-size:13px;">❌ <?= e($row['ly_do_tu_choi'] ?: 'Không có lý do cụ thể') ?></span>
+                  <span style="color:var(--red);font-size:13px;"><i class="bi bi-x-circle-fill"></i> <?= e($row['ly_do_tu_choi'] ?: 'Không có lý do cụ thể') ?></span>
                 <?php elseif ($row['trang_thai'] === 'Đã duyệt'): ?>
-                  <span style="color:var(--success);font-size:13px;">✅ Hồ sơ đã được duyệt và thêm vào danh sách theo dõi</span>
+                  <span style="color:var(--success);font-size:13px;"><i class="bi bi-check-circle-fill"></i> Hồ sơ đã được duyệt và thêm vào danh sách theo dõi</span>
                 <?php else: ?>
-                  <span style="color:var(--text2);font-size:13px;">⏳ Đang chờ Ban quản lý Chi bộ kiểm tra hồ sơ</span>
+                  <span style="color:var(--text2);font-size:13px;"><i class="bi bi-hourglass-split"></i> Đang chờ Ban quản lý Chi bộ kiểm tra hồ sơ</span>
                 <?php endif; ?>
               </td>
             </tr>
@@ -718,7 +718,7 @@ if ($newsSource === 'dangcongsan') {
   <!-- Stat Cards -->
   <div class="stat-grid">
     <div class="stat-card red fade-in">
-      <div class="stat-icon">👥</div>
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
       <div class="stat-info">
         <div class="stat-number"><?= number_format($total) ?></div>
         <div class="stat-label">Tổng đối tượng</div>
@@ -726,7 +726,7 @@ if ($newsSource === 'dangcongsan') {
       </div>
     </div>
     <div class="stat-card gold fade-in" style="animation-delay:0.1s">
-      <div class="stat-icon">🔄</div>
+      <div class="stat-icon"><i class="bi bi-arrow-repeat"></i></div>
       <div class="stat-info">
         <div class="stat-number"><?= number_format($danTheoD) ?></div>
         <div class="stat-label">Đang theo dõi</div>
@@ -734,7 +734,7 @@ if ($newsSource === 'dangcongsan') {
       </div>
     </div>
     <div class="stat-card green fade-in" style="animation-delay:0.2s">
-      <div class="stat-icon">✅</div>
+      <div class="stat-icon"><i class="bi bi-check-circle-fill"></i></div>
       <div class="stat-info">
         <div class="stat-number"><?= number_format($daKetNap) ?></div>
         <div class="stat-label">Đã kết nạp</div>
@@ -742,7 +742,7 @@ if ($newsSource === 'dangcongsan') {
       </div>
     </div>
     <div class="stat-card blue fade-in" style="animation-delay:0.3s">
-      <div class="stat-icon">↗️</div>
+      <div class="stat-icon"><i class="bi bi-box-arrow-up-right"></i></div>
       <div class="stat-info">
         <div class="stat-number"><?= number_format($daChuyen) ?></div>
         <div class="stat-label">Đã chuyển</div>
@@ -757,7 +757,7 @@ if ($newsSource === 'dangcongsan') {
     <!-- Biểu đồ tròn -->
     <div class="card fade-in">
       <div class="card-header">
-        <div class="card-title">Theo trạng thái</div>
+        <div class="card-title"><i class="bi bi-pie-chart-fill" style="margin-right:6px;"></i> Theo trạng thái</div>
       </div>
       <div class="card-body">
         <div class="chart-container" style="height:220px;">
@@ -769,7 +769,7 @@ if ($newsSource === 'dangcongsan') {
     <!-- Biểu đồ tháng -->
     <div class="card fade-in">
       <div class="card-header">
-        <div class="card-title">Đối tượng theo tháng</div>
+        <div class="card-title"><i class="bi bi-bar-chart-fill" style="margin-right:6px;"></i> Đối tượng theo tháng</div>
       </div>
       <div class="card-body">
         <div class="chart-container" style="height:220px;">
@@ -782,15 +782,15 @@ if ($newsSource === 'dangcongsan') {
   <!-- Danh sách gần đây -->
   <div class="card fade-in">
     <div class="card-header">
-      <div class="card-title">Đối tượng mới cập nhật</div>
-      <a href="Quan_ly_doi_tuong/danh_sach.php" class="btn btn-outline btn-sm">Xem tất cả →</a>
+      <div class="card-title"><i class="bi bi-clock-history" style="margin-right:6px;"></i> Đối tượng mới cập nhật</div>
+      <a href="Quan_ly_doi_tuong/danh_sach.php" class="btn btn-outline btn-sm">Xem tất cả <i class="bi bi-arrow-right"></i></a>
     </div>
     <div class="card-body" style="padding:0;">
       <?php if (empty($recent)): ?>
       <div class="empty-state">
         <h3>Chưa có dữ liệu đối tượng</h3>
         <p>Thêm đối tượng đầu tiên để bắt đầu quản lý</p>
-        <a href="Quan_ly_doi_tuong/them.php" class="btn btn-primary" style="margin-top:16px;">Thêm ngay</a>
+        <a href="Quan_ly_doi_tuong/them.php" class="btn btn-primary" style="margin-top:16px;"><i class="bi bi-person-plus-fill"></i> Thêm ngay</a>
       </div>
       <?php else: ?>
       <div class="table-wrapper">
@@ -825,8 +825,8 @@ if ($newsSource === 'dangcongsan') {
               <td><?= $row['ngay_ket_nap'] ? formatDate($row['ngay_ket_nap']) : '<span style="color:var(--text2)">—</span>' ?></td>
               <td>
                 <div style="display:flex;gap:6px;">
-                  <a href="Quan_ly_doi_tuong/chi_tiet.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Xem">Xem</a>
-                  <a href="Quan_ly_doi_tuong/sua.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Sửa">Sửa</a>
+                  <a href="Quan_ly_doi_tuong/chi_tiet.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Xem"><i class="bi bi-eye"></i></a>
+                  <a href="Quan_ly_doi_tuong/sua.php?id=<?= $row['id'] ?>" class="btn btn-outline btn-sm" title="Sửa"><i class="bi bi-pencil"></i></a>
                 </div>
               </td>
             </tr>

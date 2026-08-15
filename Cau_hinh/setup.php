@@ -15,7 +15,7 @@ try {
 
     // Create DB
     $pdo->exec("CREATE DATABASE IF NOT EXISTS `$dbName` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-    $status[] = ['ok', "✅ Database <strong>$dbName</strong> đã được tạo (hoặc đã tồn tại)"];
+    $status[] = ['ok', "<i class='bi bi-check-circle-fill' style='margin-right:6px;'></i> Database <strong>$dbName</strong> đã được tạo (hoặc đã tồn tại)"];
 
     // Use DB
     $pdo->exec("USE `$dbName`");
@@ -46,30 +46,30 @@ try {
                 // Table/data already exists – ignore (1050: Table exists, 1060: Duplicate column, 1062: Duplicate entry)
                 $msg = $e->getMessage();
                 if (strpos($msg, 'already exists') === false && strpos($msg, '1060') === false && strpos($msg, '1062') === false) {
-                    $status[] = ['warn', '⚠️ ' . htmlspecialchars($msg)];
+                    $status[] = ['warn', '<i class="bi bi-exclamation-triangle-fill" style="margin-right:6px;"></i> ' . htmlspecialchars($msg)];
                 }
             }
         }
-        $status[] = ['ok', "✅ Đã chạy $cnt câu SQL từ db.sql"];
+        $status[] = ['ok', "<i class='bi bi-check-circle-fill' style='margin-right:6px;'></i> Đã chạy $cnt câu SQL từ db.sql"];
     } else {
-        $status[] = ['warn', '⚠️ Không tìm thấy file db.sql'];
+        $status[] = ['warn', '<i class="bi bi-exclamation-triangle-fill" style="margin-right:6px;"></i> Không tìm thấy file db.sql'];
     }
 
     // Auto fix missing 'avatar' column if table already existed
     try {
         $pdo->exec("ALTER TABLE doi_tuong ADD COLUMN avatar VARCHAR(255) DEFAULT NULL AFTER id");
-        $status[] = ['ok', "✅ Đã tự động bổ sung cột <strong>avatar</strong> vào bảng doi_tuong"];
+        $status[] = ['ok', "<i class='bi bi-check-circle-fill' style='margin-right:6px;'></i> Đã tự động bổ sung cột <strong>avatar</strong> vào bảng doi_tuong"];
     } catch (PDOException $e) {
         // Column already exists - ignore
     }
 
     // Test connection
     $test = $pdo->query("SELECT COUNT(*) FROM doi_tuong")->fetchColumn();
-    $status[] = ['ok', "✅ Bảng <strong>doi_tuong</strong> sẵn sàng – hiện có <strong>$test</strong> bản ghi"];
+    $status[] = ['ok', "<i class='bi bi-check-circle-fill' style='margin-right:6px;'></i> Bảng <strong>doi_tuong</strong> sẵn sàng – hiện có <strong>$test</strong> bản ghi"];
 
     $success = true;
 } catch (PDOException $e) {
-    $status[] = ['err', '❌ Lỗi: ' . htmlspecialchars($e->getMessage())];
+    $status[] = ['err', '<i class="bi bi-x-circle-fill" style="margin-right:6px;"></i> Lỗi: ' . htmlspecialchars($e->getMessage())];
     $success  = false;
 }
 ?>
@@ -81,6 +81,7 @@ try {
   <title>Setup Database – Kết nạp Đảng</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Roboto', sans-serif; background: #0f0f14; color: #e8e8f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -96,14 +97,14 @@ try {
     .btn { display: block; text-align: center; background: linear-gradient(135deg,#C8102E,#9e0b22); color: #fff; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 15px; margin-top: 20px; transition: all 0.2s; }
     .btn:hover { opacity: 0.85; transform: translateY(-1px); }
     .btn-gold { background: linear-gradient(135deg,#FFD700,#e6c200); color: #1a1a00; }
-    .note { font-size: 12px; color: #6060780; margin-top: 16px; text-align: center; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .note { font-size: 12px; color: #606078; margin-top: 16px; text-align: center; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
     code { background: rgba(255,255,255,0.08); padding: 2px 8px; border-radius: 4px; font-size: 12px; color: #FFD700; }
   </style>
 </head>
 <body>
 <div class="box">
   <div class="box-header">
-    <div style="font-size:48px;margin-bottom:12px;">⭐</div>
+    <div style="font-size:36px;margin-bottom:8px;color:#FFD700;"><i class="bi bi-star-fill"></i></div>
     <h1>Setup Hệ thống</h1>
     <p>Thiết kế Website quản lý quần chúng ưu tú phục vụ kết nạp Đảng</p>
   </div>
@@ -113,7 +114,7 @@ try {
     <?php endforeach; ?>
 
     <?php if ($success ?? false): ?>
-    <a href="../index.php" class="btn">🏠 Vào trang Dashboard</a>
+    <a href="../index.php" class="btn"><i class="bi bi-speedometer2" style="margin-right:6px;"></i> Vào trang Dashboard</a>
     <?php else: ?>
     <div class="status-item warn">
       <div>
@@ -122,7 +123,7 @@ try {
         • Thông tin kết nối: Host <code>localhost</code>, User <code>root</code>, Pass <code>(trống)</code>
       </div>
     </div>
-    <a href="setup.php" class="btn btn-gold" style="margin-top:10px;">🔄 Thử lại</a>
+    <a href="setup.php" class="btn btn-gold" style="margin-top:10px;"><i class="bi bi-arrow-clockwise" style="margin-right:6px;"></i> Thử lại</a>
     <?php endif; ?>
 
     <div class="note">

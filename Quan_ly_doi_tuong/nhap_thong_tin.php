@@ -185,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <div class="form-container">
     <div class="form-header">
-      <div class="star">⭐</div>
+      <div class="star"><i class="bi bi-star-fill" style="color:var(--gold);"></i></div>
       <h2>ĐĂNG KÝ THÔNG TIN <span>QUẦN CHÚNG ƯU TÚ</span></h2>
       <p>Nhập thông tin cá nhân chính xác để đề xuất kết nạp Đảng</p>
     </div>
@@ -193,17 +193,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="form-body">
       <?php if ($success): ?>
         <div class="success-card fade-in">
-          <div class="icon">✅</div>
+          <div class="icon"><i class="bi bi-check-circle-fill" style="color:var(--success);font-size:64px;"></i></div>
           <h3>Gửi thông tin thành công!</h3>
           <p>Hồ sơ đăng ký của bạn đã được gửi tới Ban quản lý Chi bộ trường. Kết quả phê duyệt cùng thông tin phản hồi sẽ
             được gửi tới hòm thư Gmail <strong><?= e($email) ?></strong> của bạn sớm nhất.</p>
-          <a href="nhap_thong_tin.php" class="btn btn-outline">🔄 Nhập hồ sơ khác</a>
+          <a href="nhap_thong_tin.php" class="btn btn-outline"><i class="bi bi-arrow-clockwise"></i> Nhập hồ sơ khác</a>
         </div>
       <?php else: ?>
 
         <?php if (!empty($errors)): ?>
           <div class="flash flash-danger" style="margin-bottom: 24px;">
-            <strong>❌ Có lỗi xảy ra:</strong>
+            <strong><i class="bi bi-exclamation-triangle-fill" style="margin-right:6px;"></i> Có lỗi xảy ra:</strong>
             <ul style="margin-left: 20px; margin-top: 6px;">
               <?php foreach ($errors as $err): ?>
                 <li><?= e($err) ?></li>
@@ -215,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Edge AI Widget: AI_Module/edge_ai_autofill.js -->
         <div style="background:linear-gradient(135deg, rgba(200,16,46,0.1), rgba(255,215,0,0.1));border:1px dashed var(--gold);border-radius:12px;padding:20px;margin-bottom:24px;">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-            <span style="font-size:24px;">🤖</span>
+            <span style="font-size:24px;color:var(--gold);"><i class="bi bi-cpu-fill"></i></span>
             <div>
               <h4 style="margin:0;font-size:15px;color:var(--gold);">TRỢ LÝ EDGE AI (`AI_Module`): TỰ ĐỘNG ĐIỀN FORM & CẮT ẢNH THẺ 3x4</h4>
               <p style="margin:2px 0 0 0;font-size:11.5px;color:var(--text2);">Tải <strong>CCCD (mặt trước & sau) + Thẻ sinh viên</strong> để AI tự động điền form, hoặc tải <strong>Ảnh thẻ</strong> để AI căn chỉnh 3x4.</p>
@@ -225,16 +225,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:14px;">
             <!-- Card 1: CCCD 2 mặt + Thẻ Sinh Viên -->
             <div style="background:var(--bg2);border:1px solid var(--border);padding:14px;border-radius:8px;">
-              <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;color:var(--text);">🆔 Upload CCCD (2 Mặt) + Thẻ Sinh Viên</label>
+              <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;color:var(--text);"><i class="bi bi-person-vcard-fill" style="margin-right:4px;"></i> Upload CCCD (2 Mặt) + Thẻ Sinh Viên</label>
               <input type="file" id="aiDocInput" multiple accept="image/*,application/pdf" class="form-control" style="font-size:11px;padding:6px;">
-              <button type="button" onclick="triggerEdgeAIOCR()" id="btnAiScan" class="btn btn-gold btn-sm" style="margin-top:8px;width:100%;justify-content:center;">⚡ Quét OCR & Điền Form Tự Động</button>
+              <div style="display:flex;gap:6px;margin-top:8px;">
+                <button type="button" onclick="triggerEdgeAIOCR()" id="btnAiScan" class="btn btn-gold btn-sm" style="flex:1;justify-content:center;"><i class="bi bi-lightning-charge-fill" style="margin-right:4px;"></i> Quét OCR Tự Động</button>
+                <button type="button" onclick="openLiveCameraForAutoFill()" class="btn btn-primary btn-sm" style="justify-content:center;" title="Quét trực tiếp qua Camera WebRTC"><i class="bi bi-camera-video-fill"></i> Camera</button>
+              </div>
+              <button type="button" id="btnViewXaiAutoFill" onclick="openXaiForAutoFill()" class="btn btn-outline btn-sm" style="display:none;margin-top:8px;width:100%;justify-content:center;color:#38bdf8;border-color:#38bdf8;"><i class="bi bi-bullseye"></i> Bản Đồ Độ Tin Cậy XAI</button>
               <div id="aiOcrStatus" style="font-size:11px;margin-top:6px;color:var(--gold);font-weight:600;"></div>
             </div>
 
             <!-- Card 2: Smart Avatar Crop 3x4 -->
             <div style="background:var(--bg2);border:1px solid var(--border);padding:14px;border-radius:8px;">
-              <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;color:var(--text);">📸 Upload Ảnh Chân Dung (Smart Crop 3x4)</label>
+              <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;color:var(--text);"><i class="bi bi-camera-fill" style="margin-right:4px;"></i> Upload Ảnh Chân Dung (Smart Crop 3x4)</label>
               <input type="file" id="aiAvatarInput" accept="image/*" onchange="triggerEdgeAIAvatar()" class="form-control" style="font-size:11px;padding:6px;">
+              <button type="button" onclick="openLiveCameraForAvatar()" class="btn btn-outline btn-sm" style="margin-top:8px;width:100%;justify-content:center;"><i class="bi bi-person-bounding-box" style="margin-right:4px;"></i> Chụp Ảnh Chân Dung Live</button>
               <div id="avatarPreviewWrap" style="display:none;margin-top:8px;align-items:center;gap:10px;">
                 <canvas id="avatarCanvas" style="width:50px;height:67px;border-radius:4px;border:2px solid var(--gold);object-fit:cover;"></canvas>
                 <span id="avatarAiStatus" style="font-size:11px;color:var(--success);font-weight:600;"></span>
@@ -247,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           <!-- Section: Thông tin cá nhân -->
           <div class="form-section" style="border-left-color: var(--gold);">
-            <div class="form-section-title" style="color: var(--gold);">👤 1. Thông tin sinh viên</div>
+            <div class="form-section-title" style="color: var(--gold);"><i class="bi bi-person-fill" style="margin-right:6px;"></i> 1. Thông tin sinh viên</div>
             <div class="form-grid">
 
               <!-- Họ tên -->
@@ -327,7 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           <!-- Section: Mong muốn chi bộ -->
           <div class="form-section">
-            <div class="form-section-title">🏛️ 2. Nguyện vọng Chi bộ đề xuất</div>
+            <div class="form-section-title"><i class="bi bi-building" style="margin-right:6px;"></i> 2. Nguyện vọng Chi bộ đề xuất</div>
             <div class="form-grid">
               <div class="form-group form-full">
                 <label class="form-label">Đề xuất Chi bộ công nhận cảm tình Đảng</label>
@@ -351,7 +356,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <!-- Submit Button -->
           <div style="margin-top: 24px;">
             <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
-              💾 Gửi hồ sơ đăng ký
+              <i class="bi bi-floppy-fill" style="margin-right:6px;"></i> Gửi hồ sơ đăng ký
             </button>
           </div>
         </form>
@@ -360,12 +365,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="<?= BASE_URL ?>AI_Module/edge_image_processor.js"></script>
+<script src="<?= BASE_URL ?>AI_Module/live_camera_scanner.js"></script>
+<script src="<?= BASE_URL ?>AI_Module/xai_confidence_overlay.js"></script>
 <script src="<?= BASE_URL ?>AI_Module/edge_ai_autofill.js"></script>
 <script>
-function triggerEdgeAIOCR() {
-  const files = document.getElementById('aiDocInput').files;
+let lastAutoFillOCR = null;
+const xaiVisualizer = new XAIConfidenceOverlay();
+
+function triggerEdgeAIOCR(filesOverride = null) {
+  const files = filesOverride || document.getElementById('aiDocInput').files;
   const statusDiv = document.getElementById('aiOcrStatus');
   const btn = document.getElementById('btnAiScan');
+  const btnXai = document.getElementById('btnViewXaiAutoFill');
 
   if (!files || files.length === 0) {
     alert("Vui lòng chọn ít nhất 1 ảnh CCCD (Mặt trước/Mặt sau) hoặc Thẻ Sinh Viên!");
@@ -377,11 +389,16 @@ function triggerEdgeAIOCR() {
   processEdgeAIAutoFill(
     files,
     function(msg) {
-      statusDiv.innerHTML = `<span style="color:var(--gold);">⏳ ${msg}</span>`;
+      statusDiv.innerHTML = `<span style="color:var(--gold);"><i class="bi bi-hourglass-split"></i> ${msg}</span>`;
     },
-    function(data) {
+    function(data, combinedText, ocrMeta) {
       btn.disabled = false;
-      statusDiv.innerHTML = `<span style="color:var(--success);">✅ Đã trích xuất & điền form tự động thành công!</span>`;
+      statusDiv.innerHTML = `<span style="color:var(--success);"><i class="bi bi-check-circle-fill"></i> Đã trích xuất & điền form tự động thành công!</span>`;
+
+      lastAutoFillOCR = ocrMeta;
+      if (btnXai && ocrMeta && ocrMeta.words && ocrMeta.words.length > 0) {
+        btnXai.style.display = 'flex';
+      }
 
       // Fill in fields if extracted
       if (data.ho_ten && document.querySelector('input[name="ho_ten"]')) {
@@ -408,9 +425,48 @@ function triggerEdgeAIOCR() {
     },
     function(err) {
       btn.disabled = false;
-      statusDiv.innerHTML = `<span style="color:var(--danger);">❌ ${err}</span>`;
+      statusDiv.innerHTML = `<span style="color:var(--danger);"><i class="bi bi-exclamation-triangle-fill"></i> ${err}</span>`;
     }
   );
+}
+
+function openLiveCameraForAutoFill() {
+  const scanner = new LiveCameraScanner({
+    targetType: 'card',
+    sharpnessThreshold: 60,
+    onCapture: (file, dataUrl) => {
+      triggerEdgeAIOCR([file]);
+    }
+  });
+  scanner.open();
+}
+
+function openLiveCameraForAvatar() {
+  const scanner = new LiveCameraScanner({
+    targetType: 'card',
+    autoSnapEnabled: false,
+    onCapture: (file, dataUrl) => {
+      const wrap = document.getElementById('avatarPreviewWrap');
+      const canvas = document.getElementById('avatarCanvas');
+      const status = document.getElementById('avatarAiStatus');
+
+      wrap.style.display = 'flex';
+      status.innerHTML = '⏳ AI đang căn chỉnh tỉ lệ 3x4...';
+
+      processEdgeAIAvatarCrop(file, canvas, function(res) {
+        status.innerHTML = res.message;
+      });
+    }
+  });
+  scanner.open();
+}
+
+function openXaiForAutoFill() {
+  if (!lastAutoFillOCR || !lastAutoFillOCR.image) {
+    alert("Chưa có dữ liệu quét OCR để hiển thị XAI Heatmap.");
+    return;
+  }
+  xaiVisualizer.open(lastAutoFillOCR.image, lastAutoFillOCR.words);
 }
 
 function triggerEdgeAIAvatar() {

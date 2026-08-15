@@ -93,15 +93,15 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
       <a href="chi_tiet.php?id=<?= $id ?>">Chi tiết</a><span class="sep">›</span>
       <span class="current">Sửa</span>
     </div>
-    <div class="page-title">✏️ Sửa thông tin <span><?= e($dt['ho_ten']) ?></span></div>
+    <div class="page-title"><i class="bi bi-pencil-fill" style="margin-right:6px;"></i> Sửa thông tin <span><?= e($dt['ho_ten']) ?></span></div>
   </div>
   <div style="display:flex;gap:10px;">
-    <a href="chi_tiet.php?id=<?= $id ?>" class="btn btn-outline">← Quay lại</a>
+    <a href="chi_tiet.php?id=<?= $id ?>" class="btn btn-outline"><i class="bi bi-arrow-left"></i> Quay lại</a>
   </div>
 </div>
 
 <?php if ($errors): ?>
-<div class="flash flash-danger">❌ <?= implode('<br>❌ ', array_map('e', $errors)) ?></div>
+<div class="flash flash-danger"><i class="bi bi-exclamation-triangle-fill" style="margin-right:6px;"></i> <?= implode('<br><i class="bi bi-exclamation-triangle-fill" style="margin-right:6px;"></i> ', array_map('e', $errors)) ?></div>
 <?php endif; ?>
 
 <form method="post" enctype="multipart/form-data">
@@ -109,21 +109,24 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
 <!-- ⓪ Avatar -->
 <div class="form-section">
-  <div class="form-section-title">🖼️ Ảnh đại diện</div>
+  <div class="form-section-title"><i class="bi bi-image" style="margin-right:6px;"></i> Ảnh đại diện</div>
   <div class="avatar-upload-wrap">
     <div id="avatarPreviewWrap" class="avatar-preview-large">
       <?php if (!empty($dt['avatar'])): ?>
         <img src="<?= BASE_URL . e($dt['avatar']) ?>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
       <?php else: ?>
-        📷
+        <i class="bi bi-camera" style="font-size:28px;color:var(--text2);"></i>
       <?php endif; ?>
     </div>
     <div class="avatar-upload-btn">
       <button type="button" class="btn btn-outline" onclick="document.getElementById('avatarInput').click()">
-        📁 Chọn ảnh...
+        <i class="bi bi-folder2-open"></i> Chọn ảnh...
+      </button>
+      <button type="button" class="btn btn-primary btn-sm" onclick="openLiveCameraForAvatar()" style="display:inline-flex;align-items:center;gap:4px;">
+        <i class="bi bi-camera-fill"></i> Chụp Live & Cắt 3x4
       </button>
       <button type="button" class="btn btn-danger btn-sm" id="removeAvatarBtn" style="<?= !empty($dt['avatar']) ? 'display:inline-flex;' : 'display:none;' ?>" onclick="removeAvatar()">
-        🗑️ Xóa ảnh
+        <i class="bi bi-trash"></i> Xóa ảnh
       </button>
       <div class="avatar-hint">Hỗ trợ tất cả định dạng ảnh · Tối đa: 20MB</div>
     </div>
@@ -133,7 +136,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
 <!-- ① Thông tin cá nhân -->
 <div class="form-section">
-  <div class="form-section-title">👤 1. Thông tin cá nhân</div>
+  <div class="form-section-title"><i class="bi bi-person-badge" style="margin-right:6px;"></i> 1. Thông tin cá nhân</div>
   <div class="form-grid">
     <div class="form-group">
       <label class="form-label">Mã GV/SV</label>
@@ -142,10 +145,6 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <div class="form-group">
       <label class="form-label">Họ và tên <span class="required">*</span></label>
       <input type="text" name="ho_ten" class="form-control" value="<?= e($dt['ho_ten'] ?? '') ?>" required>
-    </div>
-    <div class="form-group">
-      <label class="form-label">SĐT</label>
-      <input type="tel" name="sdt" class="form-control" value="<?= e($dt['sdt'] ?? '') ?>">
     </div>
     <div class="form-group">
       <label class="form-label">Giới tính</label>
@@ -163,6 +162,14 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <div class="form-group">
       <label class="form-label">Dân tộc</label>
       <input type="text" name="dan_toc" class="form-control" value="<?= e($dt['dan_toc'] ?? '') ?>">
+    </div>
+    <div class="form-group">
+      <label class="form-label">SĐT</label>
+      <input type="tel" name="sdt" class="form-control" value="<?= e($dt['sdt'] ?? '') ?>">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" name="email" class="form-control" value="<?= e($dt['email'] ?? '') ?>">
     </div>
     <div class="form-group form-full">
       <label class="form-label">Quê quán</label>
@@ -189,7 +196,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
 <!-- ② Cảm tình Đảng -->
 <div class="form-section">
-  <div class="form-section-title">🏛️ 2. Chi bộ & Cảm tình Đảng</div>
+  <div class="form-section-title"><i class="bi bi-building" style="margin-right:6px;"></i> 2. Chi bộ & Cảm tình Đảng</div>
   <div class="form-grid">
     <div class="form-group form-full">
       <label class="form-label">Tên chi bộ công nhận</label>
@@ -222,7 +229,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
 <!-- ③ Lớp bồi dưỡng -->
 <div class="form-section">
-  <div class="form-section-title">📚 3. Lớp Bồi dưỡng nhận thức về Đảng</div>
+  <div class="form-section-title"><i class="bi bi-book" style="margin-right:6px;"></i> 3. Lớp Bồi dưỡng nhận thức về Đảng</div>
   <div class="form-grid">
     <div class="form-group"><label class="form-label">Số QĐ mở lớp</label><input type="text" name="so_qd_mo_lop" class="form-control" value="<?= e($dt['so_qd_mo_lop']??'') ?>"></div>
     <div class="form-group"><label class="form-label">Ngày QĐ mở lớp</label><input type="date" name="ngay_qd_mo_lop" class="form-control" value="<?= e($dt['ngay_qd_mo_lop']??'') ?>"></div>
@@ -239,7 +246,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
 <!-- ④ Kết nạp -->
 <div class="form-section">
-  <div class="form-section-title">⭐ 4. Kết nạp Đảng</div>
+  <div class="form-section-title"><i class="bi bi-star-fill" style="margin-right:6px;color:var(--gold);"></i> 4. Kết nạp Đảng</div>
   <div class="form-grid">
     <div class="form-group"><label class="form-label">Mã số</label><input type="text" name="ma_so" class="form-control" value="<?= e($dt['ma_so']??'') ?>"></div>
     <div class="form-group"><label class="form-label">Kết nạp Đảng</label><input type="text" name="ket_nap_dang" class="form-control" value="<?= e($dt['ket_nap_dang']??'') ?>"></div>
@@ -258,11 +265,56 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
 <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px;">
   <a href="chi_tiet.php?id=<?= $id ?>" class="btn btn-outline btn-lg">Hủy</a>
-  <button type="submit" class="btn btn-primary btn-lg">💾 Lưu thay đổi</button>
+  <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-floppy-fill" style="margin-right:6px;"></i> Lưu thay đổi</button>
 </div>
 </form>
 
+<script src="<?= BASE_URL ?>AI_Module/live_camera_scanner.js"></script>
+<script src="<?= BASE_URL ?>AI_Module/edge_ai_autofill.js"></script>
+
 <script>
+function dataURLtoFile(dataurl, filename) {
+  var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+  while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, {type:mime});
+}
+
+function openLiveCameraForAvatar() {
+  if (typeof LiveCameraScanner === 'undefined') {
+    alert("Thư viện LiveCameraScanner chưa sẵn sàng.");
+    return;
+  }
+  const scanner = new LiveCameraScanner({
+    targetType: 'card',
+    autoSnapEnabled: false,
+    onCapture: (file, dataUrl) => {
+      const tempCanvas = document.createElement('canvas');
+      processEdgeAIAvatarCrop(file, tempCanvas, function(res) {
+        if (res.success) {
+          const croppedDataUrl = tempCanvas.toDataURL('image/jpeg', 0.92);
+          const croppedFile = dataURLtoFile(croppedDataUrl, 'avatar_3x4.jpg');
+          
+          const dt = new DataTransfer();
+          dt.items.add(croppedFile);
+          const avatarInput = document.getElementById('avatarInput');
+          avatarInput.files = dt.files;
+          previewAvatar(avatarInput);
+        } else {
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          const avatarInput = document.getElementById('avatarInput');
+          avatarInput.files = dt.files;
+          previewAvatar(avatarInput);
+        }
+      });
+    }
+  });
+  scanner.open();
+}
+
 function previewAvatar(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
@@ -283,7 +335,7 @@ function previewAvatar(input) {
 function removeAvatar() {
   document.getElementById('avatarInput').value = '';
   var wrap = document.getElementById('avatarPreviewWrap');
-  wrap.innerHTML = '📷';
+  wrap.innerHTML = '<i class="bi bi-camera" style="font-size:28px;color:var(--text2);"></i>';
   wrap.style.cssText = '';
   document.getElementById('removeAvatarFlag').value = '1';
   document.getElementById('removeAvatarBtn').style.display = 'none';

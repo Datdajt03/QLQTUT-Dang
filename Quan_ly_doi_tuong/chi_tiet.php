@@ -59,7 +59,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     <!-- Dropdown Xuất phiếu chuẩn PDF -->
     <div style="position:relative;display:inline-block;">
       <select id="selectExportForm" class="btn btn-gold" style="padding-right:25px;cursor:pointer;" onchange="exportFormPDF(<?= $id ?>)">
-        <option value="">Xuất Mẫu Phiếu PDF (Mẫu 2026)...</option>
+        <option value="">📄 Xuất Mẫu Phiếu PDF (Mẫu 2026)...</option>
         <option value="1-knd">Mẫu 1-KNĐ: Đơn xin vào Đảng</option>
         <option value="2-knd">Mẫu 2-KNĐ: Lý lịch người vào Đảng (2026)</option>
         <option value="3-knd">Mẫu 3-KNĐ: Giấy giới thiệu người vào Đảng</option>
@@ -70,16 +70,16 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
         <option value="mau-ii">Mẫu II: Giấy chứng nhận Cấp ủy cấp</option>
       </select>
     </div>
-    <a href="sua.php?id=<?= $id ?>" class="btn btn-primary">Sửa</a>
-    <button onclick="confirmDelete()" class="btn btn-danger">Xóa</button>
-    <a href="danh_sach.php" class="btn btn-outline">← Danh sách</a>
+    <a href="sua.php?id=<?= $id ?>" class="btn btn-primary"><i class="bi bi-pencil"></i> Sửa</a>
+    <button onclick="confirmDelete()" class="btn btn-danger"><i class="bi bi-trash"></i> Xóa</button>
+    <a href="danh_sach.php" class="btn btn-outline"><i class="bi bi-arrow-left"></i> Danh sách</a>
   </div>
 </div>
 
 <!-- Progress Timeline -->
 <div class="card fade-in" style="margin-bottom:20px;">
   <div class="card-header">
-    <div class="card-title">Tiến trình kết nạp</div>
+    <div class="card-title"><i class="bi bi-diagram-3-fill" style="margin-right:6px;"></i> Tiến trình kết nạp</div>
   </div>
   <div class="card-body">
     <div class="steps">
@@ -113,9 +113,9 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 
 <!-- Tabs -->
 <div class="tabs">
-  <button class="tab-btn active" onclick="showTab('thongtin',this)">Thông tin</button>
-  <button class="tab-btn" onclick="showTab('quytrinh',this)">Quy trình</button>
-  <button class="tab-btn" onclick="showTab('lichsu',this)">Lịch sử</button>
+  <button class="tab-btn active" onclick="showTab('thongtin',this)"><i class="bi bi-person-lines-fill" style="margin-right:4px;"></i> Thông tin</button>
+  <button class="tab-btn" onclick="showTab('quytrinh',this)"><i class="bi bi-diagram-3-fill" style="margin-right:4px;"></i> Quy trình</button>
+  <button class="tab-btn" onclick="showTab('lichsu',this)"><i class="bi bi-clock-history" style="margin-right:4px;"></i> Lịch sử</button>
 </div>
 
 <!-- Tab: Thông tin -->
@@ -123,7 +123,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Thông tin cá nhân</div></div>
+      <div class="card-header"><div class="card-title"><i class="bi bi-person-badge" style="margin-right:6px;"></i> Thông tin cá nhân</div></div>
       <div class="card-body">
         <div class="info-grid">
           <?php
@@ -150,7 +150,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Chi bộ & Tổ chức</div></div>
+      <div class="card-header"><div class="card-title"><i class="bi bi-building" style="margin-right:6px;"></i> Chi bộ & Tổ chức</div></div>
       <div class="card-body">
         <div class="info-grid">
           <?php
@@ -187,7 +187,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Lớp Bồi dưỡng</div></div>
+      <div class="card-header"><div class="card-title"><i class="bi bi-book" style="margin-right:6px;"></i> Lớp Bồi dưỡng</div></div>
       <div class="card-body">
         <div class="info-grid">
           <?php
@@ -215,7 +215,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Kết nạp & Chuyển SH</div></div>
+      <div class="card-header"><div class="card-title"><i class="bi bi-star-fill" style="margin-right:6px;color:var(--gold);"></i> Kết nạp & Chuyển SH</div></div>
       <div class="card-body">
         <div class="info-grid">
           <?php
@@ -244,7 +244,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Tab: Lịch sử -->
 <div class="tab-content" id="tab-lichsu">
   <div class="card">
-    <div class="card-header"><div class="card-title">Lịch sử thao tác</div></div>
+    <div class="card-header"><div class="card-title"><i class="bi bi-clock-history" style="margin-right:6px;"></i> Lịch sử thao tác</div></div>
     <div class="card-body">
       <?php if (empty($history)): ?>
       <div class="empty-state" style="padding:30px;">
@@ -268,11 +268,11 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
-    <div class="modal-title">Xác nhận xóa</div>
+    <div class="modal-title"><i class="bi bi-exclamation-triangle-fill" style="color:var(--danger);margin-right:6px;"></i> Xác nhận xóa</div>
     <div class="modal-body">Bạn có chắc muốn xóa hồ sơ của <strong><?= e($dt['ho_ten']) ?></strong>? Hành động này <strong style="color:var(--danger)">không thể hoàn tác</strong>.</div>
     <div class="modal-actions">
       <button onclick="document.getElementById('deleteModal').classList.remove('open')" class="btn btn-outline">Hủy</button>
-      <a href="xoa.php?id=<?= $id ?>" class="btn btn-danger">Xóa</a>
+      <a href="xoa.php?id=<?= $id ?>" class="btn btn-danger"><i class="bi bi-trash-fill"></i> Xóa</a>
     </div>
   </div>
 </div>
@@ -280,7 +280,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
 <!-- Missing Fields Warning Modal -->
 <div class="modal-overlay" id="missingFieldsModal">
   <div class="modal" style="max-width:500px;">
-    <div class="modal-title" style="color:var(--gold);">Thiếu trường thông tin bắt buộc</div>
+    <div class="modal-title" style="color:var(--gold);"><i class="bi bi-exclamation-circle-fill" style="margin-right:6px;"></i> Thiếu trường thông tin bắt buộc</div>
     <div class="modal-body">
       <p style="margin-bottom:12px;">Hồ sơ của <strong><?= e($dt['ho_ten']) ?></strong> chưa đủ dữ liệu để xuất biểu mẫu PDF này. Vui lòng bổ sung các thông tin còn thiếu dưới đây:</p>
       <div id="missingFieldsList" style="background:rgba(217,119,6,0.1);border-left:4px solid var(--gold);padding:12px;border-radius:6px;margin-bottom:15px;"></div>
@@ -288,7 +288,7 @@ require_once dirname(__DIR__) . '/Giao_dien/header.php';
     </div>
     <div class="modal-actions">
       <button onclick="document.getElementById('missingFieldsModal').classList.remove('open')" class="btn btn-outline">Để sau</button>
-      <a href="sua.php?id=<?= $id ?>" class="btn btn-primary">Điền thông tin ngay</a>
+      <a href="sua.php?id=<?= $id ?>" class="btn btn-primary"><i class="bi bi-pencil-fill"></i> Điền thông tin ngay</a>
     </div>
   </div>
 </div>
