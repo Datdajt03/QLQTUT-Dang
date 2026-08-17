@@ -1,9 +1,11 @@
-\contentsline {figure}{\numberline {1}{\ignorespaces Sơ đồ Quy trình Nghiệp vụ Chuẩn hóa 5 Bước Quản lý và Xét duyệt Kết nạp Đảng}}{4}{figure.caption.6}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Sơ đồ Chi tiết Kiến trúc Phân tầng Lai 4 Lớp và Microservice-Lite Python}}{10}{figure.caption.9}%
-\contentsline {figure}{\numberline {3}{\ignorespaces Sơ đồ Use Case Tổng quan Hệ thống Quản lý Quần chúng Ưu tú}}{11}{figure.caption.11}%
-\contentsline {figure}{\numberline {4}{\ignorespaces Sơ đồ Luồng Xử lý Liên hoàn trong Bộ Phối hợp Đa Tác tử AI Thẩm định Hồ sơ}}{14}{figure.caption.15}%
-\contentsline {figure}{\numberline {5}{\ignorespaces Sơ đồ Quan hệ Thực thể ERD Các Bảng Dữ liệu Chính trong Cơ sở Dữ liệu}}{18}{figure.caption.17}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Sơ đồ Tuần tự Quy trình OCR Trích xuất CCCD và Smart Canvas Crop Ảnh 3x4}}{20}{figure.caption.20}%
-\contentsline {figure}{\numberline {7}{\ignorespaces Sơ đồ Tuần tự Quy trình Multi-Agent AI Thẩm định Hồ sơ và Ghi Log CSDL}}{21}{figure.caption.21}%
-\contentsline {figure}{\numberline {8}{\ignorespaces Sơ đồ Tuần tự Quy trình Đề xuất Cập nhật Thông tin và Phê duyệt Đối chiếu 2 Tab}}{22}{figure.caption.22}%
-\contentsline {figure}{\numberline {9}{\ignorespaces Sơ đồ Tuần tự Quy trình Kết xuất Biểu mẫu PDF 2026 qua Python Microservice}}{22}{figure.caption.23}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Sơ đồ Quy trình Nghiệp vụ Chuẩn hóa 5 Bước Quản lý và Xét duyệt Kết nạp Đảng}}{4}{figure.caption.5}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Sơ đồ Tổng quan Kiến trúc Hệ thống Phân tầng Lai (System Architecture Overview)}}{11}{figure.caption.7}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Sơ đồ Use Case Tổng quan Hệ thống Quản lý Quần chúng Ưu tú}}{13}{figure.caption.8}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Sơ đồ Luồng Xử lý Liên hoàn trong Bộ Phối hợp Đa Tác tử AI Thẩm định Hồ sơ}}{15}{figure.caption.10}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Sơ đồ Quan hệ Thực thể ERD Các Bảng Dữ liệu Chính trong Cơ sở Dữ liệu}}{20}{figure.caption.12}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Sơ đồ Quan hệ Thực thể ERD Mở rộng Toàn diện 9 Bảng Dữ liệu trong CSDL ql\_dangvien}}{21}{figure.caption.13}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Sơ đồ Tuần tự Quy trình OCR Trích xuất CCCD và Smart Canvas Crop Ảnh 3x4}}{25}{figure.caption.14}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Sơ đồ Tuần tự Quy trình Multi-Agent AI Thẩm định Hồ sơ và Ghi Log CSDL}}{25}{figure.caption.15}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Sơ đồ Tuần tự Quy trình Đề xuất Cập nhật Thông tin và Phê duyệt Đối chiếu 2 Tab}}{26}{figure.caption.16}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Sơ đồ Tuần tự Quy trình Kết xuất Biểu mẫu PDF qua Python Microservice}}{27}{figure.caption.17}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Sơ đồ Thiết kế Bố cục Giao diện Xét duyệt Đối chiếu 2 Tab và Cơ chế Kết xuất Biểu mẫu}}{29}{figure.caption.19}%

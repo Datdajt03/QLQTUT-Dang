@@ -1,9 +1,9 @@
-\contentsline {table}{\numberline {1}{\ignorespaces Bảng tổng hợp so sánh các nghiên cứu tham khảo và đề xuất giải pháp dự án}}{8}{table.caption.7}%
-\contentsline {table}{\numberline {2}{\ignorespaces Ma trận phân quyền kiểm soát truy cập hệ thống (RBAC Matrix)}}{11}{table.caption.10}%
-\contentsline {table}{\numberline {3}{\ignorespaces Bảng quy tắc 5 Mô hình Thẩm định Hồ sơ Minh chứng Đầu vào của Edge AI}}{13}{table.caption.13}%
-\contentsline {table}{\numberline {4}{\ignorespaces Ma trận đặc tả kỹ thuật các tác tử trong hệ thống Multi-Agent AI}}{13}{table.caption.14}%
-\contentsline {table}{\numberline {5}{\ignorespaces Đặc tả bảng dữ liệu chính doi\_tuong (35 cột dữ liệu hồ sơ quần chúng)}}{19}{table.caption.18}%
-\contentsline {table}{\numberline {6}{\ignorespaces Đặc tả 8 Bảng Dữ liệu Phụ thuộc trong Cơ sở Dữ liệu ql\_dangvien}}{19}{table.caption.19}%
-\contentsline {table}{\numberline {7}{\ignorespaces Danh sách 8 biểu mẫu hành chính PDF chuẩn năm 2026 xuất tự động qua ReportLab Engine}}{24}{table.caption.25}%
-\contentsline {table}{\numberline {8}{\ignorespaces Bảng tổng hợp các giải pháp bảo mật và an toàn dữ liệu trong hệ thống}}{25}{table.caption.26}%
-\contentsline {table}{\numberline {9}{\ignorespaces Bảng kết quả đo đạc thực nghiệm các chỉ số hiệu năng và độ chính xác của hệ thống}}{26}{table.caption.28}%
+\contentsline {table}{\numberline {2}{\ignorespaces Bảng tổng hợp so sánh các nghiên cứu tham khảo và đề xuất giải pháp dự án}}{8}{table.0.2}%
+\contentsline {table}{\numberline {3}{\ignorespaces Ma trận phân quyền kiểm soát truy cập hệ thống (RBAC Matrix 3 Vai trò)}}{12}{table.0.3}%
+\contentsline {table}{\numberline {4}{\ignorespaces Bảng quy tắc 5 Mô hình Thẩm định Hồ sơ Minh chứng Đầu vào của Edge AI}}{14}{table.0.4}%
+\contentsline {table}{\numberline {5}{\ignorespaces Ma trận đặc tả kỹ thuật các tác tử trong hệ thống Multi-Agent AI}}{15}{table.0.5}%
+\contentsline {table}{\numberline {6}{\ignorespaces Đặc tả bảng dữ liệu chính doi\_tuong (35 cột dữ liệu hồ sơ quần chúng)}}{23}{table.0.6}%
+\contentsline {table}{\numberline {7}{\ignorespaces Đặc tả 8 Bảng Dữ liệu Phụ thuộc trong Cơ sở Dữ liệu ql\_dangvien}}{24}{table.0.7}%
+\contentsline {table}{\numberline {8}{\ignorespaces Danh sách 8 mẫu phiếu PDF được thiết kế trong phạm vi đề tài xuất tự động qua ReportLab Engine}}{29}{table.0.8}%
+\contentsline {table}{\numberline {9}{\ignorespaces Bảng tổng hợp các giải pháp bảo mật và an toàn dữ liệu trong hệ thống}}{30}{table.0.9}%
+\contentsline {table}{\numberline {10}{\ignorespaces Bảng kết quả đo đạc thực nghiệm các chỉ số hiệu năng và độ chính xác của hệ thống}}{31}{table.0.10}%

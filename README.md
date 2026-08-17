@@ -10,12 +10,12 @@
 
 **Nhóm thực hiện:** `[02]`
 
-| STT | Họ và Tên              |  MSSV  | Phân công                      |
-| :-: | :--------------------- | :----: | :----------------------------- |
-|  1  | **LÒ MẠNH ĐẠT**        | MSSV 1 | Backend PHP, Database          |
-|  2  | **NGUYỄN HUY HOÀNG**   | MSSV 2 | Frontend Python API            |
-|  3  | **TÒNG LƯU ANH TÚ**    | MSSV 3 | Báo cáo CSS/JS, UI/UX, Edge AI |
-|  4  | **PHẠM THỊ THANH HẢO** | MSSV 4 | Python API, Báo cáo            |
+| STT | Họ và Tên              |   MSSV    | Phân công Nhiệm vụ                        |
+| :-: | :--------------------- | :-------: | :---------------------------------------- |
+|  1  | **LÒ MẠNH ĐẠT**        | 2023A0861 | Backend PHP, Database, Agent AI, Báo cáo |
+|  2  | **NGUYỄN HUY HOÀNG**   | 2023A0875 | Frontend Python API, Edge AI             |
+|  3  | **TÒNG LƯU ANH TÚ**    | 2023A0937 | Báo cáo CSS/JS, UI/UX, Edge AI           |
+|  4  | **PHẠM THỊ THANH HẢO** | 2023A0869 | Python API, Báo cáo                      |
 
 ---
 
@@ -25,7 +25,7 @@
 
 Công tác phát triển Đảng trong môi trường giáo dục đại học đòi hỏi quản lý một khối lượng lớn hồ sơ quần chúng ưu tú qua nhiều giai đoạn chặt chẽ từ tiếp nhận đơn đăng ký, theo dõi quá trình bồi dưỡng, đến hoàn thiện các biểu mẫu hành chính kết nạp theo quy định của Đảng. Thực tế hiện nay tại nhiều cơ sở giáo dục, quy trình này vẫn phụ thuộc phần lớn vào hồ sơ giấy và bảng tính thủ công, dẫn đến nguy cơ sai sót, thất lạc thông tin và tốn nhiều thời gian xử lý.
 
-**Hệ thống Quản lý Quần chúng Ưu tú Phục vụ Kết nạp Đảng** được xây dựng nhằm số hóa và tự động hóa toàn bộ quy trình nêu trên. Ứng dụng cho phép cán bộ Đảng vụ quản lý tập trung hồ sơ từng quần chúng, theo dõi timeline 5 bước kết nạp theo đúng điều lệ Đảng, phê duyệt hoặc từ chối đơn đăng ký kèm thông báo email tự động, và xuất trực tiếp 8 biểu mẫu PDF hành chính chuẩn 2026 với dữ liệu được điền sẵn chính xác từ cơ sở dữ liệu. Tích hợp thêm Edge AI giúp tự động nhận diện và điền thông tin từ ảnh CCCD/thẻ sinh viên, giảm đáng kể thời gian nhập liệu thủ công. Hệ thống phân quyền 3 cấp (Sinh viên – Quản lý – Admin) đảm bảo bảo mật và tính minh bạch trong toàn bộ vận hành.
+**Hệ thống Quản lý Quần chúng Ưu tú Phục vụ Kết nạp Đảng** được xây dựng nhằm số hóa và tự động hóa toàn bộ quy trình nêu trên. Ứng dụng cho phép cán bộ Đảng vụ quản lý tập trung hồ sơ từng quần chúng, theo dõi timeline 5 bước kết nạp theo đúng điều lệ Đảng, phê duyệt hoặc từ chối đơn đăng ký kèm thông báo email tự động, và xuất trực tiếp 8 biểu mẫu PDF hành chính được thiết kế trong phạm vi đề tài với dữ liệu được điền sẵn chính xác từ cơ sở dữ liệu. Tích hợp thêm Edge AI giúp tự động nhận diện và điền thông tin từ ảnh CCCD/thẻ sinh viên, giảm đáng kể thời gian nhập liệu thủ công. Hệ thống phân quyền 3 cấp (Sinh viên – Quản lý – Admin) đảm bảo bảo mật và tính minh bạch trong toàn bộ vận hành.
 
 > **Giá trị cốt lõi:** Giúp trường rút ngắn thời gian xử lý hồ sơ kết nạp Đảng, giảm thiểu sai sót nghiệp vụ, và nâng cao tính chuyên nghiệp trong công tác phát triển Đảng viên tại cơ sở giáo dục.
 
@@ -35,7 +35,7 @@ Công tác phát triển Đảng trong môi trường giáo dục đại học �
 
 The recruitment and development of Party members within higher education institutions is a process governed by strict procedural requirements, encompassing candidate registration, progressive training oversight, and the completion of standardised administrative documents in accordance with Party regulations. In practice, many universities continue to rely on paper-based records and manual spreadsheets, exposing the workflow to risks of data loss, clerical error, and significant administrative overhead.
 
-This system — **Management of Outstanding Candidates for Communist Party Admission** — addresses these challenges by providing a comprehensive, web-based platform that digitises and automates the entire Party member recruitment pipeline. The application enables Party secretaries to centrally manage candidate profiles, monitor each individual's progress across the five mandated admission milestones, and approve or reject applications with automated email notifications. Crucially, the system generates all eight standardised 2026 administrative PDF forms with pre-populated data drawn directly from the database, eliminating manual transcription. An integrated Edge AI module leverages OCR technology to automatically extract personal information from national identity cards and student ID cards, substantially reducing data entry time. A three-tier role-based access control model (Student – Manager – Administrator) ensures data integrity, operational transparency, and institutional security throughout the process.
+This system — **Management of Outstanding Candidates for Communist Party Admission** — addresses these challenges by providing a comprehensive, web-based platform that digitises and automates the entire Party member recruitment pipeline. The application enables Party secretaries to centrally manage candidate profiles, monitor each individual's progress across the five mandated admission milestones, and approve or reject applications with automated email notifications. Crucially, the system generates all eight administrative PDF forms designed within the project scope with pre-populated data drawn directly from the database, eliminating manual transcription. An integrated Edge AI module leverages OCR technology to automatically extract personal information from national identity cards and student ID cards, substantially reducing data entry time. A three-tier role-based access control model (Student – Manager – Administrator) ensures data integrity, operational transparency, and institutional security throughout the process.
 
 > **Core value proposition:** The system enables universities to significantly reduce administrative processing time, minimise procedural errors, and elevate the professional standard of Party member development operations within educational institutions.
 
@@ -71,7 +71,7 @@ Hệ thống được thiết kế theo **Kiến trúc Phân tầng Lai (Layered
 - ✅ **Người dùng & Bảo mật:** Đăng ký, đăng nhập, mã hóa mật khẩu `password_hash()`, phân quyền RBAC 3 lớp.
 - ✅ **Kỹ thuật & CSDL:** PHP PDO + MySQL, Upload file/avatar/minh chứng, phân trang, lọc đa tiêu chí, tìm kiếm thời gian thực.
 - ✅ **Giao diện & UX/UI:** Responsive 100%, Minimal Typography, Dark Mode Glassmorphism, Bảng chỉnh sửa trực tiếp kiểu Excel.
-- ✅ **Tính năng Nâng cao (Cộng điểm):** Microservice Python xuất 8 mẫu PDF 2026 chuẩn thể thức, Edge AI OCR tự động điền form & phân loại 5 loại phiếu.
+- ✅ **Tính năng Nâng cao (Cộng điểm):** Microservice Python xuất 8 mẫu PDF chuẩn thể thức được thiết kế trong phạm vi đề tài, Edge AI OCR tự động điền form & phân loại 5 loại phiếu.
 
 ---
 
@@ -122,12 +122,12 @@ Hệ thống bổ sung hệ cơ sở đăng ký, đăng nhập và xác thực p
 - **Agent Phân loại & Ánh xạ Tên Cột Excel (`AI_Module/excel_column_agent.js`)**: Khi tải lên file Excel/CSV tại `Thong_ke_bao_cao/import_excel.php`, AI Agent tự động phát hiện các tiêu đề cột ghi tắt/sai lệch (như `Qli`, `QL`, `Quản lý`, `Mã SV`...) và bật Modal hiển thị bảng chọn cột bên trái để ánh xạ chuẩn xác vào các trường CSDL trước khi lưu.
 - **Sơ đồ Luồng Hoạt Động**: Xem chi tiết sơ đồ Activity & Sequence Diagram của Edge AI tại 👉 **[chitiet.md (Mục 4c & 5c)](chitiet.md#4c-quy-trình-smart-auto-fill-cccd--cắt-ảnh-thẻ-3x4-ai_module)**.
 
-### 7. Xuất 8 Mẫu Phiếu Kết Nạp Đảng Ra PDF Chuẩn 2026 & Trích Xuất Dữ Liệu Cần Thiết [NEW]
+### 7. Xuất 8 Mẫu Phiếu Kết Nạp Đảng Ra PDF (Được Thiết Kế Trong Phạm Vi Đề Tài) & Trích Xuất Dữ Liệu Cần Thiết [NEW]
 
-- **Tự động trích xuất & điền dữ liệu đầy đủ vào PDF**: Hệ thống tự động trích xuất toàn bộ dữ liệu cần thiết từ CSDL MySQL (Họ tên, Ngày sinh, Nơi sinh/Quê quán, Dân tộc, Lớp, Chi bộ công nhận, Đảng viên giúp đỡ, Số chứng chỉ...) và kết xuất trực tiếp ra định dạng PDF chuẩn thể thức hành chính 2026.
-- **Hỗ trợ xuất PDF 8 biểu mẫu chuẩn mới nhất 2026** (lưu trữ tại thư mục `Bieu_mau_dang_ky_ket_ap_dang`):
-  1. **Mẫu 1-KNĐ**: Đơn xin vào Đảng (Cập nhật PDF 2026)
-  2. **Mẫu 2-KNĐ [MỚI 2026]**: Lý lịch người vào Đảng (Sơ lược lý lịch & cam đoan PDF)
+- **Tự động trích xuất & điền dữ liệu đầy đủ vào PDF**: Hệ thống tự động trích xuất toàn bộ dữ liệu cần thiết từ CSDL MySQL (Họ tên, Ngày sinh, Nơi sinh/Quê quán, Dân tộc, Lớp, Chi bộ công nhận, Đảng viên giúp đỡ, Số chứng chỉ...) và kết xuất trực tiếp ra định dạng PDF theo mẫu thiết kế.
+- **Hỗ trợ xuất PDF 8 biểu mẫu được thiết kế trong phạm vi đề tài** (lưu trữ tại thư mục `Bieu_mau_dang_ky_ket_ap_dang`):
+  1. **Mẫu 1-KNĐ**: Đơn xin vào Đảng (Xuất PDF)
+  2. **Mẫu 2-KNĐ**: Lý lịch người vào Đảng (Sơ lược lý lịch & cam đoan PDF)
   3. **Mẫu 3-KNĐ**: Giấy giới thiệu của Đảng viên chính thức (Xuất PDF)
   4. **Mẫu 4-KNĐ**: Nghị quyết giới thiệu Đoàn viên ưu tú vào Đảng (Xuất PDF)
   5. **Mẫu 4a-KNĐ**: Nghị quyết giới thiệu Đoàn viên Công đoàn vào Đảng (Xuất PDF)
@@ -363,10 +363,10 @@ Sau đó vào **Dashboard → Tiện ích & Báo cáo → Xuất dữ liệu**, 
 web1/
 ├── index.php                      ← Dashboard phân quyền theo vai trò (chọn lọc nội dung hiển thị)
 ├── config.php                     ← Cấu hình database PDO, múi giờ, tự động tạo bảng dữ liệu
-├── Form_mau_xuat_phieu_thong_tin/   ← [NEW 2026] Thư mục chứa các mẫu văn bản hành chính .docx gốc 2026
-│   └── Bieu_mau_dang_ky_ket_ap_dang/ ← Các tệp biểu mẫu chuẩn: 1-KNĐ, 2-KNĐ, 3-KNĐ, 4-KNĐ, 4a-KNĐ, 5-KNĐ...
-├── python_api/                    ← Backend Python xuất báo cáo Excel & Mẫu PDF chuẩn 2026
-│   ├── app.py                     ← REST API Flask xử lý sinh file Excel & ReportLab PDF Mẫu 2026
+├── Form_mau_xuat_phieu_thong_tin/   ← Thư mục chứa các mẫu văn bản hành chính .docx gốc
+│   └── Bieu_mau_dang_ky_ket_ap_dang/ ← Các tệp biểu mẫu: 1-KNĐ, 2-KNĐ, 3-KNĐ, 4-KNĐ, 4a-KNĐ, 5-KNĐ...
+├── python_api/                    ← Backend Python xuất báo cáo Excel & 8 Mẫu PDF
+│   ├── app.py                     ← REST API Flask xử lý sinh file Excel & ReportLab PDF
 │   ├── requirements.txt           ← Danh sách thư viện Python cần dùng (openpyxl, reportlab, pymysql, flask)
 │   └── start_api.bat              ← Script khởi chạy nhanh bằng một click chuột
 ├── uploads/
